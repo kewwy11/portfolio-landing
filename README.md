@@ -44,9 +44,11 @@ The contact form validates inputs and opens a prefilled email draft using `mailt
 
 ## GitHub
 
-The project is initialized on `main` with milestone commits. Once the destination repository exists, connect and push it:
+The project uses `main` with milestone commits and is hosted in the private [kewwy11/portfolio-landing](https://github.com/kewwy11/portfolio-landing) repository. To get another local copy:
 
 ```sh
-git remote add origin https://github.com/kewwy11/portfolio-landing.git
-git push -u origin main
+git clone https://github.com/kewwy11/portfolio-landing.git
+cd portfolio-landing
+npm install
+npm run dev
 ```
