@@ -91,8 +91,8 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .contact input::placeholder, .contact textarea::placeholder { color: #af9ca2; opacity: 1; }
 .talk-button { position: relative; overflow: hidden; background: var(--pale-pink); min-width: 123px; padding: 16px 10px; margin-top: 8px; }
 .talk-button span { position: relative; z-index: 1; }
-.talk-button img { position: absolute; left: 50%; top: -44px; transform: translateX(-50%); transition: transform .3s; }
-.talk-button:hover img { transform: translateX(-50%) rotate(45deg); }
+.talk-button img { position: absolute; left: 50%; top: -44px; transform: translateX(-50%) scale(4.34375); transform-origin: top center; transition: transform .3s; }
+.talk-button:hover img { transform: translateX(-50%) scale(4.34375) rotate(45deg); }
 .form-status { font-size: 13px; color: var(--body); line-height: 1.5; }
 .form-status:not(:empty) { margin-top: 12px; }
 .contact-image { width: 100%; height: auto; aspect-ratio: 732 / 602; object-fit: cover; }

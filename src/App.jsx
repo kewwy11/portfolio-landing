@@ -45,8 +45,8 @@ function Hero() {
 
 function Tools() {
   const logos = [
-    ['imgWrapByRakibulism1.svg', 'Design tool'], ['imgWrapByRakibulism.svg', 'Figma'],
-    ['imgJitterLogoSvg.svg', 'Jitter'], ['imgWrapByRakibulism2.svg', 'Design tool'],
+    ['imgWrapByRakibulism1.svg', 'Figma'], ['imgWrapByRakibulism.svg', 'Adobe'],
+    ['imgJitterLogoSvg.svg', 'Jitter'], ['imgWrapByRakibulism2.svg', 'Codex'],
     ['imgWrapByRakibulism3.svg', 'Claude'], ['vscode.png', 'Visual Studio Code'],
     ['imgWrapByRakibulism3.svg', 'Claude'], ['imgWrapByRakibulism3.svg', 'Claude'],
   ];
