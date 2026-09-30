@@ -36,7 +36,7 @@ Checks cover desktop, tablet, and mobile widths; loaded images; horizontal overf
 - `src/content.js`: projects, testimonials, service descriptions, email, and social URLs.
 - `public/assets/`: local Figma images/icons and self-hosted open-source fonts with their licenses.
 
-The design uses **Gind**. The site can use Gind when it is installed on the visitor's device; **Anton** is the bundled display fallback. Poppins and DM Mono match the design. The local Gind download includes a **Free for Personal Use** license, so its font file is not bundled or pushed. Add a Gind webfont and its `@font-face` declaration in `styles.css` once a license covering website distribution is available.
+The design uses **Gind**. The site can use Gind when it is installed on the visitor's device; the bundled, open-licensed **Bowlby One SC** is the display fallback, followed by Anton. Poppins and DM Mono match the design. The local Gind download includes a **Free for Personal Use** license, so its font file is not bundled or pushed. Add a Gind webfont and its `@font-face` declaration in `styles.css` once a license covering website distribution is available.
 
 The two lime project blocks are present in the supplied design and remain placeholders. No branding projects or social profile URLs were supplied, so the Branding filter shows an empty state and social names are plain text. Add verified content in `src/content.js`.
 
