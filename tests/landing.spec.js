@@ -34,11 +34,15 @@ for (const width of [1440, 768, 390, 320]) {
 test('navigation, project filters, services, and inquiry form work', async ({ page }) => {
   await page.goto('/');
   await page.getByRole('button', { name: 'Open navigation' }).click();
-  await expect(page.getByRole('navigation', { name: 'Main navigation' })).toBeVisible();
+  const menu = page.getByRole('navigation', { name: 'Main navigation' });
+  await expect(menu).toBeVisible();
+  await expect(menu.getByRole('link')).toHaveCount(6);
+  await expect(menu.getByRole('link', { name: 'Proof' })).toHaveAttribute('href', '#proof');
+  await expect(menu.getByRole('link', { name: 'Let’s Talk' })).toHaveAttribute('href', '#contact');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('button', { name: 'Open navigation' })).toBeFocused();
   await page.getByRole('button', { name: 'Open navigation' }).click();
-  await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Projects' }).click();
+  await menu.getByRole('link', { name: 'Projects' }).click();
   await expect(page.getByRole('navigation', { name: 'Main navigation' })).toHaveCount(0);
   await expect(page.locator('.project')).toHaveCount(4);
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
@@ -54,6 +58,37 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
   await page.getByLabel('Inquiry').fill('I need a website for my business.');
   await page.getByRole('button', { name: 'Let’s talk' }).click();
   await expect(page.getByRole('status')).toContainText('Your email app will open');
+});
+
+test('full-screen menu and hero arrow work at the design viewport', async ({ page }) => {
+  await page.setViewportSize({ width: 433, height: 706 });
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  const overlay = page.getByRole('dialog', { name: 'Site menu' });
+  await expect(overlay).toBeVisible();
+  await expect(overlay).toHaveCSS('position', 'fixed');
+  await expect(page.getByRole('button', { name: 'Close navigation' })).toBeFocused();
+  expect(await overlay.evaluate(element => {
+    const { x, y, width, height } = element.getBoundingClientRect();
+    return { x, y, width, height };
+  })).toEqual({ x: 0, y: 0, width: 433, height: 706 });
+  await expect(overlay.locator('.menu-social')).toHaveCount(5);
+  await page.screenshot({ path: 'test-results/menu-433.png' });
+  await page.getByRole('button', { name: 'Close navigation' }).click();
+  await expect(overlay).toHaveCount(0);
+  await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe('');
+  const prompt = page.locator('.work-link span');
+  await prompt.hover();
+  await expect(prompt).toHaveCSS('text-decoration-line', 'none');
+  await page.getByRole('link', { name: 'Go to projects' }).click();
+  await expect(page).toHaveURL(/#projects$/);
+  await page.setViewportSize({ width: 320, height: 568 });
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await expect(overlay).toBeVisible();
+  expect(await overlay.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
+  await overlay.evaluate(element => { element.scrollTop = element.scrollHeight; });
+  await expect(page.getByRole('button', { name: 'Close navigation' })).toBeInViewport();
 });
 
 test('video slots are silent and looping, while still images and failed videos retain their posters', async ({ page }) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { email, navigation, projects, testimonials, services, socials, heroMedia, contactMedia } from './content.js';
+import { email, navigation, menuNavigation, projects, testimonials, services, socials, heroMedia, contactMedia } from './content.js';
 import Media from './Media.jsx';
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
@@ -7,22 +7,68 @@ const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 function Header() {
   const [open, setOpen] = useState(false);
   const menuButton = useRef(null);
+  const menuOverlay = useRef(null);
+  const closeButton = useRef(null);
+  const menuSocials = [
+    ['X (Twitter)', 'x.svg'], ['LinkedIn', 'linkedin.svg'],
+    ['Instagram', 'instagram.svg'], ['Behance', 'behance.svg'],
+    ['Pinterest', 'pinterest.svg'],
+  ];
   useEffect(() => {
     if (!open) return;
-    const dismiss = (event) => {
-      if (event.key === 'Escape') { setOpen(false); menuButton.current?.focus(); }
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    closeButton.current?.focus();
+    const handleKeyDown = (event) => {
+      if (event.key === 'Escape') {
+        setOpen(false);
+        menuButton.current?.focus();
+      }
+      if (event.key === 'Tab') {
+        const focusable = [...menuOverlay.current.querySelectorAll('button, a[href]')];
+        const first = focusable[0];
+        const last = focusable.at(-1);
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
     };
-    document.addEventListener('keydown', dismiss);
-    return () => document.removeEventListener('keydown', dismiss);
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+      document.body.style.overflow = previousOverflow;
+    };
   }, [open]);
   return <header className="header">
     <a href="#home" className="wordmark" aria-label="Grateful Erhis, home">Grateful Erhis</a>
-    <button ref={menuButton} className="menu-button" aria-label={open ? 'Close navigation' : 'Open navigation'} aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}>
-      {open ? <span className="close-icon" aria-hidden="true">×</span> : <img src={asset('imgFrame2.svg')} alt="" />}
+    <button ref={menuButton} className="menu-button" aria-label="Open navigation" aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(true)}>
+      <img src={asset('imgFrame2.svg')} alt="" />
     </button>
-    {open && <nav id="main-navigation" className="menu" aria-label="Main navigation">
-      {navigation.map(([label, id]) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>{label}<span aria-hidden="true">↗</span></a>)}
-    </nav>}
+    {open && <div ref={menuOverlay} className="menu-overlay" role="dialog" aria-modal="true" aria-label="Site menu">
+      <button ref={closeButton} className="menu-close" aria-label="Close navigation" onClick={() => { setOpen(false); menuButton.current?.focus(); }}>
+        <img src={asset('menu/close.svg')} alt="" />
+      </button>
+      <div className="menu-overlay-inner">
+        <nav id="main-navigation" className="menu-navigation" aria-label="Main navigation">
+          {menuNavigation.map(([label, id], index) => <a key={id} href={`#${id}`} onClick={() => setOpen(false)}>
+            <span className="menu-link-label">{label}</span><span className="menu-link-number" aria-hidden="true">0{index + 1}</span>
+          </a>)}
+        </nav>
+        <div className="menu-socials" aria-label="Social media">
+          {menuSocials.map(([name, icon]) => {
+            const url = socials.find((social) => social.name === name)?.url;
+            const image = <img src={asset(`menu/${icon}`)} alt={name} />;
+            return url ? <a key={name} className="menu-social" href={url} target="_blank" rel="noreferrer">{image}</a>
+              : <span key={name} className="menu-social">{image}</span>;
+          })}
+        </div>
+        <p className="menu-copyright">©2026 Grateful Erhis</p>
+      </div>
+    </div>}
   </header>;
 }
 
@@ -40,7 +86,9 @@ function Hero() {
       <span className="hero-line"><Media {...heroMedia.visuals} className="hero-inset" alt="Visual design reel" width="177" height="100" /> Amazing visuals</span>
       <span className="hero-line"><small>and code</small> that converts</span>
     </h1>
-    <a className="work-link" href="#projects">I’ve talked the talk, now let me walk the walk <img src={asset('imgFrame11.svg')} alt="" /></a>
+    <div className="work-link"><span>I’ve talked the talk, now let me walk the walk</span>
+      <a href="#projects" aria-label="Go to projects"><img src={asset('imgFrame11.svg')} alt="" /></a>
+    </div>
   </section>;
 }
 
@@ -77,7 +125,7 @@ function Projects() {
 }
 
 function Testimonials() {
-  return <section className="section testimonials" aria-labelledby="proof-heading">
+  return <section id="proof" className="section testimonials" aria-labelledby="proof-heading">
     <h2 id="proof-heading">Still in doubt?<br />Here’s proof...</h2>
     <div className="testimonial-grid">{testimonials.map((item) => <figure className="testimonial" key={item.name}>
       <blockquote>{item.quote}</blockquote><figcaption><img src={asset('imgEllipse2.svg')} alt="" loading="lazy" /><span><strong>{item.name}</strong><span>{item.role}</span></span></figcaption>

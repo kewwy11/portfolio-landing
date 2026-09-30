@@ -23,18 +23,30 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .header { height: 82px; display: flex; align-items: center; justify-content: space-between; position: relative; }
 .wordmark { font-family: var(--display); text-transform: uppercase; font-size: 20px; line-height: 1; }
 .menu-button { background: transparent; min-width: 44px; min-height: 44px; display: grid; place-items: center; padding: 0; }
-.close-icon { font-size: 36px; line-height: 1; }
-.menu { position: absolute; z-index: 10; right: 0; top: 70px; width: min(340px, 100%); padding: 16px 24px; background: var(--pink); color: var(--cream); box-shadow: 8px 8px 0 var(--lime); }
-.menu a { display: flex; justify-content: space-between; padding: 14px 0; border-bottom: 1px solid #ffffff40; font-size: 20px; }
-.menu a:last-child { border: 0; }
+.menu-overlay { --menu-side: clamp(20px, 12.93vw, 160px); position: fixed; inset: 0; z-index: 100; overflow-y: auto; background: var(--pink); color: var(--cream); }
+.menu-overlay-inner { min-height: 100dvh; padding: clamp(72px, 21.25vw, 92px) var(--menu-side) clamp(24px, 7.4vw, 32px); display: flex; flex-direction: column; }
+.menu-close { position: fixed; z-index: 1; top: 12px; right: max(8px, calc(var(--menu-side) - 36px)); width: 44px; height: 44px; padding: 0; display: grid; place-items: center; background: transparent; color: var(--cream); }
+.menu-close img { width: 20px; height: 20px; }
+.menu-navigation { display: flex; flex-direction: column; gap: clamp(20px, 5.54vw, 24px); }
+.menu-navigation a { height: clamp(50px, 12.7vw, 55px); border-bottom: 1px solid #faf3e899; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-decoration: none; }
+.menu-link-label { font-family: var(--display); font-size: clamp(30px, 9.24vw, 40px); line-height: 1; text-transform: uppercase; white-space: nowrap; }
+.menu-link-number { color: var(--pale-pink); font-size: clamp(14px, 3.7vw, 16px); line-height: 1; }
+.menu-socials { display: flex; flex-wrap: wrap; gap: clamp(8px, 2.3vw, 10px); padding-top: clamp(40px, 11.09vw, 48px); margin-top: auto; }
+.menu-social { width: clamp(30px, 8.31vw, 36px); height: clamp(30px, 8.31vw, 36px); background: var(--cream); display: grid; place-items: center; flex: none; }
+.menu-social img { width: clamp(14px, 3.7vw, 16px); height: clamp(14px, 3.7vw, 16px); }
+.menu-socials a:hover { text-decoration: none; opacity: .85; }
+.menu-copyright { margin-top: 24px; font-size: clamp(14px, 3.7vw, 16px); line-height: 24px; }
 .intro { display: flex; gap: 16px; width: 451px; align-items: center; margin-top: 20px; }
 .intro img { flex: 0 0 70px; border-radius: 50%; object-fit: cover; }
 .intro p { font-size: 16px; line-height: 1.5; }
 .hero-heading { display: flex; flex-direction: column; gap: 16px; margin: 66px auto 0; font-family: var(--display); font-size: 100px; font-weight: 400; line-height: .94; text-transform: uppercase; letter-spacing: -.015em; }
 .hero-line { display: flex; justify-content: center; align-items: center; gap: 30px; white-space: nowrap; }
+.hero-line:last-child { align-items: baseline; }
 .hero-inset { width: 177px; height: 100px; object-fit: cover; flex-shrink: 0; }
-.hero-line small { font-size: 36px; align-self: flex-end; padding-bottom: 3px; }
+.hero-line small { font-size: 36px; }
 .work-link { position: absolute; top: 842px; left: 0; right: 0; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 20px; }
+.work-link a { display: inline-grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; }
+.work-link a:hover { text-decoration: none; }
 .tools { height: 172px; overflow: hidden; position: relative; max-width: 1440px; margin: auto; display: flex; align-items: center; }
 .tools::before, .tools::after { content: ''; position: absolute; top: 19px; bottom: 19px; width: 80px; background: var(--cream); z-index: 1; }
 .tools::before { left: 0; } .tools::after { right: 0; }
@@ -42,7 +54,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .tool { flex: 0 0 177px; height: 76px; border: 1px solid #af9ca2; display: flex; justify-content: center; align-items: center; }
 .tool-1 img { transform: scale(.726); }
 .tool-5 img { width: 39px; height: 38px; }
-.section { padding: 48px 40px; max-width: 1440px; margin: auto; }
+.section { padding: 56px 40px; max-width: 1440px; margin: auto; }
 h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; font-size: 96px; line-height: 1.04; letter-spacing: -.015em; }
 .projects h2, .testimonials h2, .services h2 { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
 .section-heading { display: flex; align-items: center; justify-content: space-between; gap: 24px; }
@@ -109,6 +121,18 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .footer-columns p { font-size: 16px; }
 .footer small { font-size: 16px; }
 @media(min-width:1441px) { .footer { padding-inline: max(40px, calc((100vw - 1360px) / 2)); } }
+@media(min-width:761px) {
+  .menu-overlay-inner { padding-block: 64px 40px; }
+  .menu-navigation { gap: 16px; }
+  .menu-navigation a { height: clamp(64px, 7vw, 80px); }
+  .menu-link-label { font-size: clamp(48px, 5.2vw, 76px); }
+  .menu-link-number { font-size: clamp(20px, 2vw, 26px); }
+  .menu-socials { gap: 12px; padding-top: 32px; }
+  .menu-social { width: 50px; height: 50px; }
+  .menu-social img { width: 22px; height: 22px; }
+  .menu-copyright { font-size: 20px; line-height: 30px; }
+  .menu-close { top: 28px; }
+}
 @media(max-width:1200px) {
   .hero { height: auto; min-height: 760px; padding-bottom: 56px; }
   .hero-heading { font-size: 7.2vw; gap: 1.1vw; margin-top: 66px; }
@@ -152,7 +176,7 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
   .tools::before, .tools::after { width: 20px; }
   .tools-track { gap: 12px; }
   .tool { flex-basis: 125px; height: 62px; }
-  .section { padding: 36px 20px; }
+  .section { padding: 44px 20px; }
   h2 { font-size: clamp(34px, 8vw, 60px); line-height: 1.08; }
   .section-heading { gap: 16px; flex-wrap: wrap; }
   .filters { width: 196px; padding: 5px; }

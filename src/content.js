@@ -5,6 +5,11 @@ export const navigation = [
   ['Services', 'services'], ['Contact', 'contact'],
 ];
 
+export const menuNavigation = [
+  ['Home', 'home'], ['About', 'about'], ['Projects', 'projects'],
+  ['Services', 'services'], ['Proof', 'proof'], ['Let’s Talk', 'contact'],
+];
+
 // Add uploaded files from public/assets/videos/ to the video fields. Leave a
 // video blank when that slot should remain a still image.
 export const heroMedia = {
