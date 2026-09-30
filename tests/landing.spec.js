@@ -60,15 +60,25 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
   await expect(page.getByRole('status')).toContainText('Your email app will open');
 });
 
-test('full-screen menu and hero arrow work at the design viewport', async ({ page }) => {
-  await page.setViewportSize({ width: 433, height: 706 });
+test('right-side menu and hero arrow work at desktop and narrow viewports', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 930 });
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
   await page.getByRole('button', { name: 'Open navigation' }).click();
   const overlay = page.getByRole('dialog', { name: 'Site menu' });
   await expect(overlay).toBeVisible();
-  await expect(overlay).toHaveCSS('position', 'fixed');
+  await expect(overlay).toHaveCSS('position', 'absolute');
   await expect(page.getByRole('button', { name: 'Close navigation' })).toBeFocused();
+  expect(await overlay.evaluate(element => {
+    const { x, y, width, height } = element.getBoundingClientRect();
+    return { x, y, width, height };
+  })).toEqual({ x: 982, y: 0, width: 458, height: 706 });
+  await page.screenshot({ path: 'test-results/menu-desktop-1440.png' });
+  await page.locator('.menu-backdrop').click();
+  await expect(overlay).toHaveCount(0);
+  await page.setViewportSize({ width: 433, height: 706 });
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await expect(overlay).toBeVisible();
   expect(await overlay.evaluate(element => {
     const { x, y, width, height } = element.getBoundingClientRect();
     return { x, y, width, height };

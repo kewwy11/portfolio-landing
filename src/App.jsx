@@ -14,6 +14,10 @@ function Header() {
     ['Instagram', 'instagram.svg'], ['Behance', 'behance.svg'],
     ['Pinterest', 'pinterest.svg'],
   ];
+  const dismissMenu = () => {
+    setOpen(false);
+    menuButton.current?.focus();
+  };
   useEffect(() => {
     if (!open) return;
     const previousOverflow = document.body.style.overflow;
@@ -21,8 +25,7 @@ function Header() {
     closeButton.current?.focus();
     const handleKeyDown = (event) => {
       if (event.key === 'Escape') {
-        setOpen(false);
-        menuButton.current?.focus();
+        dismissMenu();
       }
       if (event.key === 'Tab') {
         const focusable = [...menuOverlay.current.querySelectorAll('button, a[href]')];
@@ -48,8 +51,9 @@ function Header() {
     <button ref={menuButton} className="menu-button" aria-label="Open navigation" aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(true)}>
       <img src={asset('imgFrame2.svg')} alt="" />
     </button>
-    {open && <div ref={menuOverlay} className="menu-overlay" role="dialog" aria-modal="true" aria-label="Site menu">
-      <button ref={closeButton} className="menu-close" aria-label="Close navigation" onClick={() => { setOpen(false); menuButton.current?.focus(); }}>
+    {open && <><div className="menu-backdrop" aria-hidden="true" onClick={dismissMenu} />
+    <div ref={menuOverlay} className="menu-overlay" role="dialog" aria-modal="true" aria-label="Site menu">
+      <button ref={closeButton} className="menu-close" aria-label="Close navigation" onClick={dismissMenu}>
         <img src={asset('menu/close.svg')} alt="" />
       </button>
       <div className="menu-overlay-inner">
@@ -68,7 +72,7 @@ function Header() {
         </div>
         <p className="menu-copyright">©2026 Grateful Erhis</p>
       </div>
-    </div>}
+    </div></>}
   </header>;
 }
 

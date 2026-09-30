@@ -20,12 +20,13 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .skip-link { position: fixed; top: 12px; left: 12px; padding: 12px 20px; color: var(--cream); background: var(--pink); z-index: 50; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
 .hero { height: 930px; position: relative; max-width: 1440px; margin: auto; padding: 0 40px; }
-.header { height: 82px; display: flex; align-items: center; justify-content: space-between; position: relative; }
+.header { height: 82px; display: flex; align-items: center; justify-content: space-between; }
 .wordmark { font-family: var(--display); text-transform: uppercase; font-size: 20px; line-height: 1; }
 .menu-button { background: transparent; min-width: 44px; min-height: 44px; display: grid; place-items: center; padding: 0; }
-.menu-overlay { --menu-side: clamp(20px, 12.93vw, 160px); position: fixed; inset: 0; z-index: 100; overflow-y: auto; background: var(--pink); color: var(--cream); }
-.menu-overlay-inner { min-height: 100dvh; padding: clamp(72px, 21.25vw, 92px) var(--menu-side) clamp(24px, 7.4vw, 32px); display: flex; flex-direction: column; }
-.menu-close { position: fixed; z-index: 1; top: 12px; right: max(8px, calc(var(--menu-side) - 36px)); width: 44px; height: 44px; padding: 0; display: grid; place-items: center; background: transparent; color: var(--cream); }
+.menu-backdrop { position: fixed; inset: 0; z-index: 99; }
+.menu-overlay { --menu-side: clamp(20px, 12.93vw, 56px); position: absolute; top: 0; right: 0; z-index: 100; width: min(458px, 100%); height: min(706px, 100dvh); overflow-y: auto; background: var(--pink); color: var(--cream); }
+.menu-overlay-inner { min-height: 100%; padding: clamp(72px, 21.25vw, 92px) var(--menu-side) clamp(24px, 7.4vw, 32px); display: flex; flex-direction: column; }
+.menu-close { position: fixed; z-index: 1; top: 12px; right: max(20px, calc(50vw - 700px)); width: 44px; height: 44px; padding: 0; display: grid; place-items: center; background: transparent; color: var(--cream); }
 .menu-close img { width: 20px; height: 20px; }
 .menu-navigation { display: flex; flex-direction: column; gap: clamp(20px, 5.54vw, 24px); }
 .menu-navigation a { height: clamp(50px, 12.7vw, 55px); border-bottom: 1px solid #faf3e899; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-decoration: none; }
@@ -121,18 +122,6 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .footer-columns p { font-size: 16px; }
 .footer small { font-size: 16px; }
 @media(min-width:1441px) { .footer { padding-inline: max(40px, calc((100vw - 1360px) / 2)); } }
-@media(min-width:761px) {
-  .menu-overlay-inner { padding-block: 64px 40px; }
-  .menu-navigation { gap: 16px; }
-  .menu-navigation a { height: clamp(64px, 7vw, 80px); }
-  .menu-link-label { font-size: clamp(48px, 5.2vw, 76px); }
-  .menu-link-number { font-size: clamp(20px, 2vw, 26px); }
-  .menu-socials { gap: 12px; padding-top: 32px; }
-  .menu-social { width: 50px; height: 50px; }
-  .menu-social img { width: 22px; height: 22px; }
-  .menu-copyright { font-size: 20px; line-height: 30px; }
-  .menu-close { top: 28px; }
-}
 @media(max-width:1200px) {
   .hero { height: auto; min-height: 760px; padding-bottom: 56px; }
   .hero-heading { font-size: 7.2vw; gap: 1.1vw; margin-top: 66px; }
