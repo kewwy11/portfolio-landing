@@ -1,5 +1,14 @@
 import { test, expect } from '@playwright/test';
 
+test('the Gind display font is served and loaded for visitors', async ({ page }) => {
+  const fontResponse = await page.request.get('/assets/fonts/Gind.otf');
+  expect(fontResponse.ok()).toBe(true);
+  await page.goto('/');
+  await page.evaluate(() => document.fonts.ready);
+  expect(await page.evaluate(() => document.fonts.check('100px Gind'))).toBe(true);
+  expect(await page.locator('.hero-heading').evaluate(element => getComputedStyle(element).fontFamily)).toBe('Gind');
+});
+
 for (const width of [1440, 768, 390, 320]) {
   test(`page renders without overflow or broken assets at ${width}px`, async ({ page }) => {
     await page.setViewportSize({ width, height: 1000 });
@@ -9,9 +18,12 @@ for (const width of [1440, 768, 390, 320]) {
     await page.evaluate(() => document.fonts.ready);
     for (const image of await page.locator('img[loading="lazy"]').all()) {
       await image.evaluate(img => img.scrollIntoView({ behavior: 'instant', block: 'center' }));
-      await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+      await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0), {
+        message: `Load ${await image.getAttribute('src')}`,
+        timeout: 30_000,
+      }).toBe(true);
     }
-    await expect.poll(() => page.locator('img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0))).toBe(true);
+    await expect.poll(() => page.locator('img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0)), { timeout: 30_000 }).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);
     await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));

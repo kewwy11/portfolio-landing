@@ -2,11 +2,9 @@
 @font-face { font-family: Poppins; src: url('/assets/Poppins-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
 @font-face { font-family: Poppins; src: url('/assets/Poppins-SemiBold.woff2') format('woff2'); font-weight: 600; font-display: swap; }
 @font-face { font-family: 'DM Mono'; src: url('/assets/DMMono-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Anton'; src: url('/assets/Anton-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Bowlby One SC'; src: url('/assets/BowlbyOneSC-Latin.woff2') format('woff2'); font-weight: 400; font-display: swap; }
-@font-face { font-family: 'Gind Local'; src: local('Gind'), local('Gind Regular'), local('Gind-Regular'); font-weight: 400; font-display: swap; }
+@font-face { font-family: Gind; src: url('/assets/fonts/Gind.otf') format('opentype'); font-weight: 400; font-display: block; }
 
-:root { font-family: Poppins, sans-serif; color: #ef0070; background: #faf3e8; font-synthesis: none; --pink: #ef0070; --cream: #faf3e8; --lime: #c9d93f; --pale-pink: #f4d6e9; --body: #4a3b40; --display: 'Gind Local', 'Bowlby One SC', 'Anton', Impact, sans-serif; }
+:root { font-family: Poppins, sans-serif; color: #ef0070; background: #faf3e8; font-synthesis: none; --pink: #ef0070; --cream: #faf3e8; --lime: #c9d93f; --pale-pink: #f4d6e9; --body: #4a3b40; --display: Gind; }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 24px; }
 body { margin: 0; }
