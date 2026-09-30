@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { email, navigation, projects, testimonials, services, socials } from './content.js';
+import { email, navigation, projects, testimonials, services, socials, heroMedia, contactMedia } from './content.js';
+import Media from './Media.jsx';
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
@@ -33,10 +34,10 @@ function Hero() {
       <p>Hello, my name is Grateful Erhis. I am a visual designer, and these are the only three things you need to know about me.....</p>
     </div>
     <h1 id="hero-heading" className="hero-heading">
-      <span className="hero-line">I love <img className="hero-inset" src={asset('hero-pink.png')} alt="" width="177" height="100" /> pink.</span>
-      <span className="hero-line">I am a design <img className="hero-inset" src={asset('hero-design.png')} alt="" width="177" height="100" /></span>
+      <span className="hero-line">I love <Media {...heroMedia.pink} className="hero-inset" alt="Pink visual design reel" width="177" height="100" /> pink.</span>
+      <span className="hero-line">I am a design <Media {...heroMedia.design} className="hero-inset" alt="Design reel" width="177" height="100" /></span>
       <span className="hero-line">generalist. I create</span>
-      <span className="hero-line"><img className="hero-inset" src={asset('hero-visuals.png')} alt="" width="177" height="100" /> Amazing visuals</span>
+      <span className="hero-line"><Media {...heroMedia.visuals} className="hero-inset" alt="Visual design reel" width="177" height="100" /> Amazing visuals</span>
       <span className="hero-line"><small>and code</small> that converts</span>
     </h1>
     <a className="work-link" href="#projects">I’ve talked the talk, now let me walk the walk <img src={asset('imgFrame11.svg')} alt="" /></a>
@@ -66,8 +67,8 @@ function Projects() {
     </div>
     <div className="project-grid" aria-live="polite">
       {filtered.length ? filtered.map((project, index) => <article key={project.id} className={`project project-${index}`}>
-        <div className={`project-image ${project.image ? '' : 'project-placeholder'}`}>
-          {project.image && <img src={asset(project.image)} alt={project.alt} loading="lazy" />}
+        <div className={`project-image ${project.image || project.video ? '' : 'project-placeholder'}`}>
+          <Media image={project.image} video={project.video} alt={project.alt} loading="lazy" />
         </div>
         <div className="project-caption"><h3>{project.name}</h3><ul className="tags" aria-label="Project type"><li>Web</li><li>Dashboard</li></ul></div>
       </article>) : <div className="empty-projects"><h3>More good things on the way.</h3><p>Branding projects are coming soon.</p><a href="#contact">Let’s create something together ↗</a></div>}
@@ -114,7 +115,7 @@ function Contact() {
         <p className="form-status" role="status">{status}</p>
       </form>
     </div>
-    <img className="contact-image" src={asset('contact.png')} alt="A close-up of the Piggyvest mobile interface in hand" loading="lazy" width="732" height="602" />
+    <Media {...contactMedia} className="contact-image" alt="A close-up of the Piggyvest mobile interface in hand" loading="lazy" width="732" height="602" />
   </section>;
 }
 

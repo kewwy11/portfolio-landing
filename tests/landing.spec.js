@@ -43,3 +43,23 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
   await page.getByRole('button', { name: 'Let’s talk' }).click();
   await expect(page.getByRole('status')).toContainText('Your email app will open');
 });
+
+test('video slots are silent and looping, while still images and failed videos retain their posters', async ({ page }) => {
+  let releaseDemo;
+  await page.route('**/assets/videos/demo.webm', async route => {
+    await new Promise(resolve => { releaseDemo = resolve; });
+    await route.fulfill({ status: 404 });
+  });
+  await page.route('**/assets/videos/broken.webm', route => route.fulfill({ status: 404 }));
+  await page.goto('/tests/media-harness.html', { waitUntil: 'domcontentloaded' });
+  const video = page.locator('#video-slot video');
+  await expect(video).toBeVisible();
+  expect(await video.evaluate(element => element.muted && element.loop && element.playsInline && element.controls)).toBe(true);
+  await expect.poll(() => Boolean(releaseDemo)).toBe(true);
+  await expect(page.locator('#still-slot img')).toBeVisible();
+  await expect(page.locator('#broken-slot img')).toBeVisible();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect.poll(() => video.evaluate(element => element.paused)).toBe(true);
+  releaseDemo();
+  await expect(page.locator('#video-slot img')).toBeVisible();
+});

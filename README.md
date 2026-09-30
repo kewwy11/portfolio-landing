@@ -42,6 +42,12 @@ The two lime project blocks are present in the supplied design and remain placeh
 
 The contact form validates inputs and opens a prefilled email draft using `mailto:`. It requires the visitor to send the draft in their email app; it does not claim to send messages through a backend.
 
+## Supplying fonts and videos
+
+Put Gind font files in `public/assets/fonts/` (WOFF2 preferred; WOFF, TTF, or OTF also accepted). The font has not been activated yet because its file is still needed.
+
+Put MP4 or WebM clips in `public/assets/videos/` and identify which headline, project, or contact slot each clip belongs to. Every slot is ready for a video in `src/content.js`; leave `video` empty for a still image. For a clip named `intro.mp4`, set its slot to `video: 'videos/intro.mp4'`. The reusable `src/Media.jsx` component supports silent looping, playback controls, inline mobile playback, reduced-motion preferences, and an image fallback on loading errors. Clip filenames can be assigned once the video files are supplied.
+
 ## GitHub
 
 The project uses `main` with milestone commits and is hosted in the private [kewwy11/portfolio-landing](https://github.com/kewwy11/portfolio-landing) repository. To get another local copy:

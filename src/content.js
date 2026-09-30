@@ -5,11 +5,21 @@ export const navigation = [
   ['Services', 'services'], ['Contact', 'contact'],
 ];
 
+// Add uploaded files from public/assets/videos/ to the video fields. Leave a
+// video blank when that slot should remain a still image.
+export const heroMedia = {
+  pink: { image: 'hero-pink.png', video: '' },
+  design: { image: 'hero-design.png', video: '' },
+  visuals: { image: 'hero-visuals.png', video: '' },
+};
+
+export const contactMedia = { image: 'contact.png', video: '' };
+
 export const projects = [
-  { id: 'lumis', name: 'Lumis Dermatologists', image: 'imgFrame14.png', alt: 'Lumis dermatology dashboard displayed on a laptop', category: 'UI/UX' },
-  { id: 'piggyvest', name: 'Piggyvest', image: 'imgFrame15.png', alt: 'Piggyvest mobile finance interface displayed on a phone', category: 'UI/UX' },
-  { id: 'lumis-concept-1', name: 'Lumis Dermatologists', category: 'UI/UX' },
-  { id: 'lumis-concept-2', name: 'Lumis Dermatologists', category: 'UI/UX' },
+  { id: 'lumis', name: 'Lumis Dermatologists', image: 'imgFrame14.png', video: '', alt: 'Lumis dermatology dashboard displayed on a laptop', category: 'UI/UX' },
+  { id: 'piggyvest', name: 'Piggyvest', image: 'imgFrame15.png', video: '', alt: 'Piggyvest mobile finance interface displayed on a phone', category: 'UI/UX' },
+  { id: 'lumis-concept-1', name: 'Lumis Dermatologists', image: '', video: '', alt: 'Lumis Dermatologists project', category: 'UI/UX' },
+  { id: 'lumis-concept-2', name: 'Lumis Dermatologists', image: '', video: '', alt: 'Lumis Dermatologists project', category: 'UI/UX' },
 ];
 
 export const testimonials = [
