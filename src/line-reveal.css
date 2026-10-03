@@ -1,0 +1,25 @@
+/* The source preserves native wrapping, text accessibility, and the final height. */
+.line-reveal-heading { position: relative; }
+.line-reveal-source { display: block; opacity: 0; }
+.line-reveal-layer { position: absolute; inset: 0; pointer-events: none; }
+.line-reveal-mask { position: absolute; left: 0; right: 0; display: block; overflow: clip; }
+.line-reveal-text {
+  position: absolute;
+  top: 0;
+  display: block;
+  white-space: pre;
+  text-align: left;
+  opacity: .001;
+  transform: translateY(32px);
+}
+.line-reveal-heading.is-revealed .line-reveal-text {
+  animation: hero-text-enter 400ms cubic-bezier(.12, .23, .5, 1) both;
+  animation-delay: var(--line-delay, 0ms);
+}
+.line-reveal-heading:is(.is-settled, .motion-disabled) .line-reveal-source { opacity: 1; }
+.line-reveal-heading:is(.is-settled, .motion-disabled) .line-reveal-layer { display: none; }
+.line-reveal-heading.motion-disabled .line-reveal-text { animation: none; transform: none; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .line-reveal-source { opacity: 1; }
+  .line-reveal-layer { display: none; }
+}

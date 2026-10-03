@@ -42,13 +42,48 @@ export const testimonials = [
   },
 ];
 
-// Expanded service copy supplements the collapsed rows in the Figma design.
 export const services = [
-  ['Strategy', 'Find your direction with audience research, product positioning, and a clear plan for your next move.'],
-  ['Branding', 'Build a memorable visual identity, from your logo and colour palette to a consistent brand system.'],
-  ['Product Design', 'Turn ideas into thoughtful websites and apps with user research, interface design, and interactive prototypes.'],
-  ['Development', 'Bring your design to life with responsive, accessible websites built with HTML, CSS, JavaScript, and React.'],
-  ['Graphics', 'Tell your story through visual assets for social media, campaigns, presentations, and everyday brand communication.'],
+  {
+    id: 'strategy', name: 'Strategy', title: ['Creative', 'Direction'],
+    paragraphs: [
+      'Before I design anything, I define the structure, message, and visual direction of the site. Every page gets a clear purpose, so the final result feels focused and easy to understand.',
+      'I look at your brand, audience, content, and goals, then turn all of it into one simple creative direction that guides the rest of the project.',
+    ],
+    milestones: ['Project Discovery', 'Competitor Research', 'Product structure', 'Creative Direction'],
+  },
+  {
+    id: 'branding', name: 'Branding', title: ['Brand & Visual', 'identity'],
+    paragraphs: [
+      'When creating a brand and visual identity for a business, I focus less on the aesthetics and more on what founders/business owners want their product to feel like when users come across it.',
+      'One of the key goals is to make a logo that stands out among the competition, a visual identity that sells the message of the brand. I also make sure I help brands curate their social media to invite their target audience.',
+    ],
+    milestones: ['Logo & Marks', 'Colour & type system', 'Brand guidelines', 'social templates'],
+  },
+  {
+    id: 'product-design', name: 'Product Design', title: ['Websites, Apps &', 'dashboards'],
+    paragraphs: [
+      'I focus on B2C companies because I love working with products that directly interact with consumers.',
+      'I create websites that catch the attention of consumers in the first 7second of their visit cause that’s how long you have to keep them\nI create app onboarding experiences that don’t wear them out before they get to experience the product.',
+      'And finally, I create dashboards that actually give consumers insight to their data/activities rather than confuse them.',
+    ],
+    milestones: ['wireframe', 'ui design', 'prototype', 'design system'],
+  },
+  {
+    id: 'development', name: 'Development', title: ['FROM DESIGN TO LIVE PRODUCT'],
+    paragraphs: [
+      'I take projects end to end, from design through to development, using AI tools like Claude and Codex to iterate faster and tighten the build.',
+      'It also means I speak the same language as seasoned developers at hand-off, and stay involved right through to launch.',
+    ],
+    milestones: ['responsive build', 'component library', 'hand-off documentation', 'Launch support'],
+  },
+  {
+    id: 'graphics', name: 'Graphics', title: ['POSTERS & PERSONAL WORK'],
+    paragraphs: [
+      "From time to time I make sport, film, and creative posters. It's personal work, and it keeps my eye sharp and my tools sharper.",
+      "It's also where most of my taste comes from, and those instincts go straight back into the visuals I make for brands.",
+    ],
+    milestones: ['poster design', 'campaign design', 'social graphics', 'Typography and photography exploration'],
+  },
 ];
 
 // Add verified profile URLs here when available. Unconfigured accounts are

@@ -1,0 +1,40 @@
+.about-story { position: relative; max-width: 1440px; margin-inline: auto; }
+.story-sticky, .story-flow-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 20px;
+  align-items: center;
+  width: 100%;
+  padding: 40px;
+}
+.story-sticky { position: absolute; top: 0; visibility: hidden; pointer-events: none; }
+.about-story.is-pinned .story-sticky { position: sticky; top: var(--story-top); visibility: visible; }
+.story-image-window { position: relative; overflow: clip; width: 100%; aspect-ratio: 670 / 588; }
+.story-visual-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.story-visual-image:not(:first-child) { clip-path: inset(100% 0 0 0); }
+.story-text-window { overflow: clip; min-width: 0; height: var(--story-copy-height, 360px); }
+.story-text-track { will-change: transform; }
+.story-text-panel { height: var(--story-copy-height, 360px); display: flex; align-items: center; }
+.story-copy { width: min(100%, var(--copy-width)); font-size: 24px; line-height: 36px; }
+.story-copy-group + .story-copy-group { margin-top: 36px; }
+.story-flow-stage > img { width: 100%; height: auto; aspect-ratio: 670 / 588; object-fit: cover; }
+/* Preserve the complete reading order while the visual presentation is pinned. */
+.about-story.is-pinned .story-flow {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: normal;
+}
+@media (max-width: 1200px) {
+  .story-copy { font-size: 21px; line-height: 31.5px; }
+  .story-copy-group + .story-copy-group { margin-top: 31.5px; }
+}
+@media (max-width: 760px) {
+  .story-sticky, .story-flow-stage { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+  .story-copy { width: 100%; font-size: 16px; line-height: 24px; }
+  .story-copy-group + .story-copy-group { margin-top: 24px; }
+}

@@ -49,10 +49,10 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
   await expect(page.getByText('Branding projects are coming soon.')).toBeVisible();
   await page.getByRole('button', { name: 'UI/UX', exact: true }).click();
   await expect(page.locator('.project')).toHaveCount(4);
-  await page.locator('summary').filter({ hasText: 'Strategy' }).click();
-  await expect(page.getByText('Find your direction with audience research', { exact: false })).toBeVisible();
-  await page.locator('summary').filter({ hasText: 'Strategy' }).click();
-  await expect(page.locator('.service').first()).not.toHaveAttribute('open');
+  await page.getByRole('button', { name: '01 Strategy' }).click();
+  await expect(page.getByText('Before I design anything, I define the structure', { exact: false })).toBeVisible();
+  await page.getByRole('button', { name: '01 Strategy' }).click();
+  await expect(page.getByRole('button', { name: '01 Strategy' })).toHaveAttribute('aria-expanded', 'false');
   await page.getByLabel('Email Address').fill('visitor@example.com');
   await page.getByLabel('Name', { exact: true }).fill('Portfolio Visitor');
   await page.getByLabel('Inquiry').fill('I need a website for my business.');
@@ -61,24 +61,34 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
 });
 
 test('right-side menu and hero arrow work at desktop and narrow viewports', async ({ page }) => {
+  // Layout is checked at rest; the next test inspects both animated edges.
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1440, height: 930 });
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
   await page.getByRole('button', { name: 'Open navigation' }).click();
   const overlay = page.getByRole('dialog', { name: 'Site menu' });
   await expect(overlay).toBeVisible();
-  await expect(overlay).toHaveCSS('position', 'absolute');
+  await expect(page.locator('.menu-panel')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+  await expect(page.locator('.menu-backdrop')).toHaveCSS('backdrop-filter', 'blur(20px)');
   await expect(page.getByRole('button', { name: 'Close navigation' })).toBeFocused();
   expect(await overlay.evaluate(element => {
     const { x, y, width, height } = element.getBoundingClientRect();
     return { x, y, width, height };
-  })).toEqual({ x: 982, y: 0, width: 458, height: 706 });
+  })).toEqual({ x: 961, y: 0, width: 479, height: 930 });
   await page.screenshot({ path: 'test-results/menu-desktop-1440.png' });
-  await page.locator('.menu-backdrop').click();
+  const heroBefore = await page.locator('.hero-heading').boundingBox();
+  await page.mouse.move(300, 400);
+  await page.mouse.wheel(0, 600);
+  await page.waitForTimeout(200);
+  expect(await page.evaluate(() => scrollY)).toBe(0);
+  expect(await page.locator('.hero-heading').boundingBox()).toEqual(heroBefore);
+  await page.locator('.menu-backdrop').click({ position: { x: 100, y: 100 } });
   await expect(overlay).toHaveCount(0);
   await page.setViewportSize({ width: 433, height: 706 });
   await page.getByRole('button', { name: 'Open navigation' }).click();
   await expect(overlay).toBeVisible();
+  await expect(page.locator('.menu-panel')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
   expect(await overlay.evaluate(element => {
     const { x, y, width, height } = element.getBoundingClientRect();
     return { x, y, width, height };
@@ -88,7 +98,7 @@ test('right-side menu and hero arrow work at desktop and narrow viewports', asyn
   await page.getByRole('button', { name: 'Close navigation' }).click();
   await expect(overlay).toHaveCount(0);
   await expect.poll(() => page.evaluate(() => document.body.style.overflow)).toBe('');
-  const prompt = page.locator('.work-link span');
+  const prompt = page.locator('.work-link > .typewriter-text');
   await prompt.hover();
   await expect(prompt).toHaveCSS('text-decoration-line', 'none');
   await page.getByRole('link', { name: 'Go to projects' }).click();
@@ -96,9 +106,47 @@ test('right-side menu and hero arrow work at desktop and narrow viewports', asyn
   await page.setViewportSize({ width: 320, height: 568 });
   await page.getByRole('button', { name: 'Open navigation' }).click();
   await expect(overlay).toBeVisible();
+  await expect(page.locator('.menu-panel')).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
   expect(await overlay.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
-  await overlay.evaluate(element => { element.scrollTop = element.scrollHeight; });
+  await overlay.locator('.menu-overlay-inner').evaluate(element => { element.scrollTop = element.scrollHeight; });
   await expect(page.getByRole('button', { name: 'Close navigation' })).toBeInViewport();
+});
+
+test('menu unfolds a curved edge on opening and folds it back on closing', async ({ page }) => {
+  await page.goto('/');
+  const curve = page.locator('.menu-curve');
+  const panel = page.locator('.menu-panel');
+  const freezeCurve = async () => {
+    await expect.poll(() => curve.evaluate(element => element.getAnimations().length)).toBeGreaterThan(0);
+    await page.locator('.menu-layer').evaluate(element => {
+      for (const animation of element.getAnimations({ subtree: true })) {
+        animation.pause();
+        animation.currentTime = 180;
+      }
+    });
+    const width = await curve.evaluate(element => element.getBoundingClientRect().width);
+    expect(width).toBeGreaterThan(0);
+    expect(width).toBeLessThan(100);
+    await expect(page.locator('.menu-curve-shape')).toHaveCSS('border-top-left-radius', '60%');
+  };
+  const finish = () => page.locator('.menu-layer').evaluate(element => {
+    for (const animation of element.getAnimations({ subtree: true })) animation.finish();
+  });
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await freezeCurve();
+  await page.screenshot({ path: 'test-results/menu-unfolding.png' });
+  await finish();
+  await expect(curve).toHaveCSS('width', '0px');
+  await expect(panel).toHaveCSS('transform', 'matrix(1, 0, 0, 1, 0, 0)');
+  await page.getByRole('button', { name: 'Close navigation' }).click();
+  await freezeCurve();
+  await page.screenshot({ path: 'test-results/menu-folding.png' });
+  await finish();
+  await expect(page.locator('.menu-layer')).toHaveCSS('visibility', 'hidden');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await page.getByRole('button', { name: 'Open navigation' }).click();
+  await expect(curve).toHaveCSS('width', '0px');
+  await expect(panel).toHaveCSS('transition-duration', '0s');
 });
 
 test('video slots are silent and looping, while still images and failed videos retain their posters', async ({ page }) => {
