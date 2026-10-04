@@ -3,7 +3,8 @@ import './talk-button.css';
 
 // Keep the Figma fill and label sequence on a continuous, reversible clock.
 const DURATION = 650;
-const EASE = 'cubic-bezier(0.4, 0, 0.2, 1)';
+// A symmetric curve keeps the same acceleration when the clock reverses.
+const EASE = 'cubic-bezier(0.4, 0, 0.6, 1)';
 const at = milliseconds => milliseconds / DURATION;
 
 export default function TalkButton({ children = 'Let’s talk', type = 'submit', className = '', disabled = false,
@@ -53,14 +54,13 @@ export default function TalkButton({ children = 'Let’s talk', type = 'submit',
       const fillAnimation = fill.animate([
         { offset: 0, opacity: 0, '--talk-sweep': '180deg', easing: EASE },
         { offset: at(180), opacity: 1 },
-        { offset: at(430), '--talk-sweep': '360deg' },
         { offset: 1, opacity: 1, '--talk-sweep': '360deg' },
       ], timing);
       const labelAnimation = label.animate([
         { offset: 0, color: pink, transform: 'translateY(0px)', easing: EASE },
-        { offset: at(300), color: pink, transform: 'translateY(30px)', easing: EASE },
+        { offset: .5, color: pink, transform: 'translateY(30px)', easing: EASE },
         // Change color while the label is below the button's clipping edge.
-        { offset: at(300.001), color: palePink },
+        { offset: at(325.001), color: palePink },
         { offset: 1, color: palePink, transform: 'translateY(0px)' },
       ], timing);
       fillAnimation.id = 'talk-fill';
@@ -75,17 +75,16 @@ export default function TalkButton({ children = 'Let’s talk', type = 'submit',
 
     const animations = animationsRef.current;
     const position = Math.max(0, Math.min(DURATION, animations[0].currentTime ?? 0));
-    const rate = active ? 1 : -1.25;
+    const rate = active ? 1 : -1;
     const atTarget = active ? position === DURATION : position === 0;
-    const clock = document.timeline.currentTime;
     animations.forEach(animation => {
-      // Reuse both tracks: interruptions never reset the visible fill or label.
-      animation.pause();
-      animation.currentTime = position;
-      animation.playbackRate = rate;
-      if (!atTarget) {
+      // Let the browser preserve the live position when reversing either track.
+      animation.updatePlaybackRate(rate);
+      if (atTarget) {
+        animation.pause();
+        animation.currentTime = position;
+      } else {
         animation.play();
-        animation.startTime = clock - position / rate;
       }
     });
   }, [active, immediate]);

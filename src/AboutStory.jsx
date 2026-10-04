@@ -1,18 +1,23 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './about-story.css';
 
-const EASE = 'cubic-bezier(.22, 1, .36, 1)';
+gsap.registerPlugin(ScrollTrigger);
+const EASE = 'cubic-bezier(.65, 0, .35, 1)';
+const SCRUB_SECONDS = .4;
 const clamp = value => Math.max(0, Math.min(1, value));
-// Match the menu's easing when native animation support is unavailable.
+// Use the same symmetric curve with or without native animation support.
 function ease(progress) {
   if (progress === 0 || progress === 1) return progress;
   let low = 0, high = 1;
   for (let index = 0; index < 16; index++) {
     const t = (low + high) / 2;
-    const x = 3 * (1 - t) ** 2 * t * .22 + 3 * (1 - t) * t ** 2 * .36 + t ** 3;
+    const x = 3 * (1 - t) ** 2 * t * .65 + 3 * (1 - t) * t ** 2 * .35 + t ** 3;
     if (x < progress) low = t; else high = t;
   }
-  return 1 - (1 - (low + high) / 2) ** 3;
+  const t = (low + high) / 2;
+  return 3 * (1 - t) * t ** 2 + t ** 3;
 }
 const story = [
   {
@@ -127,10 +132,7 @@ export default function AboutStory({ ready = true }) {
     }) : [];
     const animations = [textAnimation, ...imageAnimations].filter(Boolean);
     animations.forEach(animation => animation.pause());
-    let frame;
-    const update = () => {
-      frame = undefined;
-      const progress = clamp((layout.top - section.getBoundingClientRect().top) / layout.range);
+    const paint = progress => {
       animations.forEach(animation => { animation.currentTime = progress * 1000; });
       if (!nativeAnimation) {
         const incoming = [0, 1].map(index => reducedMotion
@@ -144,14 +146,29 @@ export default function AboutStory({ ready = true }) {
       section.dataset.progress = progress.toFixed(4);
       section.dataset.stage = progress < .25 ? '1' : progress < .75 ? '2' : '3';
     };
-    const schedule = () => { if (frame === undefined) frame = requestAnimationFrame(update); };
-    update();
-    window.addEventListener('scroll', schedule, { passive: true });
-    window.addEventListener('pageshow', schedule);
+    const playhead = { progress: 0 };
+    // A short scrub absorbs wheel steps without restarting either visual track.
+    // The same continuous clock runs forwards and backwards without overshoot.
+    const smoothProgress = gsap.quickTo(playhead, 'progress', { duration: SCRUB_SECONDS,
+      ease: 'power1.out', onUpdate: () => paint(playhead.progress) });
+    const settle = progress => {
+      smoothProgress.tween.pause();
+      playhead.progress = progress;
+      paint(progress);
+    };
+    const trigger = ScrollTrigger.create({
+      trigger: section, start: `top ${layout.top}px`, end: `+=${layout.range}`,
+      onUpdate: self => reducedMotion ? settle(self.progress) : smoothProgress(self.progress, playhead.progress),
+      onRefresh: self => settle(self.progress),
+      onLeave: self => settle(self.progress),
+      onLeaveBack: self => settle(self.progress),
+    });
+    const refresh = () => trigger.refresh();
+    window.addEventListener('pageshow', refresh);
     return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('scroll', schedule);
-      window.removeEventListener('pageshow', schedule);
+      window.removeEventListener('pageshow', refresh);
+      trigger.kill();
+      smoothProgress.tween.kill();
       animations.forEach(animation => animation.cancel());
       trackRef.current?.style.removeProperty('transform');
       imageRefs.current.slice(1).forEach(image => image?.style.removeProperty('clip-path'));

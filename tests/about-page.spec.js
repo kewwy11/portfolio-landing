@@ -21,16 +21,25 @@ test('About includes the three story pairs, experience, shared contact, and foot
       const rectangle = document.querySelector(selector).getBoundingClientRect();
       return { x: rectangle.x, y: rectangle.y + scrollY, width: rectangle.width, height: rectangle.height };
     };
-    return { heading: box('.about-heading'), story: box('#about-story'),
+    return { heading: box('.about-heading'), title: box('#about-heading'), intro: box('.about-intro'),
+      question: box('#about-question'), portrait: box('.about-portrait'), story: box('#about-story'),
       experience: box('.about-experience'), rows: box('.experience-list') };
   });
   expect(geometry.heading.width).toBe(1440);
+  expect(geometry.heading.height).toBeCloseTo(240, 1);
+  expect(geometry.intro.height).toBeCloseTo(817, 1);
+  expect(geometry.portrait.width).toBeCloseTo(670, 1);
+  expect(geometry.portrait.height).toBeCloseTo(721, 1);
+  expect(Math.min(geometry.question.y, geometry.portrait.y) - geometry.title.y - geometry.title.height).toBeCloseTo(64, 1);
+  expect(geometry.question.y + geometry.question.height).toBeCloseTo(geometry.portrait.y + geometry.portrait.height, 1);
   expect(geometry.story.x).toBe(0);
   expect(geometry.story.width).toBe(1440);
   expect(geometry.story.y).toBeGreaterThanOrEqual(geometry.heading.y + geometry.heading.height - 1);
   expect(geometry.experience.y).toBeGreaterThanOrEqual(geometry.story.y + geometry.story.height - 1);
-  expect(geometry.experience.height).toBeCloseTo(568, 1);
+  expect(geometry.experience.height).toBeCloseTo(556, 1);
   expect(geometry.rows.height).toBeGreaterThan(0);
+  await expect(page.locator('.experience-row').first()).toHaveCSS('font-size', '16px');
+  await expect(page.locator('.experience-row').first()).toHaveCSS('line-height', '24px');
   await expect(page.locator('#about-question .heading-mask')).toHaveCount(4);
   await expect(page.locator('#about-question')).toHaveCSS('font-size', '96px');
   await expect(page.locator('#about-question')).toHaveCSS('line-height', '90px');
@@ -85,6 +94,15 @@ test('About adapts to tablet and narrow screens without overflow or missing cont
       return box.width > 0 && box.left >= -1 && box.right <= innerWidth + 1;
     }))).toBe(true);
     expect(await page.locator('.experience-row').evaluateAll(rows => rows.every(row => row.scrollWidth <= row.clientWidth))).toBe(true);
+    const gap = await page.evaluate(() => {
+      const title = document.querySelector('#about-heading').getBoundingClientRect();
+      const question = document.querySelector('#about-question').getBoundingClientRect();
+      const portrait = document.querySelector('.about-portrait').getBoundingClientRect();
+      return Math.min(question.top, portrait.top) - title.bottom;
+    });
+    expect(gap).toBeCloseTo(width <= 760 ? 32 : 64, 1);
+    await expect(page.locator('.experience-row').first()).toHaveCSS('font-size', width <= 760 ? '14px' : '16px');
+    await expect(page.locator('.experience-row').first()).toHaveCSS('line-height', width <= 760 ? '21px' : '24px');
     if (width === 390) {
       await page.locator('.contact-image').scrollIntoViewIfNeeded();
       await expect.poll(() => page.locator('.contact-image').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);

@@ -14,7 +14,7 @@
 .story-text-window { overflow: clip; min-width: 0; height: var(--story-copy-height, 360px); }
 .story-text-track { will-change: transform; }
 .story-text-panel { height: var(--story-copy-height, 360px); display: flex; align-items: center; }
-.story-copy { width: min(100%, var(--copy-width)); font-size: 24px; line-height: 36px; }
+.story-copy { width: min(100%, var(--copy-width)); padding-inline: 16px; font-size: 24px; line-height: 36px; }
 .story-copy-group + .story-copy-group { margin-top: 36px; }
 .story-flow-stage > img { width: 100%; height: auto; aspect-ratio: 670 / 588; object-fit: cover; }
 /* Preserve the complete reading order while the visual presentation is pinned. */
@@ -34,7 +34,7 @@
 }
 @media (max-width: 760px) {
   .story-sticky, .story-flow-stage { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
-  .story-copy { width: 100%; font-size: 16px; line-height: 24px; }
+  .story-copy { width: 100%; padding-inline: 0; font-size: 16px; line-height: 24px; }
   .story-copy-group + .story-copy-group { margin-top: 24px; }
 }
 @media (min-width: 761px) and (max-height: 460px) {

@@ -108,7 +108,7 @@ test('the story pins all three pairs, rolls text vertically, and unveils station
     .toEqual(['about-story-image-2', 'about-story-image-3', 'about-story-text']);
   for (const animation of unveiling.animations) {
     expect(animation.state).toBe('paused');
-    expect(animation.time).toBeCloseTo(250, 0);
+    expect(animation.time).toBeCloseTo(unveiling.progress * 1000, 0);
   }
   await page.screenshot({ path: '.tools/about-story-unveiling.png' });
 
@@ -170,6 +170,41 @@ test('desktop wheel scrolling advances and reverses the pinned story without tra
   await expect.poll(async () => (await scene(page)).progress).toBeCloseTo(0.95, 2);
   await page.mouse.wheel(0, 200);
   await expect.poll(async () => (await scene(page)).frame.y).toBeLessThan(first.frame.y - 60);
+});
+
+test('wheel bursts and reversals move through intermediate states instead of jumping between scenes', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 600 });
+  await openAbout(page);
+  await scrollProgress(page, .12);
+  const { range } = await pinnedGeometry(page);
+  const copyHeight = (await scene(page)).copyHeight;
+  const sampleFrames = () => page.evaluate(async () => {
+    const track = document.querySelector('.story-text-track');
+    const image = document.querySelectorAll('.story-visual-image')[1];
+    const values = [];
+    for (let frame = 0; frame < 24; frame++) {
+      await new Promise(requestAnimationFrame);
+      values.push({ y: new DOMMatrixReadOnly(getComputedStyle(track).transform).m42,
+        mask: parseFloat(getComputedStyle(image).clipPath.match(/inset\(([^ ]+)/)[1]) });
+    }
+    return values;
+  });
+  const check = (frames, direction) => {
+    expect(frames.filter(frame => frame.y < -1 && frame.y > -copyHeight + 1).length).toBeGreaterThanOrEqual(3);
+    for (let index = 1; index < frames.length; index++) {
+      const delta = frames[index].y - frames[index - 1].y;
+      expect(direction * delta).toBeGreaterThanOrEqual(-1);
+      expect(Math.abs(delta)).toBeLessThan(copyHeight * .5);
+      expect(frames[index].mask).toBeCloseTo(100 * (1 + frames[index].y / copyHeight), 1);
+    }
+  };
+  await page.mouse.move(350, 300);
+  await page.mouse.wheel(0, range * .26);
+  check(await sampleFrames(), -1);
+  await expect.poll(async () => (await scene(page)).textY).toBeCloseTo(-copyHeight, 1);
+  await page.mouse.wheel(0, -range * .26);
+  check(await sampleFrames(), 1);
+  await expect.poll(async () => (await scene(page)).textY).toBeCloseTo(0, 1);
 });
 
 for (const viewport of [
