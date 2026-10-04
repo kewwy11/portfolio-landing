@@ -43,6 +43,10 @@ test('About includes the three story pairs, experience, shared contact, and foot
   await expect(page.locator('#about-question .heading-mask')).toHaveCount(4);
   await expect(page.locator('#about-question')).toHaveCSS('font-size', '96px');
   await expect(page.locator('#about-question')).toHaveCSS('line-height', '90px');
+  const copies = page.locator('.story-sticky .story-copy');
+  await expect(copies.first()).toHaveCSS('font-size', '20px');
+  await expect(copies.first()).toHaveCSS('line-height', '30px');
+  expect(await copies.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width))).toEqual([538, 523, 523]);
   const storyImages = page.locator('.story-visual-image');
   await expect(storyImages).toHaveCount(3);
   for (const image of await storyImages.all()) {
