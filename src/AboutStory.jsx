@@ -2,6 +2,18 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import './about-story.css';
 
 const EASE = 'cubic-bezier(.22, 1, .36, 1)';
+const clamp = value => Math.max(0, Math.min(1, value));
+// Match the menu's easing when native animation support is unavailable.
+function ease(progress) {
+  if (progress === 0 || progress === 1) return progress;
+  let low = 0, high = 1;
+  for (let index = 0; index < 16; index++) {
+    const t = (low + high) / 2;
+    const x = 3 * (1 - t) ** 2 * t * .22 + 3 * (1 - t) * t ** 2 * .36 + t ** 3;
+    if (x < progress) low = t; else high = t;
+  }
+  return 1 - (1 - (low + high) / 2) ** 3;
+}
 const story = [
   {
     image: 'about-story-memory.png', width: 641,
@@ -45,7 +57,8 @@ export default function AboutStory({ ready = true }) {
   const textRefs = useRef([]);
   const imageRefs = useRef([]);
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
-  const [layout, setLayout] = useState({ pinned: false, frameHeight: 0, range: 0, top: 0, copyHeight: 360 });
+  const [layout, setLayout] = useState(() => ({ frameHeight: Math.min(668, window.innerHeight),
+    range: 2 * Math.max(window.innerHeight, 500), top: 0, copyHeight: 360, imageHeight: null }));
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -60,15 +73,20 @@ export default function AboutStory({ ready = true }) {
     let mounted = true;
     const measure = () => {
       if (!mounted) return;
-      const copyHeight = Math.ceil(Math.max(window.innerWidth > 760 ? 360 : 0,
-        ...textRefs.current.map(node => node?.getBoundingClientRect().height || 0)));
-      frame.style.setProperty('--story-copy-height', `${copyHeight}px`);
-      const frameHeight = Math.ceil(frame.getBoundingClientRect().height);
       const viewportHeight = window.innerHeight;
-      // Every line must fit before a stage can be pinned. Short screens use flow.
-      const pinned = ready && !reducedMotion && typeof Element.prototype.animate === 'function'
-        && frameHeight + 8 <= viewportHeight;
-      const next = { pinned, frameHeight, copyHeight, range: pinned ? 2 * Math.max(viewportHeight, 500) : 0,
+      const mobile = window.innerWidth <= 760;
+      const copyHeight = Math.ceil(Math.max(!mobile && viewportHeight >= 668 ? 360 : 0,
+        ...textRefs.current.map(node => node?.getBoundingClientRect().height || 0)));
+      const style = getComputedStyle(frame);
+      const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
+      const gap = parseFloat(style.rowGap);
+      const imageWidth = frame.querySelector('.story-image-window').getBoundingClientRect().width;
+      const imageHeight = Math.max(1, Math.min(imageWidth * 588 / 670,
+        viewportHeight - padding - (mobile ? copyHeight + gap : 0)));
+      frame.style.setProperty('--story-copy-height', `${copyHeight}px`);
+      frame.style.setProperty('--story-image-height', `${imageHeight}px`);
+      const frameHeight = Math.ceil(frame.getBoundingClientRect().height);
+      const next = { frameHeight, copyHeight, imageHeight, range: 2 * Math.max(viewportHeight, 500),
         top: Math.max(0, Math.floor((viewportHeight - frameHeight) / 2)) };
       setLayout(current => Object.keys(next).every(key => next[key] === current[key]) ? current : next);
     };
@@ -79,22 +97,23 @@ export default function AboutStory({ ready = true }) {
     window.addEventListener('resize', measure);
     document.fonts.ready.then(measure);
     return () => { mounted = false; observer?.disconnect(); window.removeEventListener('resize', measure); };
-  }, [ready, reducedMotion]);
+  }, [ready]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!layout.pinned || !section) return;
+    if (!section) return;
+    const nativeAnimation = !reducedMotion && typeof Element.prototype.animate === 'function';
     const timing = { duration: 1000, fill: 'both', easing: 'linear' };
-    const textAnimation = trackRef.current.animate([
+    const textAnimation = nativeAnimation ? trackRef.current.animate([
       { offset: 0, transform: 'translateY(0px)' },
       { offset: .125, transform: 'translateY(0px)', easing: EASE },
       { offset: .375, transform: `translateY(-${layout.copyHeight}px)` },
       { offset: .625, transform: `translateY(-${layout.copyHeight}px)`, easing: EASE },
       { offset: .875, transform: `translateY(-${2 * layout.copyHeight}px)` },
       { offset: 1, transform: `translateY(-${2 * layout.copyHeight}px)` },
-    ], timing);
-    textAnimation.id = 'about-story-text';
-    const imageAnimations = imageRefs.current.slice(1).map((node, index) => {
+    ], timing) : null;
+    if (textAnimation) textAnimation.id = 'about-story-text';
+    const imageAnimations = nativeAnimation ? imageRefs.current.slice(1).map((node, index) => {
       const start = index === 0 ? .125 : .625;
       const end = index === 0 ? .375 : .875;
       const animation = node.animate([
@@ -105,14 +124,23 @@ export default function AboutStory({ ready = true }) {
       ], timing);
       animation.id = `about-story-image-${index + 2}`;
       return animation;
-    });
-    const animations = [textAnimation, ...imageAnimations];
+    }) : [];
+    const animations = [textAnimation, ...imageAnimations].filter(Boolean);
     animations.forEach(animation => animation.pause());
     let frame;
     const update = () => {
       frame = undefined;
-      const progress = Math.max(0, Math.min(1, (layout.top - section.getBoundingClientRect().top) / layout.range));
+      const progress = clamp((layout.top - section.getBoundingClientRect().top) / layout.range);
       animations.forEach(animation => { animation.currentTime = progress * 1000; });
+      if (!nativeAnimation) {
+        const incoming = [0, 1].map(index => reducedMotion
+          ? Number(progress >= (index === 0 ? .25 : .75))
+          : ease(clamp((progress - (index === 0 ? .125 : .625)) / .25)));
+        trackRef.current.style.transform = `translateY(-${(incoming[0] + incoming[1]) * layout.copyHeight}px)`;
+        imageRefs.current.slice(1).forEach((image, index) => {
+          image.style.clipPath = `inset(${100 * (1 - incoming[index])}% 0px 0px 0px)`;
+        });
+      }
       section.dataset.progress = progress.toFixed(4);
       section.dataset.stage = progress < .25 ? '1' : progress < .75 ? '2' : '3';
     };
@@ -125,14 +153,17 @@ export default function AboutStory({ ready = true }) {
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('pageshow', schedule);
       animations.forEach(animation => animation.cancel());
+      trackRef.current?.style.removeProperty('transform');
+      imageRefs.current.slice(1).forEach(image => image?.style.removeProperty('clip-path'));
     };
-  }, [layout]);
+  }, [layout, reducedMotion]);
 
-  return <section ref={sectionRef} id="about-story" className={`about-story${layout.pinned ? ' is-pinned' : ''}`}
-    aria-label="My approach to design" data-mode={layout.pinned ? 'pinned' : 'flow'} data-stage="1" data-progress="0"
-    style={layout.pinned ? { height: `${layout.frameHeight + layout.range}px` } : undefined}>
+  return <section ref={sectionRef} id="about-story" className="about-story is-pinned"
+    aria-label="My approach to design" data-mode="pinned" data-stage="1" data-progress="0"
+    style={{ height: `${layout.frameHeight + layout.range}px` }}>
     <div ref={frameRef} className="story-sticky" aria-hidden="true"
-      style={{ '--story-top': `${layout.top}px`, '--story-copy-height': `${layout.copyHeight}px` }}>
+      style={{ '--story-top': `${layout.top}px`, '--story-copy-height': `${layout.copyHeight}px`,
+        '--story-image-height': layout.imageHeight === null ? undefined : `${layout.imageHeight}px` }}>
       <div className="story-image-window">
         {story.map((item, index) => <img ref={node => { imageRefs.current[index] = node; }} className="story-visual-image"
           key={item.image} src={asset(item.image)} alt="" width="670" height="588" />)}

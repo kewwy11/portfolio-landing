@@ -34,12 +34,10 @@ test('About includes the three story pairs, experience, shared contact, and foot
   await expect(page.locator('#about-question .heading-mask')).toHaveCount(4);
   await expect(page.locator('#about-question')).toHaveCSS('font-size', '96px');
   await expect(page.locator('#about-question')).toHaveCSS('line-height', '90px');
-  const storyImages = page.locator('.story-flow img');
+  const storyImages = page.locator('.story-visual-image');
   await expect(storyImages).toHaveCount(3);
   for (const image of await storyImages.all()) {
-    await image.scrollIntoViewIfNeeded();
     await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
-    await expect(image).toBeVisible();
   }
   await page.locator('.contact-image').scrollIntoViewIfNeeded();
   await expect.poll(() => page.locator('.contact-image').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
@@ -82,7 +80,7 @@ test('About adapts to tablet and narrow screens without overflow or missing cont
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     await expect(page.locator('.experience-row')).toHaveCount(4);
     await expect(page.locator('.story-flow img')).toHaveCount(3);
-    expect(await page.locator('.story-flow img').evaluateAll(images => images.every(image => {
+    expect(await page.locator('.story-visual-image').evaluateAll(images => images.every(image => {
       const box = image.getBoundingClientRect();
       return box.width > 0 && box.left >= -1 && box.right <= innerWidth + 1;
     }))).toBe(true);

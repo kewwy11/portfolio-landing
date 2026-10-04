@@ -30,12 +30,23 @@ async function scene(page) {
       return { x: box.x, y: box.y, width: box.width, height: box.height };
     };
     const track = section.querySelector('.story-text-track');
+    const textWindow = section.querySelector('.story-text-window');
+    const textBounds = textWindow.getBoundingClientRect();
+    const panels = [...section.querySelectorAll('.story-text-panel')];
     return {
       progress: Number(section.dataset.progress),
       stage: section.dataset.stage,
       frame: rectangle(section.querySelector('.story-sticky')),
       copyHeight: section.querySelector('.story-text-panel').getBoundingClientRect().height,
       textY: new DOMMatrixReadOnly(getComputedStyle(track).transform).m42,
+      textWindow: rectangle(textWindow),
+      visiblePanels: panels.flatMap((panel, index) => {
+        const bounds = panel.getBoundingClientRect();
+        const visibleHeight = Math.min(bounds.bottom, textBounds.bottom) - Math.max(bounds.top, textBounds.top);
+        return visibleHeight > 1 ? [index + 1] : [];
+      }),
+      copy: rectangle(panels[Number(section.dataset.stage) - 1].querySelector('.story-copy')),
+      semanticFlow: rectangle(section.querySelector('.story-flow')),
       images: [...section.querySelectorAll('.story-visual-image')].map(image => {
         const style = getComputedStyle(image);
         return { box: rectangle(image), transform: style.transform,
@@ -45,6 +56,20 @@ async function scene(page) {
         .map(animation => ({ id: animation.id, time: animation.currentTime, state: animation.playState })),
     };
   });
+}
+
+function expectSingleRestingScene(snapshot, stage, viewport) {
+  expect(snapshot.stage).toBe(String(stage));
+  expect(snapshot.visiblePanels).toEqual([stage]);
+  expect(snapshot.textY).toBeCloseTo(-(stage - 1) * snapshot.copyHeight, 1);
+  expect(snapshot.images.map(image => image.mask)).toEqual([0, stage >= 2 ? 0 : 100, stage === 3 ? 0 : 100]);
+  expect(snapshot.frame.y).toBeGreaterThanOrEqual(-1);
+  expect(snapshot.frame.y + snapshot.frame.height).toBeLessThanOrEqual(viewport.height + 1);
+  expect(snapshot.images[0].box.height).toBeGreaterThan(viewport.height <= 460 ? 40 : 90);
+  expect(snapshot.copy.y).toBeGreaterThanOrEqual(snapshot.textWindow.y - 1);
+  expect(snapshot.copy.y + snapshot.copy.height).toBeLessThanOrEqual(snapshot.textWindow.y + snapshot.textWindow.height + 1);
+  expect(snapshot.semanticFlow.width).toBeLessThanOrEqual(1);
+  expect(snapshot.semanticFlow.height).toBeLessThanOrEqual(1);
 }
 
 test('the story pins all three pairs, rolls text vertically, and unveils stationary images upward', async ({ page }) => {
@@ -147,61 +172,93 @@ test('desktop wheel scrolling advances and reverses the pinned story without tra
   await expect.poll(async () => (await scene(page)).frame.y).toBeLessThan(first.frame.y - 60);
 });
 
-test('reduced motion presents all three story pairs in readable document flow', async ({ page }) => {
-  await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const width of [1440, 768, 390, 320]) {
-    await page.setViewportSize({ width, height: 568 });
+for (const viewport of [
+  { width: 1366, height: 650 }, { width: 1440, height: 600 },
+  { width: 390, height: 667 }, { width: 320, height: 568 }, { width: 320, height: 360 },
+]) {
+  test(`short ${viewport.width}×${viewport.height} screens pin one complete scene and replace it through all three stages`, async ({ page }) => {
+    await page.setViewportSize(viewport);
     await openAbout(page);
-    await expect(page.locator('#about-story')).toHaveAttribute('data-mode', 'flow');
-    await expect(page.locator('.story-sticky')).toBeHidden();
-    const images = page.locator('.story-flow img');
-    await expect(page.locator('#about-story').getByRole('img')).toHaveCount(3);
-    let previousBottom = -Infinity;
-    for (const image of await images.all()) {
-      await expect(image).toHaveAttribute('alt', /\S/);
-      await image.scrollIntoViewIfNeeded();
-      await expect(image).toBeInViewport();
-      await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
-      const box = await image.evaluate(node => {
-        const rectangle = node.getBoundingClientRect();
-        return { top: rectangle.top + scrollY, bottom: rectangle.bottom + scrollY,
-          left: rectangle.left, right: rectangle.right, height: rectangle.height };
-      });
-      expect(box.top).toBeGreaterThanOrEqual(previousBottom - 1);
-      expect(box.height).toBeGreaterThan(0);
-      expect(box.left).toBeGreaterThanOrEqual(-1);
-      expect(box.right).toBeLessThanOrEqual(width + 1);
-      previousBottom = box.bottom;
+    const section = page.locator('#about-story');
+    await expect(section).toHaveAttribute('data-mode', 'pinned');
+    await expect(page.locator('.story-sticky')).toBeVisible();
+    const geometry = await pinnedGeometry(page);
+    expect(geometry.height).toBeLessThanOrEqual(viewport.height);
+    expect(geometry.range).toBeGreaterThanOrEqual(2 * viewport.height);
+    let pinnedFrame;
+    for (const [progress, stage] of [[0.05, 1], [0.5, 2], [0.95, 3], [0.5, 2], [0.05, 1]]) {
+      await scrollProgress(page, progress);
+      const current = await scene(page);
+      expectSingleRestingScene(current, stage, viewport);
+      if (pinnedFrame) expect(current.frame).toEqual(pinnedFrame);
+      else pinnedFrame = current.frame;
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+      if (stage === 3 && (viewport.width === 1440 || viewport.height === 360)) {
+        await page.screenshot({ path: `.tools/about-story-fitted-${viewport.width}-${viewport.height}-stage-3.png` });
+      }
     }
-    expect(await page.locator('#about-story').evaluate(node => node.getAnimations({ subtree: true }).length)).toBe(0);
-    expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    await scrollProgress(page, 0.25);
+    const transition = await scene(page);
+    expect(transition.textY).toBeGreaterThan(-transition.copyHeight);
+    expect(transition.textY).toBeLessThan(0);
+    expect(transition.images[1].mask).toBeGreaterThan(0);
+    expect(transition.images[1].mask).toBeLessThan(100);
+    expect(transition.frame).toEqual(pinnedFrame);
+    if (viewport.width === 1440 || viewport.width === 320) {
+      await scrollProgress(page, 0.05);
+      await page.screenshot({ path: `.tools/about-story-fitted-${viewport.width}-${viewport.height}.png` });
+    }
+    await page.evaluate(top => scrollTo({ top, behavior: 'instant' }), geometry.start + geometry.range + 80);
+    await expect.poll(async () => (await scene(page)).frame.y).toBeLessThan(geometry.inset - 60);
+  });
+}
+
+test('reduced motion keeps one scene visible and swaps it immediately as scrolling advances or reverses', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const viewport of [{ width: 1440, height: 600 }, { width: 768, height: 568 }, { width: 390, height: 667 }, { width: 320, height: 568 }]) {
+    await page.setViewportSize(viewport);
+    await openAbout(page);
+    const section = page.locator('#about-story');
+    await expect(section).toHaveAttribute('data-mode', 'pinned');
+    await expect(page.locator('.story-sticky')).toBeVisible();
+    await expect(section.getByRole('img')).toHaveCount(3);
+    for (const image of await page.locator('.story-flow img').all()) await expect(image).toHaveAttribute('alt', /\S/);
+    for (const [progress, stage] of [[0.05, 1], [0.3, 2], [0.8, 3], [0.5, 2], [0.1, 1]]) {
+      await scrollProgress(page, progress);
+      const current = await scene(page);
+      expectSingleRestingScene(current, stage, viewport);
+      expect(current.animations).toHaveLength(0);
+      expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+    }
     await page.locator('#experience-heading').scrollIntoViewIfNeeded();
     await expect(page.locator('#experience-heading')).toBeInViewport();
   }
 });
 
-test('short viewports and missing animation support preserve the complete story in static flow', async ({ page }) => {
-  await page.setViewportSize({ width: 320, height: 360 });
-  await openAbout(page);
-  await expect(page.locator('#about-story')).toHaveAttribute('data-mode', 'flow');
-  await expect(page.locator('.story-sticky')).toBeHidden();
-  for (const pair of await page.locator('.story-flow-stage').all()) {
-    await pair.scrollIntoViewIfNeeded();
-    await expect(pair).toBeInViewport();
-    expect(await pair.textContent()).toMatch(/\S/);
-  }
-  expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
+test('missing animation support preserves one pinned scene and smooth reversible replacements', async ({ page }) => {
   await page.addInitScript(() => { delete Element.prototype.animate; });
-  await page.setViewportSize({ width: 1440, height: 1000 });
-  await page.reload();
-  await expect(page.locator('#about-story')).toHaveAttribute('data-mode', 'flow');
-  await expect(page.locator('.story-sticky')).toBeHidden();
-  await expect(page.locator('#about-story').getByRole('img')).toHaveCount(3);
-  for (const image of await page.locator('.story-flow img').all()) await expect(image).toBeVisible();
+  const viewport = { width: 1440, height: 600 };
+  await page.setViewportSize(viewport);
+  await openAbout(page);
+  await expect(page.locator('#about-story')).toHaveAttribute('data-mode', 'pinned');
+  await expect(page.locator('.story-sticky')).toBeVisible();
+  for (const [progress, stage] of [[0.05, 1], [0.5, 2], [0.95, 3], [0.5, 2], [0.1, 1]]) {
+    await scrollProgress(page, progress);
+    const current = await scene(page);
+    expectSingleRestingScene(current, stage, viewport);
+    expect(current.animations).toHaveLength(0);
+  }
+  await scrollProgress(page, 0.25);
+  const transition = await scene(page);
+  expect(transition.textY).toBeGreaterThan(-transition.copyHeight);
+  expect(transition.textY).toBeLessThan(0);
+  expect(transition.images[1].mask).toBeGreaterThan(0);
+  expect(transition.images[1].mask).toBeLessThan(100);
+  expect(transition.animations).toHaveLength(0);
 });
 
 test.describe('touch scrolling', () => {
-  test.use({ viewport: { width: 390, height: 1000 }, isMobile: true, hasTouch: true });
+  test.use({ viewport: { width: 390, height: 667 }, isMobile: true, hasTouch: true });
 
   test('mobile touch pans advance and reverse the pinned story', async ({ page }) => {
     await openAbout(page);
@@ -219,18 +276,18 @@ test.describe('touch scrolling', () => {
     try {
       await scrollProgress(page, 0.1);
       const first = await scene(page);
-      await swipeWhileHeld(850, 250);
+      await swipeWhileHeld(550, 150);
       await expect.poll(async () => (await scene(page)).progress).toBeGreaterThan(0.2);
       const forward = await scene(page);
       expect(forward.frame.y).toBeCloseTo(first.frame.y, 1);
       expect(forward.textY).toBeLessThan(first.textY);
       await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
       // A new contact stops fling momentum before testing the reverse gesture.
-      await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: points(250) });
+      await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: points(150) });
       await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
       await scrollProgress(page, 0.5);
       const second = await scene(page);
-      await swipeWhileHeld(250, 850);
+      await swipeWhileHeld(150, 550);
       await expect.poll(async () => (await scene(page)).progress).toBeLessThan(0.4);
       const backward = await scene(page);
       expect(backward.frame.y).toBeCloseTo(second.frame.y, 1);
