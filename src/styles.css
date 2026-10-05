@@ -18,7 +18,7 @@ p, h1, h2, h3, figure, blockquote { margin: 0; }
 button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #604d53; outline-offset: 5px; }
 .skip-link { position: fixed; top: 12px; left: 12px; padding: 12px 20px; color: var(--cream); background: var(--pink); z-index: 50; transform: translateY(-150%); }
 .skip-link:focus { transform: translateY(0); }
-.hero { height: 930px; position: relative; max-width: 1440px; margin: auto; padding: 0 40px; }
+.hero { height: auto; min-height: 930px; position: relative; max-width: 1440px; margin: auto; padding: 0 40px; }
 .header { height: 82px; display: flex; align-items: center; justify-content: space-between; }
 .wordmark { font-family: var(--display); text-transform: uppercase; font-size: 20px; line-height: 1; }
 .menu-button { background: transparent; min-width: 44px; min-height: 44px; display: grid; place-items: center; padding: 0; }
@@ -58,7 +58,7 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .menu-social:is(:hover, :focus-visible) .menu-social-tooltip { opacity: 1; transform: translateX(-50%) scale(1) rotate(0deg); }
 .menu-social:focus-visible { outline: 3px solid var(--cream); outline-offset: 5px; }
 .menu-copyright { flex-shrink: 0; margin-top: 32px; font-size: clamp(14px, 3.7vw, 16px); line-height: 24px; }
-.intro { display: flex; gap: 16px; width: 451px; align-items: center; margin-top: 20px; }
+.intro { display: flex; gap: 16px; width: min(100%, 451px); align-items: center; margin-top: 20px; }
 .intro img { flex: 0 0 70px; border-radius: 50%; object-fit: cover; }
 .intro p { font-size: 16px; line-height: 1.5; }
 .hero-heading { display: flex; flex-direction: column; gap: 16px; margin: 66px auto 0; font-family: var(--display); font-size: 100px; font-weight: 400; line-height: .94; text-transform: uppercase; letter-spacing: -.015em; }
@@ -129,7 +129,7 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .service-list { margin: 54px 40px 0; display: grid; gap: 16px; }
 .square { display: inline-block; width: 14px; height: 14px; flex-shrink: 0; background: #ff99d8; margin-right: 6px; }
 .contact { display: grid; grid-template-columns: minmax(0, 1fr) 53.82%; gap: 20px; align-items: center; }
-.contact-copy { padding-right: 24px; }
+.contact-copy { min-width: 0; padding-right: 24px; }
 .contact h2 { font-family: Poppins, sans-serif; font-size: 24px; line-height: 1.5; text-transform: none; letter-spacing: 0; }
 .contact form { margin-top: 36px; }
 .contact label { font-family: 'DM Mono', monospace; color: var(--body); display: flex; align-items: center; font-size: 16px; letter-spacing: -.32px; }
@@ -139,6 +139,9 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .form-status { font-size: 13px; color: var(--body); line-height: 1.5; }
 .form-status:not(:empty) { margin-top: 12px; }
 .contact-image { width: 100%; height: auto; aspect-ratio: 732 / 602; object-fit: cover; }
+/* One content-to-footer gap on every route and at every breakpoint. */
+main > .contact:last-child { padding-bottom: 96px; }
+main:is(.contact-shell, .projects-shell) { padding-bottom: 96px; }
 .footer { padding: 48px 40px; min-height: 365px; background: var(--pink); color: var(--cream); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 .footer-brand { display: flex; min-width: 0; flex-direction: column; justify-content: space-between; }
 .footer-heading { width: min(100%, 388px); font-family: var(--display); font-size: 48px; line-height: normal; text-transform: uppercase; }
@@ -152,7 +155,7 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .footer-columns { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 20px; width: min(100%, 524px); min-height: 245px; }
 .footer-column, .footer-links { display: flex; min-width: 0; flex-direction: column; align-items: flex-start; gap: 24px; }
 .footer h3 { font-size: 16px; font-weight: 500; line-height: 1.5; }
-.footer .location h3 { font-size: 15px; }
+.footer .location h3 { font-size: 16px; }
 .footer-links > * { display: block; font-size: 16px; }
 .footer-column.location > p { font-size: 16px; }
 .footer small { font-size: 16px; line-height: 1.5; text-box-trim: trim-both; text-box-edge: cap alphabetic; }
@@ -214,7 +217,8 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
   .footer-email a { font-size: 14px; }
   .footer-right { align-items: flex-start; padding-right: 0; gap: 28px; }
   .footer-columns { gap: 32px 24px; min-height: 0; }
-  .footer h3, .footer .location h3 { font-size: 15px; }
+  .footer h3 { font-size: 15px; }
+  .footer .location h3 { font-size: 16px; }
   .footer-links > *, .footer-column.location > p { font-size: 14px; }
   .footer small { font-size: 12px; align-self: flex-end; }
 }

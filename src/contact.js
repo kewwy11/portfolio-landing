@@ -1,9 +1,9 @@
-export const contactHeading = "No matter what stage of the process you're in, I highly recommend getting in touch.";
+export const contactHeading = "No matter what stage of the process\nyou're in, I highly recommend getting\nin touch.";
 
 export const faqs = [
   {
     id: 'cost', question: 'How much does a project cost?',
-    answer: "Most website projects start at $1000, and branding packages start at $500. The final number depends on scope: number of pages, whether you need development, and how much content work is involved. I'll give you a fixed quote after our first call, so there are no surprises mid-project.",
+    answer: "Most website projects start at $1000, and branding packages start at $1500. The final number depends on scope: number of pages, whether you need, development, and how much content work is involved. I'll give you a fixed quote after our first call, so there are no surprises mid-project.",
   },
   {
     id: 'timeline', question: 'How long does a project take?',

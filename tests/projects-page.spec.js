@@ -76,7 +76,7 @@ test('Projects matches the desktop layout and includes both populated project ca
   expect(geometry.images[1]).toEqual({ x: 730, y: 272, width: 670, height: 500 });
   expect(geometry.images[2].height).toBeCloseTo(500, 1);
   expect(geometry.images[2].y).toBe(geometry.images[3].y);
-  expect(geometry.footer.y - geometry.gridEnd).toBeCloseTo(68, 1);
+  expect(geometry.footer.y - geometry.gridEnd).toBeCloseTo(96, 1);
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
   await expectGallery(page, 'Branding');
   const brandSizes = await page.locator('.project-image').evaluateAll(images => images.map(image => {
@@ -190,7 +190,7 @@ test('both project categories fit tablet and narrow screens without clipping cap
       const gallery = document.querySelector('.project-grid').getBoundingClientRect();
       return footer.top - gallery.bottom;
     });
-    expect(footerGap).toBeCloseTo(width <= 760 ? 64 : 68, 1);
+    expect(footerGap).toBeCloseTo(96, 1);
   }
 });
 

@@ -14,7 +14,7 @@ export default function FaqSection() {
         const open = activeId === item.id;
         const toggleId = `faq-${item.id}-toggle`;
         const panelId = `faq-${item.id}-panel`;
-        return <article className={`faq-item${open ? ' is-open' : ''}`} key={item.id}>
+        return <article className={`faq-item${open ? ' is-open' : ''}`} key={item.id} data-faq={item.id}>
           <button className="faq-toggle" id={toggleId} type="button" aria-expanded={open}
             aria-controls={panelId} onClick={() => setActiveId(previous => previous === item.id ? null : item.id)}>
             <span>{item.question}</span>

@@ -1,0 +1,20 @@
+.footer.site-footer { display: block; min-height: 0; padding: 48px max(40px, calc((100vw - 1360px) / 2)); }
+.footer-masthead { position: relative; width: 100%; aspect-ratio: 1360 / 186; container-type: inline-size; }
+.footer-wordmark { font-family: var(--display); font-size: 12.4265cqw; line-height: 1.1; letter-spacing: -.02em; text-transform: uppercase; text-align: center; white-space: nowrap; }
+.footer-collage { position: absolute; inset: 0; pointer-events: none; }
+.footer-card { position: absolute; width: 17.6471%; aspect-ratio: 240 / 203.824; padding: 0; border: 0; background: transparent; pointer-events: auto; transform-origin: center; border-radius: 0; }
+.footer-project { width: 100%; height: 100%; object-fit: cover; border-radius: inherit; opacity: 0; visibility: hidden; transform: scale(.15); transform-origin: center; pointer-events: none; }
+.footer-card-nommy { left: 1.8992%; top: 2.9695cqw; transform: rotate(18.2deg); }
+.footer-card-jewelry { left: 28.4654%; top: 3.4557cqw; transform: rotate(12.94deg); }
+.footer-card-lumis { left: 54.7507%; top: 3.4329cqw; transform: rotate(-14.43deg); }
+.footer-card-piggyvest { left: 80.9107%; top: 3.7181cqw; transform: rotate(11.91deg); }
+.footer-card.is-active { z-index: 1; }
+.footer-card:focus-visible { outline-color: var(--cream); }
+.footer-content { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; margin-top: 80px; min-height: 269px; }
+@media (max-width: 1200px) {
+  .footer-content { grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 32px; margin-top: clamp(40px, 5.56vw, 80px); }
+}
+@media (max-width: 760px) {
+  .footer.site-footer { padding: 36px 20px; }
+  .footer-content { grid-template-columns: minmax(0, 1fr); gap: 40px; margin-top: 40px; min-height: 0; }
+}

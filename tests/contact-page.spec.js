@@ -27,8 +27,9 @@ test('Contact matches the desktop design with its own heading, shared form, FAQ,
   await expect(page.locator('#contact-heading')).toContainText(contactTitle);
   await expect(page.locator('#contact-page-heading')).toHaveCSS('font-size', '96px');
   await expect(page.locator('#contact-page-heading')).toHaveCSS('line-height', '106px');
-  await expect(page.locator('#contact-heading')).toHaveCSS('font-size', '32px');
-  await expect(page.locator('#contact-heading')).toHaveCSS('line-height', '48px');
+  await expect(page.locator('#contact-heading')).toHaveCSS('font-size', '24px');
+  await expect(page.locator('#contact-heading')).toHaveCSS('line-height', '34px');
+  await expect(page.locator('#contact-heading')).toHaveCSS('letter-spacing', '-0.48px');
   await expect(page.locator('.faq-toggle')).toHaveCount(8);
   await expect(page.locator('.faq-toggle[aria-expanded="true"]')).toHaveCount(0);
   await page.locator('.contact-image').scrollIntoViewIfNeeded();
@@ -46,7 +47,7 @@ test('Contact matches the desktop design with its own heading, shared form, FAQ,
   expect(geometry.wordmark).toEqual({ x: 40, y: 32, width: geometry.wordmark.width, height: 22 });
   expect(geometry.heading.y).toBeCloseTo(118, 1);
   expect(geometry.heading.height).toBeCloseTo(212, 1);
-  expect(geometry.image).toEqual({ x: 668, y: 394, width: 732, height: 602 });
+  expect(geometry.image).toEqual({ x: 668, y: 378, width: 732, height: 602 });
   expect(geometry.form.width).toBeCloseTo(584, 1);
   expect(geometry.faqTop).toBeGreaterThan(geometry.contactEnd);
   expect(geometry.footerTop).toBeGreaterThan(geometry.faqTop);
@@ -134,6 +135,14 @@ test('FAQ exposes eight keyboard controls and only keeps one answer open', async
   await expect(toggles.first()).toHaveAttribute('aria-expanded', 'true');
   await expect(page.locator('.faq-toggle[aria-expanded="true"]')).toHaveCount(1);
   const firstPanel = page.locator('.faq-item').first().locator('.faq-panel');
+  await expect(firstPanel).toContainText('branding packages start at $1500');
+  await expect(firstPanel.locator('.faq-answer')).toHaveCSS('font-size', '14px');
+  await expect(firstPanel.locator('.faq-answer')).toHaveCSS('line-height', '23px');
+  expect(await page.locator('.faq-item').first().evaluate(item => {
+    const question = item.querySelector('.faq-toggle > span:first-child').getBoundingClientRect();
+    const answer = item.querySelector('.faq-answer').getBoundingClientRect();
+    return answer.top - question.bottom;
+  })).toBeGreaterThanOrEqual(24);
   expect((await firstPanel.textContent()).trim().length).toBeGreaterThan(0);
   expect(await firstPanel.evaluate(panel => panel.getBoundingClientRect().height)).toBeGreaterThan(20);
   await toggles.nth(1).click();
@@ -192,6 +201,11 @@ test('Contact keeps form fields and FAQ answers readable without horizontal over
       await toggle.click();
       await expect(toggle).toHaveAttribute('aria-expanded', 'true');
       await expect(page.locator('.faq-toggle[aria-expanded="true"]')).toHaveCount(1);
+      expect(await toggle.evaluate(button => {
+        const question = button.querySelector('span').getBoundingClientRect();
+        const answer = button.parentElement.querySelector('.faq-answer').getBoundingClientRect();
+        return answer.top - question.bottom;
+      })).toBeGreaterThanOrEqual(24);
       expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     }
     const fieldsFit = await page.locator('.contact form input, .contact form textarea').evaluateAll(fields => fields.every(field => {
@@ -222,4 +236,17 @@ test('Contact headings wait for entry and replay their reveal each time they ret
   await expect(faqHeading).not.toHaveClass(/is-revealed/);
   await faqHeading.scrollIntoViewIfNeeded();
   await expect(faqHeading).toHaveClass(/is-revealed/);
+  const formHeading = page.locator('#contact-heading');
+  await expect(formHeading).not.toHaveClass(/is-revealed/);
+  await formHeading.scrollIntoViewIfNeeded();
+  await expect(formHeading).toHaveClass(/is-revealed/);
+  const timings = await formHeading.evaluate(node => node.getAnimations({ subtree: true }).map(animation => {
+    animation.pause();
+    const { duration, delay } = animation.effect.getTiming();
+    return { duration, delay, easing: getComputedStyle(animation.effect.target).animationTimingFunction };
+  }));
+  expect(timings.length).toBeGreaterThan(1);
+  timings.forEach((timing, index) => expect(timing).toEqual({
+    duration: 400, delay: index * 140, easing: 'cubic-bezier(0.12, 0.23, 0.5, 1)',
+  }));
 });

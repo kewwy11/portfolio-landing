@@ -126,7 +126,7 @@
 
 .service-content {
   display: grid;
-  grid-template-columns: 269px 508px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 269fr) minmax(0, 508fr) minmax(0, 311fr);
   align-items: start;
   gap: 48px;
   padding: 36px 48px 48px;

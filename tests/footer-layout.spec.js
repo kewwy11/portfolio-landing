@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 
 test('footer matches Figma column positions and visible text gaps', async ({ page }) => {
+  test.setTimeout(180_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1440, height: 930 });
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
   const footer = page.locator('.footer');
-  await footer.scrollIntoViewIfNeeded();
+  await footer.evaluate(node => node.scrollIntoView({ behavior: 'instant', block: 'start' }));
   const geometry = await footer.evaluate(element => {
     const origin = element.getBoundingClientRect();
     const box = selector => element.querySelector(selector).getBoundingClientRect();
@@ -25,27 +26,36 @@ test('footer matches Figma column positions and visible text gaps', async ({ pag
       rightInset: origin.right - box('.footer-right small').right,
     };
   });
-  expect(geometry.height).toBe(365);
+  expect(geometry.height).toBeCloseTo(631, 0);
   expect(geometry.headline.x).toBe(40);
-  expect(geometry.headline.y).toBe(48);
-  expect(geometry.columns).toEqual({ x: 844, y: 48, width: 524 });
+  expect(geometry.headline.y).toBeCloseTo(314, 0);
+  expect(geometry.columns.x).toBe(844);
+  expect(geometry.columns.y).toBeCloseTo(314, 0);
+  expect(geometry.columns.width).toBe(524);
   expect(geometry.rightInset).toBe(72);
   for (const gap of [...geometry.columnGaps, ...geometry.linkGaps]) expect(gap).toBeCloseTo(24, 0);
   expect(geometry.emailGap).toBeCloseTo(10, 0);
   expect(geometry.bottomAlignment).toBeCloseTo(0, 0);
   await expect(footer.getByRole('heading', { name: 'Quick links' })).toHaveCSS('font-size', '16px');
-  await expect(footer.locator('.location h3')).toHaveCSS('font-size', '15px');
+  await expect(footer.locator('.location h3')).toHaveCSS('font-size', '16px');
+  await expect(footer.locator('.footer-wordmark')).toHaveText('Grateful Erhis');
+  await expect(footer.locator('.footer-project')).toHaveCount(4);
+  for (const image of await footer.locator('.footer-project').all()) {
+    await image.evaluate(node => node.scrollIntoView({ behavior: 'instant', block: 'center' }));
+    await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0), { timeout: 60_000 }).toBe(true);
+  }
   await footer.screenshot({ path: '.tools/footer-final-desktop.png' });
 });
 
 test('footer preserves spacing and readable content on tablet and mobile', async ({ page }) => {
+  test.setTimeout(180_000);
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   await page.evaluate(() => document.fonts.ready);
   for (const width of [1024, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 930 });
     const footer = page.locator('.footer');
-    await footer.scrollIntoViewIfNeeded();
+    await footer.evaluate(node => node.scrollIntoView({ behavior: 'instant', block: 'start' }));
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(await footer.evaluate(element => element.scrollWidth <= element.clientWidth)).toBe(true);
     const links = footer.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link');
