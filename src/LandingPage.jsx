@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { projects, testimonials, services, heroMedia } from './content.js';
+import { testimonials, services, heroMedia } from './content.js';
 import Media from './Media.jsx';
 import useRevealOnScroll from './useRevealOnScroll.js';
 import RevealHeading from './RevealHeading.jsx';
@@ -8,6 +8,7 @@ import ServiceAccordion from './ServiceAccordion.jsx';
 import Header from './SiteHeader.jsx';
 import Contact from './ContactSection.jsx';
 import Footer from './SiteFooter.jsx';
+import ProjectGallery from './ProjectGallery.jsx';
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
@@ -68,22 +69,8 @@ function Tools() {
 }
 
 function Projects() {
-  const [category, setCategory] = useState('UI/UX');
-  const filtered = projects.filter((project) => project.category === category);
   return <section id="projects" className="section projects" aria-labelledby="projects-heading">
-    <div className="section-heading"><RevealHeading id="projects-heading">Projects</RevealHeading>
-      <div className="filters" role="group" aria-label="Filter projects">
-        {['UI/UX', 'Branding'].map((label) => <button key={label} aria-pressed={category === label} onClick={() => setCategory(label)}>{label}</button>)}
-      </div>
-    </div>
-    <div className="project-grid" aria-live="polite">
-      {filtered.length ? filtered.map((project, index) => <article key={project.id} className={`project project-${index}`}>
-        <div className={`project-image ${project.image || project.video ? '' : 'project-placeholder'}`}>
-          <Media image={project.image} video={project.video} alt={project.alt} loading="lazy" />
-        </div>
-        <div className="project-caption"><RevealHeading as="h3">{project.name}</RevealHeading><ul className="tags" aria-label="Project type"><li>Web</li><li>Dashboard</li></ul></div>
-      </article>) : <div className="empty-projects"><RevealHeading as="h3">More good things on the way.</RevealHeading><p>Branding projects are coming soon.</p><a href="#contact">Let’s create something together ↗</a></div>}
-    </div>
+    <ProjectGallery />
   </section>;
 }
 

@@ -73,7 +73,7 @@ test('menu and footer link between About and the landing page, including direct 
   await expect(page).toHaveURL(/\/about#contact$/);
   await expect(page.getByLabel('Email Address')).toBeInViewport();
   await page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link', { name: 'Projects' }).click();
-  await expect(page).toHaveURL(/\/#projects$/);
+  await expect(page).toHaveURL(/\/projects$/);
   await expect(page.locator('#projects')).toBeInViewport();
   await page.goBack();
   await expect(page).toHaveURL(/\/about#contact$/);

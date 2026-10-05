@@ -43,12 +43,16 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
   await expect(page.getByRole('button', { name: 'Open navigation' })).toBeFocused();
   await page.getByRole('button', { name: 'Open navigation' }).click();
   await menu.getByRole('link', { name: 'Projects' }).click();
+  await expect(page).toHaveURL(/\/projects$/);
   await expect(page.getByRole('navigation', { name: 'Main navigation' })).toHaveCount(0);
   await expect(page.locator('.project')).toHaveCount(4);
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
-  await expect(page.getByText('Branding projects are coming soon.')).toBeVisible();
+  await expect(page.locator('.project')).toHaveCount(4);
+  await expect(page.getByRole('heading', { name: 'Beacon Trust', exact: true })).toBeVisible();
   await page.getByRole('button', { name: 'UI/UX', exact: true }).click();
   await expect(page.locator('.project')).toHaveCount(4);
+  await page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link', { name: 'Services' }).click();
+  await expect(page).toHaveURL(/\/#services$/);
   await page.getByRole('button', { name: '01 Strategy' }).click();
   await expect(page.getByText('Before I design anything, I define the structure', { exact: false })).toBeVisible();
   await page.getByRole('button', { name: '01 Strategy' }).click();

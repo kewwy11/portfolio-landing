@@ -1,6 +1,6 @@
-# Grateful Erhis — Portfolio landing page
+# Grateful Erhis — Portfolio
 
-A responsive React landing page based on the [Figma design](https://www.figma.com/design/aeXUdTNliWZoSMl14fA5Pi/Portfolio?node-id=507-417), built with semantic HTML, plain CSS, JavaScript, and Vite.
+A responsive React portfolio based on the [Figma design](https://www.figma.com/design/aeXUdTNliWZoSMl14fA5Pi/Portfolio?node-id=507-417), built with semantic HTML, plain CSS, JavaScript, and Vite. Home, About, and Projects each have their own page component and share the navigation and footer.
 
 ## Run locally
 
@@ -12,6 +12,8 @@ npm run dev
 ```
 
 Open the local URL printed by Vite (usually http://127.0.0.1:5173).
+
+About is available at `/about` and Projects at `/projects`.
 
 ```sh
 npm run build
@@ -31,20 +33,22 @@ Checks cover desktop, tablet, and mobile widths; loaded images; horizontal overf
 
 ## Content and assets
 
-- `src/App.jsx`: page sections and interactions.
+- `src/App.jsx` and `src/navigation.js`: page routing and navigation links.
+- `src/LandingPage.jsx`, `src/AboutPage.jsx`, and `src/ProjectsPage.jsx`: individual pages.
+- `src/ProjectGallery.jsx` and `src/projects.js`: the shared project gallery and its content.
 - `src/styles.css`: design tokens, layout, and responsive styles.
-- `src/content.js`: projects, testimonials, service descriptions, email, and social URLs.
+- `src/content.js`: testimonials, service descriptions, email, social URLs, and shared media settings.
 - `public/assets/`: local Figma images/icons and bundled fonts with their license files.
 
 The design uses **Gind** for its display text. The supplied Gind font is served from `public/assets/fonts/Gind.otf` so visitors see the intended typeface; its accompanying `exFont-License.txt` is kept beside it. Poppins and DM Mono are also bundled for the other text.
 
-The two lime project blocks are present in the supplied design and remain placeholders. No branding projects or social profile URLs were supplied, so the Branding filter shows an empty state and social names are plain text. Add verified content in `src/content.js`.
+Both project tabs match the supplied designs: UI/UX includes Lumis Dermatologists and Piggyvest, and Branding includes Lumis and Beacon Trust. The two lime blocks in each tab are present in Figma. Update project content in `src/projects.js`. Social profile URLs can be added in `src/content.js`; unconfigured social names remain plain text.
 
 The contact form validates inputs and opens a prefilled email draft using `mailto:`. It requires the visitor to send the draft in their email app; it does not claim to send messages through a backend.
 
 ## Supplying videos
 
-Put MP4 or WebM clips in `public/assets/videos/` and identify which headline, project, or contact slot each clip belongs to. Every slot is ready for a video in `src/content.js`; leave `video` empty for a still image. For a clip named `intro.mp4`, set its slot to `video: 'videos/intro.mp4'`. The reusable `src/Media.jsx` component supports silent looping, playback controls, inline mobile playback, reduced-motion preferences, and an image fallback on loading errors. Clip filenames can be assigned once the video files are supplied.
+Put MP4 or WebM clips in `public/assets/videos/` and identify which headline, project, or contact slot each clip belongs to. Shared media slots are configured in `src/content.js` and project slots in `src/projects.js`; leave `video` empty for a still image. For a clip named `intro.mp4`, set its slot to `video: 'videos/intro.mp4'`. The reusable `src/Media.jsx` component supports silent looping, playback controls, inline mobile playback, reduced-motion preferences, and an image fallback on loading errors. Clip filenames can be assigned once the video files are supplied.
 
 ## GitHub
 
