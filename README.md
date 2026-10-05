@@ -1,6 +1,6 @@
 # Grateful Erhis — Portfolio
 
-A responsive React portfolio based on the [Figma design](https://www.figma.com/design/aeXUdTNliWZoSMl14fA5Pi/Portfolio?node-id=507-417), built with semantic HTML, plain CSS, JavaScript, and Vite. Home, About, and Projects each have their own page component and share the navigation and footer.
+A responsive React portfolio based on the [Figma design](https://www.figma.com/design/aeXUdTNliWZoSMl14fA5Pi/Portfolio?node-id=507-417), built with semantic HTML, plain CSS, JavaScript, and Vite. Home, About, Projects, and Contact each have their own page component and share the navigation and footer.
 
 ## Run locally
 
@@ -13,7 +13,7 @@ npm run dev
 
 Open the local URL printed by Vite (usually http://127.0.0.1:5173).
 
-About is available at `/about` and Projects at `/projects`.
+About is available at `/about`, Projects at `/projects`, and Contact at `/contact`.
 
 ```sh
 npm run build
@@ -34,8 +34,9 @@ Checks cover desktop, tablet, and mobile widths; loaded images; horizontal overf
 ## Content and assets
 
 - `src/App.jsx` and `src/navigation.js`: page routing and navigation links.
-- `src/LandingPage.jsx`, `src/AboutPage.jsx`, and `src/ProjectsPage.jsx`: individual pages.
+- `src/LandingPage.jsx`, `src/AboutPage.jsx`, `src/ProjectsPage.jsx`, and `src/ContactPage.jsx`: individual pages.
 - `src/ProjectGallery.jsx` and `src/projects.js`: the shared project gallery and its content.
+- `src/ContactSection.jsx`: the shared inquiry form; `src/FaqSection.jsx` and `src/contact.js`: the Contact page FAQ and its Figma content.
 - `src/styles.css`: design tokens, layout, and responsive styles.
 - `src/content.js`: testimonials, service descriptions, email, social URLs, and shared media settings.
 - `public/assets/`: local Figma images/icons and bundled fonts with their license files.

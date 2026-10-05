@@ -76,7 +76,7 @@ test('Projects matches the desktop layout and includes both populated project ca
   expect(geometry.images[1]).toEqual({ x: 730, y: 272, width: 670, height: 500 });
   expect(geometry.images[2].height).toBeCloseTo(500, 1);
   expect(geometry.images[2].y).toBe(geometry.images[3].y);
-  expect(geometry.footer.y).toBeGreaterThanOrEqual(geometry.gridEnd);
+  expect(geometry.footer.y - geometry.gridEnd).toBeCloseTo(68, 1);
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
   await expectGallery(page, 'Branding');
   const brandSizes = await page.locator('.project-image').evaluateAll(images => images.map(image => {
@@ -115,12 +115,12 @@ test('Projects supports direct reload, a trailing slash, local links, and cross-
   await expect(footer.getByRole('link', { name: 'About', exact: true })).toHaveAttribute('href', '/about');
   await expect(footer.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', '/#home');
   await expect(footer.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute('href', '/#services');
-  await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/#contact');
+  await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
   await page.getByRole('button', { name: 'Open navigation' }).click();
   const menu = page.getByRole('navigation', { name: 'Main navigation' });
   await expect(menu.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('href', '#projects');
   await expect(menu.getByRole('link', { name: 'Proof', exact: true })).toHaveAttribute('href', '/#proof');
-  await expect(menu.getByRole('link', { name: 'Let’s Talk', exact: true })).toHaveAttribute('href', '/#contact');
+  await expect(menu.getByRole('link', { name: 'Let’s Talk', exact: true })).toHaveAttribute('href', '/contact');
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
   await footer.getByRole('link', { name: 'Projects', exact: true }).click();
@@ -138,7 +138,7 @@ test('Projects supports direct reload, a trailing slash, local links, and cross-
   await expect(page).toHaveURL(/\/projects$/);
   await expect(page.locator('.projects-page')).toBeVisible();
   await footer.getByRole('link', { name: 'Contact', exact: true }).click();
-  await expect(page).toHaveURL(/\/#contact$/);
+  await expect(page).toHaveURL(/\/contact$/);
   await expect(page.getByLabel('Email Address')).toBeInViewport();
   await footer.getByRole('link', { name: 'Projects', exact: true }).click();
   await expect(page).toHaveURL(/\/projects$/);
@@ -185,6 +185,12 @@ test('both project categories fit tablet and narrow screens without clipping cap
       }
     }
     await expect(page.locator('.footer')).toHaveCount(1);
+    const footerGap = await page.evaluate(() => {
+      const footer = document.querySelector('.footer').getBoundingClientRect();
+      const gallery = document.querySelector('.project-grid').getBoundingClientRect();
+      return footer.top - gallery.bottom;
+    });
+    expect(footerGap).toBeCloseTo(width <= 760 ? 64 : 68, 1);
   }
 });
 

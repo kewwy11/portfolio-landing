@@ -5,7 +5,9 @@ import LineRevealHeading from './LineRevealHeading.jsx';
 import TalkButton from './TalkButton.jsx';
 import './contact-fields.css';
 
-export default function Contact() {
+const defaultHeading = 'Want to scale your business with a website or an app that converts, create a memorable brand, find your target market, or give your product an entirely different direction? Don’t be a stranger.';
+
+export default function Contact({ heading = defaultHeading }) {
   const [status, setStatus] = useState('');
   function submit(event) {
     event.preventDefault();
@@ -16,7 +18,7 @@ export default function Contact() {
     setStatus('Your email app will open with your inquiry. Send it there to get in touch, or email me using the link below.');
   }
   return <section className="section contact" id="contact" aria-labelledby="contact-heading">
-    <div className="contact-copy"><LineRevealHeading id="contact-heading">Want to scale your business with a website or an app that converts, create a memorable brand, find your target market, or give your product an entirely different direction? Don’t be a stranger.</LineRevealHeading>
+    <div className="contact-copy"><LineRevealHeading id="contact-heading">{heading}</LineRevealHeading>
       <form onSubmit={submit}>
         <label htmlFor="email"><span className="square" />Email Address</label><input id="email" name="email" type="email" autoComplete="email" placeholder="robinhood@gmail.com" required maxLength="254" />
         <label htmlFor="name"><span className="square" />Name</label><input id="name" name="name" autoComplete="name" placeholder="Jane Doe" required maxLength="100" />

@@ -1,0 +1,25 @@
+.contact-shell { width: 100%; max-width: 1440px; margin-inline: auto; padding: 32px 40px; display: flex; flex-direction: column; gap: 64px; }
+.contact-shell > .header { height: 22px; }
+.contact-shell .wordmark { line-height: 22px; }
+.contact-page h1 { font-family: var(--display); font-size: 96px; font-weight: 400; line-height: 106px; text-transform: uppercase; }
+.contact-page .contact { width: 100%; max-width: none; padding: 0; margin: 0; grid-template-columns: minmax(0, 608fr) minmax(0, 732fr); }
+.contact-page .contact h2 { font-size: 32px; line-height: 48px; }
+.contact-page .contact h2 .line-reveal-source { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.contact-page .contact h2 .line-reveal-text { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.contact-page .contact h2 .line-reveal-mask:last-child { box-sizing: content-box; padding-bottom: .25em; }
+.contact-page .contact label { gap: 5px; line-height: 11px; }
+.contact-page .contact .square { margin-right: 0; }
+.contact-page .contact form :is(input, textarea) { height: 44px; min-height: 44px; padding: 9.5px 10px; }
+.contact-page .contact form textarea { margin-bottom: 24px; }
+.contact-page .contact .talk-button { display: block; height: 43px; margin-top: 0; }
+
+@media (max-width: 1200px) {
+  .contact-page h1 { font-size: 7vw; line-height: 1.104167; }
+  .contact-page .contact h2 { font-size: 25px; line-height: 37.5px; }
+}
+@media (max-width: 760px) {
+  .contact-shell { padding: 27px 20px 32px; gap: 40px; }
+  .contact-page h1 { font-size: clamp(22px, 6.6vw, 50px); }
+  .contact-page .contact { grid-template-columns: 1fr; gap: 32px; }
+  .contact-page .contact h2 { font-size: 25px; line-height: 37.5px; }
+}

@@ -1,0 +1,26 @@
+.faq { width: 100%; }
+.faq h2 { font-size: 64px; line-height: 71px; letter-spacing: -.64px; text-align: center; }
+.faq h2 .heading-text { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.faq-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: start; gap: 16px 20px; margin-top: 24px; }
+.faq-item { --faq-duration: 450ms; --faq-ease: cubic-bezier(.22, 1, .36, 1); min-width: 0; border-bottom: 1px solid #ff99d8; }
+.faq-toggle { display: flex; align-items: center; justify-content: space-between; width: 100%; gap: 10px; padding: 24px 10px; background: transparent; color: var(--body); text-align: left; font-size: 16px; line-height: 24px; letter-spacing: -.16px; }
+.faq-toggle > span:first-child { min-width: 0; text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.faq-icon { position: relative; flex: 0 0 24px; width: 24px; height: 24px; }
+.faq-icon img { position: absolute; inset: 0; transition: opacity var(--faq-duration) var(--faq-ease), transform var(--faq-duration) var(--faq-ease); }
+.faq-minus { opacity: 0; transform: rotate(-90deg) scale(.8); }
+.faq-item.is-open .faq-plus { opacity: 0; transform: rotate(90deg) scale(.8); }
+.faq-item.is-open .faq-minus { opacity: 1; transform: rotate(0deg) scale(1); }
+.faq-panel { display: grid; grid-template-rows: 0fr; visibility: hidden; transition: grid-template-rows var(--faq-duration) var(--faq-ease), visibility 0s var(--faq-duration); }
+.faq-item.is-open .faq-panel { grid-template-rows: 1fr; visibility: visible; transition: grid-template-rows var(--faq-duration) var(--faq-ease), visibility 0s; }
+.faq-panel-clip { min-height: 0; overflow: hidden; }
+.faq-answer { padding: 0 10px 24px; color: #7f6c72; font-size: 16px; line-height: 27px; text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+
+@media (max-width: 760px) {
+  .faq h2 { font-size: 48px; line-height: 53px; letter-spacing: -.48px; }
+  .faq-list { grid-template-columns: 1fr; }
+  .faq-toggle { padding-block: 20px; font-size: 15px; }
+  .faq-answer { font-size: 15px; line-height: 25px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faq-icon img, .faq-panel, .faq-item.is-open .faq-panel { transition: none; }
+}

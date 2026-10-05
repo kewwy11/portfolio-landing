@@ -2,14 +2,17 @@ import React, { useEffect } from 'react';
 import LandingPage from './LandingPage.jsx';
 import AboutPage from './AboutPage.jsx';
 import ProjectsPage from './ProjectsPage.jsx';
-import { isAboutPage, isProjectsPage } from './navigation.js';
+import ContactPage from './ContactPage.jsx';
+import { isAboutPage, isProjectsPage, isContactPage } from './navigation.js';
 
 export default function App() {
   const about = isAboutPage();
   const projects = isProjectsPage();
+  const contact = isContactPage();
   useEffect(() => {
     document.title = about ? 'About — Grateful Erhis'
-      : projects ? 'Projects — Grateful Erhis' : 'Grateful Erhis — Visual Designer';
+      : projects ? 'Projects — Grateful Erhis'
+        : contact ? 'Contact — Grateful Erhis' : 'Grateful Erhis — Visual Designer';
     if (!window.location.hash) return;
     let mounted = true;
     let frame;
@@ -24,6 +27,6 @@ export default function App() {
       });
     });
     return () => { mounted = false; cancelAnimationFrame(frame); };
-  }, [about, projects]);
-  return about ? <AboutPage /> : projects ? <ProjectsPage /> : <LandingPage />;
+  }, [about, projects, contact]);
+  return about ? <AboutPage /> : projects ? <ProjectsPage /> : contact ? <ContactPage /> : <LandingPage />;
 }

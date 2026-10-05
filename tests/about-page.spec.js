@@ -70,14 +70,14 @@ test('menu and footer link between About and the landing page, including direct 
   await expect(page.locator('.about-page')).toBeVisible();
   await page.getByRole('button', { name: 'Open navigation' }).click();
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Let’s Talk' }).click();
-  await expect(page).toHaveURL(/\/about#contact$/);
+  await expect(page).toHaveURL(/\/contact$/);
   await expect(page.getByLabel('Email Address')).toBeInViewport();
   await page.getByRole('navigation', { name: 'Footer navigation' }).getByRole('link', { name: 'Projects' }).click();
   await expect(page).toHaveURL(/\/projects$/);
   await expect(page.locator('#projects')).toBeInViewport();
   await page.goBack();
-  await expect(page).toHaveURL(/\/about#contact$/);
-  await expect(page.locator('.about-page')).toBeVisible();
+  await expect(page).toHaveURL(/\/contact$/);
+  await expect(page.locator('.contact-page')).toBeVisible();
   await page.locator('.wordmark').click();
   await expect(page).toHaveURL(/\/#home$/);
   await expect(page.locator('.hero')).toHaveCount(1);
