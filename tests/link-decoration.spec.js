@@ -48,7 +48,7 @@ test('links stay undecorated while menu separators, hover motion, and keyboard f
   await page.getByRole('button', { name: 'Close navigation' }).click();
 
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
-  await expect(page.locator('.project')).toHaveCount(4);
+  await expect(page.locator('.project')).toHaveCount(2);
   await expect(page.getByRole('heading', { name: 'Beacon Trust', exact: true })).toBeVisible();
   expect(await decoratedLinks()).toEqual([]);
 });

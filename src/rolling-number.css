@@ -1,0 +1,6 @@
+.rolling-number { --number-height: 1em; display: inline-block; flex: none; height: var(--number-height); overflow: hidden; vertical-align: middle; }
+.number-track { display: flex; flex-direction: column; transition: transform 400ms cubic-bezier(.22, 1, .36, 1); }
+.number-track > span { display: block; flex: none; height: var(--number-height); line-height: var(--number-height); }
+.number-hover:is(:hover, :focus-visible) .number-track { transform: translateY(-50%); }
+.menu-link-number { --number-height: 24px; }
+@media (prefers-reduced-motion: reduce) { .number-track { transition: none; } }

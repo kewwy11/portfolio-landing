@@ -1,5 +1,6 @@
 import React, { useId } from 'react';
 import RevealHeading from './RevealHeading.jsx';
+import RollingNumber from './RollingNumber.jsx';
 import './service-accordion.css';
 
 export default function ServiceAccordion({ service, index, open = false, onToggle }) {
@@ -10,15 +11,16 @@ export default function ServiceAccordion({ service, index, open = false, onToggl
   return <article className={`service-accordion${open ? ' is-open' : ''}`}>
     <button
       id={toggleId}
-      className="service-toggle"
+      className="service-toggle number-hover"
       type="button"
       aria-expanded={open}
       aria-controls={panelId}
+      aria-label={`${String(index + 1).padStart(2, '0')} ${service.name}`}
       onClick={onToggle}
     >
       <span className="service-toggle-label">
         <span className="service-toggle-square" aria-hidden="true" />
-        <span className="service-toggle-number">{String(index + 1).padStart(2, '0')}</span>
+        <RollingNumber value={String(index + 1).padStart(2, '0')} className="service-toggle-number" />
         <span>{service.name}</span>
       </span>
       <span className="service-toggle-icon" aria-hidden="true">
@@ -37,7 +39,9 @@ export default function ServiceAccordion({ service, index, open = false, onToggl
     >
       <div className="service-panel-clip">
         <div className="service-content">
-          <div className="service-visual" aria-hidden="true" />
+          <div className={`service-visual service-visual-${service.id}`} aria-hidden="true">
+            <img src={`${import.meta.env.BASE_URL}assets/${service.image}`} alt="" loading="lazy" />
+          </div>
           <div className="service-content-copy">
             <RevealHeading as="h3" className="service-content-title" lines={service.title} />
             <div className="service-paragraphs">

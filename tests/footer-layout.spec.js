@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 test('footer matches Figma column positions and visible text gaps', async ({ page }) => {
   test.setTimeout(180_000);
@@ -17,6 +17,8 @@ test('footer matches Figma column positions and visible text gaps', async ({ pag
     };
     return {
       height: origin.height,
+      width: origin.width,
+      mastheadHeight: box('.footer-masthead').height,
       headline: { x: box('.footer-heading').left - origin.left, y: box('.footer-heading').top - origin.top },
       columns: { x: box('.footer-columns').left - origin.left, y: box('.footer-columns').top - origin.top, width: box('.footer-columns').width },
       columnGaps: [...element.querySelectorAll('.footer-column')].flatMap(gaps),
@@ -26,11 +28,11 @@ test('footer matches Figma column positions and visible text gaps', async ({ pag
       rightInset: origin.right - box('.footer-right small').right,
     };
   });
-  expect(geometry.height).toBeCloseTo(631, 0);
+  expect(geometry.height).toBeCloseTo(geometry.mastheadHeight + 445, 0);
   expect(geometry.headline.x).toBe(40);
-  expect(geometry.headline.y).toBeCloseTo(314, 0);
-  expect(geometry.columns.x).toBe(844);
-  expect(geometry.columns.y).toBeCloseTo(314, 0);
+  expect(geometry.headline.y).toBeCloseTo(geometry.mastheadHeight + 128, 0);
+  expect(geometry.columns.x).toBe(geometry.width - 596);
+  expect(geometry.columns.y).toBeCloseTo(geometry.mastheadHeight + 128, 0);
   expect(geometry.columns.width).toBe(524);
   expect(geometry.rightInset).toBe(72);
   for (const gap of [...geometry.columnGaps, ...geometry.linkGaps]) expect(gap).toBeCloseTo(24, 0);

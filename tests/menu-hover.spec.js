@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 test('menu hover rolls numbers, reveals the Figma arrow, and resets on exit', async ({ page }) => {
   await page.goto('/');

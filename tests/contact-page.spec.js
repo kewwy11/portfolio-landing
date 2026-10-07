@@ -33,7 +33,7 @@ test('Contact matches the desktop design with its own heading, shared form, FAQ,
   await expect(page.locator('.faq-toggle')).toHaveCount(8);
   await expect(page.locator('.faq-toggle[aria-expanded="true"]')).toHaveCount(0);
   await page.locator('.contact-image').scrollIntoViewIfNeeded();
-  await expect.poll(() => page.locator('.contact-image').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  await expect.poll(() => page.locator('.contact-image').evaluate(video => video.readyState >= 2 && video.videoWidth > 0)).toBe(true);
   const geometry = await page.evaluate(() => {
     const box = selector => {
       const { x, y, width, height } = document.querySelector(selector).getBoundingClientRect();
@@ -195,7 +195,7 @@ test('Contact keeps form fields and FAQ answers readable without horizontal over
     await page.setViewportSize({ width, height: 1000 });
     await openContact(page);
     await page.locator('.contact-image').scrollIntoViewIfNeeded();
-    await expect.poll(() => page.locator('.contact-image').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+    await expect.poll(() => page.locator('.contact-image').evaluate(video => video.readyState >= 2 && video.videoWidth > 0)).toBe(true);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     for (const toggle of await page.locator('.faq-toggle').all()) {
       await toggle.click();

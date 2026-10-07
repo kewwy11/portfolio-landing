@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 test('About includes the three story pairs, experience, shared contact, and footer in the correct order', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -53,7 +53,7 @@ test('About includes the three story pairs, experience, shared contact, and foot
     await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
   }
   await page.locator('.contact-image').scrollIntoViewIfNeeded();
-  await expect.poll(() => page.locator('.contact-image').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+  await expect.poll(() => page.locator('.contact-image').evaluate(video => video.readyState >= 2 && video.videoWidth > 0)).toBe(true);
   expect(errors).toEqual([]);
   await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
   await page.screenshot({ path: '.tools/about-desktop.png', fullPage: true });
@@ -109,7 +109,7 @@ test('About adapts to tablet and narrow screens without overflow or missing cont
     await expect(page.locator('.experience-row').first()).toHaveCSS('line-height', width <= 760 ? '21px' : '24px');
     if (width === 390) {
       await page.locator('.contact-image').scrollIntoViewIfNeeded();
-      await expect.poll(() => page.locator('.contact-image').evaluate(image => image.complete && image.naturalWidth > 0)).toBe(true);
+      await expect.poll(() => page.locator('.contact-image').evaluate(video => video.readyState >= 2 && video.videoWidth > 0)).toBe(true);
       await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));
       await page.screenshot({ path: '.tools/about-mobile.png', fullPage: true });
     }

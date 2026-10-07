@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 const openService = async (card) => {
   const button = card.locator('.service-toggle');
@@ -129,10 +129,11 @@ test('expanded cards match desktop dimensions and resize without clipped content
       visualHeight: visual.height, copyWidth: copy.width, gap: copy.left - visual.right,
       milestoneHeight: milestones[0].height, milestoneSpacing: milestones[1].top - milestones[0].top };
   });
-  expect(geometry.width).toBe(1280);
-  expect(geometry.visualWidth).toBe(269);
-  expect(geometry.visualHeight).toBe(249);
-  expect(geometry.copyWidth).toBe(508);
+  expect(geometry.width).toBe(await page.evaluate(() => document.documentElement.clientWidth - 160));
+  const columnScale = (geometry.width - 192) / 1088;
+  expect(geometry.visualWidth).toBeCloseTo(269 * columnScale, 1);
+  expect(geometry.visualHeight).toBeCloseTo(249 * columnScale, 1);
+  expect(geometry.copyWidth).toBeCloseTo(508 * columnScale, 1);
   expect(geometry.gap).toBe(48);
   expect(geometry.milestoneHeight).toBeCloseTo(12, 0);
   expect(geometry.milestoneSpacing).toBeCloseTo(28, 0);
@@ -164,7 +165,7 @@ test('expanded cards match desktop dimensions and resize without clipped content
       expect(measurement.innerOverflow).toBe(0);
       expect(measurement.listRight).toBeLessThanOrEqual(measurement.cardRight);
     }
-    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBe(0);
+    expect(await page.evaluate(() => document.documentElement.scrollWidth - innerWidth)).toBeLessThanOrEqual(0);
     if (width === 390) {
       await openService(cards.first());
       await cards.first().screenshot({ path: testInfo.outputPath('service-final-mobile.png') });

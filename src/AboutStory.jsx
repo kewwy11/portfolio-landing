@@ -21,8 +21,8 @@ function ease(progress) {
 }
 const story = [
   {
-    image: 'about-story-memory.png', width: 538, minHeight: 288,
-    alt: 'Two friends sitting together outdoors in warm evening light',
+    image: 'about-story-design-board.png', width: 538, minHeight: 288,
+    alt: 'Lumis product design screens arranged on a dark design board',
     groups: [
       ['How it made you feel, how alive you probably felt for the first time in a long time, the little giggles you let out when you remember it.',
         'But if we are being honest, you really can’t remember most details of the day but you would never forget the experience.'],

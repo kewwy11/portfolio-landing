@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 const viewports = [
   { width: 320, height: 568 }, { width: 390, height: 844 },

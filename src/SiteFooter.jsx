@@ -5,6 +5,17 @@ import { navigationHref } from './navigation.js';
 import './footer.css';
 import FooterMasthead from './FooterMasthead.jsx';
 
+function FooterLink({ children, ...props }) {
+  return <a {...props} className="footer-rolling-link">
+    <span className="footer-link-window">
+      <span className="footer-link-track">
+        <span>{children}</span>
+        <span aria-hidden="true">{children}</span>
+      </span>
+    </span>
+  </a>;
+}
+
 export default function Footer() {
   return <footer className="footer site-footer">
     <FooterMasthead />
@@ -12,10 +23,10 @@ export default function Footer() {
     <div className="footer-brand"><RevealHeading as="p" className="footer-heading" lines={['Growing B2C', 'startups and', 'businesses']} /><div className="footer-email"><p>Reach out to me via email</p><a href={`mailto:${email}`}>{email}</a></div></div>
     <div className="footer-right"><div className="footer-columns">
       <div className="footer-column location"><RevealHeading as="h3">Location</RevealHeading><p>Currently based in Lagos, Nigeria.<br />Open to remote roles or relocation</p></div>
-      <nav className="footer-column" aria-label="Footer navigation"><RevealHeading as="h3">Quick links</RevealHeading><div className="footer-links">{navigation.map(([label, id]) => <a href={navigationHref(id)} key={id}>{label}</a>)}</div></nav>
+      <nav className="footer-column" aria-label="Footer navigation"><RevealHeading as="h3">Quick links</RevealHeading><div className="footer-links">{navigation.map(([label, id]) => <FooterLink href={navigationHref(id)} key={id}>{label}</FooterLink>)}</div></nav>
       <div className="footer-column"><RevealHeading as="h3">Social media</RevealHeading><div className="footer-links">{socials.map(({name, url}) => {
         const label = name === 'X (Twitter)' ? 'X(Twitter)' : name;
-        return url ? <a key={name} href={url} target="_blank" rel="noreferrer">{label}</a> : <span className="social-label" key={name}>{label}</span>;
+        return url ? <FooterLink key={name} href={url} target="_blank" rel="noopener noreferrer">{label}</FooterLink> : <span className="social-label" key={name}>{label}</span>;
       })}</div></div>
     </div><small>©2026 Grateful Erhis</small></div>
     </div>

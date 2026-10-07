@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { menuNavigation, socials } from './content.js';
 import { navigationHref } from './navigation.js';
+import RollingNumber from './RollingNumber.jsx';
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
@@ -71,7 +72,7 @@ export default function Header() {
         <nav id="main-navigation" className="menu-navigation" aria-label="Main navigation">
           {menuNavigation.map(([label, id], index) => <a key={id} href={navigationHref(id)} onClick={() => setOpen(false)}>
             <span className="menu-link-copy"><img className="menu-link-arrow" src={asset('menu/arrow.svg')} alt="" /><span className="menu-link-label">{label}</span></span>
-            <span className="menu-link-number" aria-hidden="true"><span className="menu-number-track"><span>0{index + 1}</span><span>0{index + 1}</span></span></span>
+            <RollingNumber value={String(index + 1).padStart(2, '0')} className="menu-link-number" trackClassName="menu-number-track" />
           </a>)}
         </nav>
         <div className="menu-socials" aria-label="Social media">

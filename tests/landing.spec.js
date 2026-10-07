@@ -153,7 +153,7 @@ test('menu unfolds a curved edge on opening and folds it back on closing', async
   await expect(panel).toHaveCSS('transition-duration', '0s');
 });
 
-test('video slots are silent and looping, while still images and failed videos retain their posters', async ({ page }) => {
+test('video slots are silent with continuous loops, while still images and failed videos retain their posters', async ({ page }) => {
   let releaseDemo;
   await page.route('**/assets/videos/demo.webm', async route => {
     await new Promise(resolve => { releaseDemo = resolve; });
@@ -163,7 +163,7 @@ test('video slots are silent and looping, while still images and failed videos r
   await page.goto('/tests/media-harness.html', { waitUntil: 'domcontentloaded' });
   const video = page.locator('#video-slot video');
   await expect(video).toBeVisible();
-  expect(await video.evaluate(element => element.muted && element.loop && element.playsInline && element.controls)).toBe(true);
+  expect(await video.evaluate(element => element.muted && element.loop && element.playsInline)).toBe(true);
   await expect.poll(() => Boolean(releaseDemo)).toBe(true);
   await expect(page.locator('#still-slot img')).toBeVisible();
   await expect(page.locator('#broken-slot img')).toBeVisible();

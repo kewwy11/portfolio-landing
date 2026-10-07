@@ -133,10 +133,18 @@
 }
 
 .service-visual {
+  position: relative;
+  overflow: hidden;
   width: 100%;
   aspect-ratio: 269 / 249;
-  background: #c9d93f;
+  background: white;
 }
+
+.service-visual img { position: absolute; max-width: none; object-fit: cover; }
+.service-visual-strategy img { width: 114.4981%; height: 164.6586%; left: 0; top: -38.5542%; }
+.service-visual-branding img { width: 123.7918%; height: 100%; left: -11.8959%; top: 0; }
+.service-visual-product-design img { width: 138.6617%; height: 100%; left: -19.3309%; top: 0; }
+.service-visual-development img, .service-visual-graphics img { width: 100%; height: 144.1767%; left: 0; top: -44.1767%; }
 
 .service-content-copy {
   min-width: 0;

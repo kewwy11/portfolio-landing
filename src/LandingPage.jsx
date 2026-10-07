@@ -76,9 +76,16 @@ function Projects() {
 
 function TestimonialCard({ item, index }) {
   const { ref, revealed } = useRevealOnScroll();
-  return <div ref={ref} className="testimonial-slot"><figure className={`testimonial review-reveal${revealed ? ' is-revealed' : ''}`} style={{ '--review-delay': `${index * 120}ms` }}>
+  const avatar = useRef(null);
+  const [imageReady, setImageReady] = useState(false);
+  useEffect(() => {
+    let mounted = true;
+    avatar.current?.decode().catch(() => {}).then(() => { if (mounted) setImageReady(true); });
+    return () => { mounted = false; };
+  }, [item.image]);
+  return <div ref={ref} className="testimonial-slot"><figure data-image-ready={imageReady} className={`testimonial review-reveal${revealed && imageReady ? ' is-revealed' : ''}`} style={{ '--review-delay': `${index * 120}ms` }}>
     <blockquote>{item.quote}</blockquote>
-    <figcaption><img src={asset('imgEllipse2.svg')} alt="" loading="lazy" width="50" height="50" />
+    <figcaption><span className={`review-avatar${item.logo ? ' review-avatar-logo' : ''}`}><img ref={avatar} src={asset(item.image)} alt="" loading="eager" decoding="async" width={item.logo ? undefined : 50} height={item.logo ? undefined : 50} /></span>
       <span className="review-author"><strong>{item.name}</strong><span className="review-role">{item.role}</span></span>
     </figcaption>
   </figure></div>;
@@ -87,7 +94,7 @@ function TestimonialCard({ item, index }) {
 function Testimonials() {
   return <section id="proof" className="section testimonials" aria-labelledby="proof-heading">
     <RevealHeading id="proof-heading" lines={['Still in doubt?', 'Here’s proof...']} />
-    <div className="testimonial-grid">{testimonials.map((item, index) => <TestimonialCard key={item.name} item={item} index={index} />)}</div>
+    <div className="testimonial-grid">{[testimonials[2], testimonials[0], testimonials[1]].map((item, index) => <TestimonialCard key={item.name} item={item} index={index} />)}</div>
   </section>;
 }
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 const expectSettled = async (element) => {
   const lines = element.locator('.heading-text');

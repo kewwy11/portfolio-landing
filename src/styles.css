@@ -114,12 +114,16 @@ h2 { font-family: var(--display); text-transform: uppercase; font-weight: 400; f
 .testimonial-slot { display: flex; min-width: 0; }
 .testimonial { padding: 32px 32px 24px; min-height: 403px; background: var(--lime); display: flex; flex-direction: column; gap: 24px; }
 .testimonial-slot > .testimonial { flex: 1; min-width: 0; }
-.testimonial-slot:nth-child(2) .testimonial { padding-inline: 24px; }
+.testimonial-slot:nth-child(3) .testimonial { padding-inline: 24px; }
 .testimonial blockquote { flex: 1; color: #604d53; font-size: 16px; line-height: 27px; }
 .testimonial figcaption { display: flex; gap: 10px; align-items: center; }
-.testimonial figcaption > span { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.testimonial figcaption > .review-author { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
 .review-author > * { display: block; line-height: 1.5; text-box-trim: trim-both; text-box-edge: cap alphabetic; }
 .testimonial figcaption > img { flex: none; }
+.review-avatar { display: grid; place-items: center; width: 50px; height: 50px; flex: none; border-radius: 50%; overflow: hidden; }
+.review-avatar > img { width: 50px; height: 50px; object-fit: cover; }
+.review-avatar-logo { background: white; }
+.review-avatar-logo > img { width: 64.85%; height: 65%; object-fit: contain; }
 .testimonial strong { font-size: 20px; font-weight: 500; color: #2c2527; }
 .testimonial figcaption span span { color: #7f6c72; font-size: 16px; }
 .review-reveal { clip-path: inset(100% 0 0 0); }

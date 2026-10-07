@@ -1,22 +1,27 @@
-import { test, expect } from '@playwright/test';
+import { test, expect } from './browser-test.js';
 
 const uiProjects = [
-  { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'], image: 'imgFrame14.png' },
-  { name: 'Piggyvest', tags: ['App', 'Mobile', 'Dashboard'], image: 'imgFrame15.png' },
-  { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'] },
-  { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'] },
+  { name: 'Coming soon', tags: [], image: 'home/project-coming-soon.jpg' },
+  { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'], image: 'home/project-lumis.jpg' },
+  { name: 'Piggyvest', tags: ['App', 'Mobile', 'Dashboard'], image: 'home/project-piggyvest.jpg' },
 ];
 const brandProjects = [
-  { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], image: 'project-brand-lumis.png' },
-  { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], image: 'project-brand-beacon.png' },
-  { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'] },
-  { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'] },
+  { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], video: true },
+  { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], image: 'home/project-beacon.png' },
 ];
 
 async function expectGallery(page, category) {
-  const expected = category === 'Branding' ? brandProjects : uiProjects;
+  const home = !new URL(page.url()).pathname.startsWith('/projects');
+  const expected = home ? (category === 'Branding' ? [
+    { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], video: true },
+    { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], image: 'home/project-beacon.png' },
+  ] : [
+    { name: 'Coming soon', tags: [], image: 'home/project-coming-soon.jpg' },
+    { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'], image: 'home/project-lumis.jpg' },
+    { name: 'Piggyvest', tags: ['App', 'Mobile', 'Dashboard'], image: 'home/project-piggyvest.jpg' },
+  ]) : category === 'Branding' ? brandProjects : uiProjects;
   const cards = page.locator('.project-grid .project');
-  await expect(cards).toHaveCount(4);
+  await expect(cards).toHaveCount(expected.length);
   await expect(page.getByRole('button', { name: category, exact: true })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.getByRole('button', { name: category === 'Branding' ? 'UI/UX' : 'Branding', exact: true })).toHaveAttribute('aria-pressed', 'false');
   for (let index = 0; index < expected.length; index++) {
@@ -24,13 +29,15 @@ async function expectGallery(page, category) {
     await expect(card.locator('.project-caption h3')).toHaveText(expected[index].name);
     await expect(card.locator('.tags li')).toHaveText(expected[index].tags);
     if (expected[index].image) {
-      const image = card.locator('.project-image img');
+      const image = card.locator('.project-image img:not(.project-hover-image)');
       await expect(image).toHaveAttribute('src', new RegExp('/assets/' + expected[index].image.replaceAll('.', '\\.') + '$'));
       await image.scrollIntoViewIfNeeded();
       await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0), {
         message: `Load ${expected[index].image}`,
       }).toBe(true);
       await expect(image).toHaveAttribute('alt', /\S/);
+    } else if (expected[index].video) {
+      await expect(card.locator('video')).toHaveAttribute('src', /\/assets\/videos\/lumis-brand-reel\.mp4$/);
     } else {
       await expect(card.locator('.project-placeholder')).toHaveCount(1);
     }
@@ -64,7 +71,7 @@ test('Projects matches the desktop layout and includes both populated project ca
       const { x, y, width, height } = image.getBoundingClientRect();
       return { x, y: y + scrollY, width, height };
     });
-    return { wordmark: box('.wordmark'), heading: box('#projects-page-heading'), images,
+    return { contentWidth: document.documentElement.clientWidth, wordmark: box('.wordmark'), heading: box('#projects-page-heading'), images,
       gridEnd: box('.project-grid').y + box('.project-grid').height, footer: box('.footer') };
   });
   expect(geometry.wordmark.x).toBeCloseTo(40, 1);
@@ -72,10 +79,15 @@ test('Projects matches the desktop layout and includes both populated project ca
   expect(geometry.wordmark.height).toBeCloseTo(22, 1);
   expect(geometry.heading.y).toBeCloseTo(118, 1);
   expect(geometry.heading.height).toBeCloseTo(106, 1);
-  expect(geometry.images[0]).toEqual({ x: 40, y: 272, width: 670, height: 500 });
-  expect(geometry.images[1]).toEqual({ x: 730, y: 272, width: 670, height: 500 });
-  expect(geometry.images[2].height).toBeCloseTo(500, 1);
-  expect(geometry.images[2].y).toBe(geometry.images[3].y);
+  const cardWidth = (geometry.contentWidth - 100) / 2;
+  expect(geometry.images[0].x).toBe(40);
+  expect(geometry.images[0].y).toBe(272);
+  expect(geometry.images[0].width).toBeCloseTo(cardWidth, 1);
+  expect(geometry.images[0].height).toBeCloseTo(cardWidth * 500 / 670, 1);
+  expect(geometry.images[1].x).toBeCloseTo(60 + cardWidth, 1);
+  expect(geometry.images[1].width).toBeCloseTo(cardWidth, 1);
+  expect(geometry.images[2].height).toBeCloseTo(cardWidth * 500 / 670, 1);
+  expect(geometry.images[2].y).toBeGreaterThan(geometry.images[0].y + geometry.images[0].height);
   expect(geometry.footer.y - geometry.gridEnd).toBeCloseTo(96, 1);
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
   await expectGallery(page, 'Branding');
@@ -83,10 +95,10 @@ test('Projects matches the desktop layout and includes both populated project ca
     const box = image.getBoundingClientRect();
     return { width: box.width, height: box.height };
   }));
-  expect(brandSizes).toEqual([
-    { width: 670, height: 430 }, { width: 670, height: 373 },
-    { width: 670, height: 421 }, { width: 670, height: 373 },
-  ]);
+  for (const [index, height] of [430, 373].entries()) {
+    expect(brandSizes[index].width).toBeCloseTo(cardWidth, 1);
+    expect(brandSizes[index].height).toBeCloseTo(cardWidth * height / 670, 1);
+  }
   expect(errors).toEqual([]);
 });
 
