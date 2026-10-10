@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 
-test('diagrams draw in order on entry and replay on re-entry', async ({ page }) => {
+test('diagrams draw in order only once per page load', async ({ page }) => {
   await page.goto('/projects/lumis');
   const problem = page.locator('.lumis-bias-diagram');
   const solution = page.locator('.lumis-workflow-diagram');
@@ -19,7 +19,7 @@ test('diagrams draw in order on entry and replay on re-entry', async ({ page }) 
   await expect(solution.locator('.workflow-right-one')).toHaveCSS('animation-delay', '0.195s');
 
   await page.evaluate(() => window.scrollTo(0, 0));
-  await expect(solution).not.toHaveClass(/is-drawing/);
+  await expect(solution).toHaveClass(/is-drawing/);
   await solution.scrollIntoViewIfNeeded();
   await expect(solution).toHaveClass(/is-drawing/);
 });

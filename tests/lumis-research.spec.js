@@ -5,7 +5,7 @@ test('research follows the case study width and section spacing', async ({ page 
   await page.goto('/projects/lumis');
 
   const research = page.locator('#research');
-  const board = research.locator('.lumis-research-board img');
+  const board = research.locator('.lumis-research-board > img');
   await research.scrollIntoViewIfNeeded();
   await expect.poll(() => board.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true);
   await expect(research).toHaveCSS('width', '1127px');

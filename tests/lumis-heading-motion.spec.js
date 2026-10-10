@@ -18,6 +18,10 @@ test('case-study labels and headings slide up together on entry', async ({ page 
   await expect(section.locator('.lumis-label-text')).toHaveCSS('animation-delay', '0s');
   await expect(section.locator('#research-title .heading-text')).toHaveCSS('animation-delay', '0s');
 
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await expect(section.locator('.lumis-animated-heading')).toHaveClass(/is-revealed/);
+  await expect(section.locator('#research-title')).toHaveCSS('font-family', 'Poppins, sans-serif');
+
   await page.setViewportSize({ width: 390, height: 844 });
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
 });

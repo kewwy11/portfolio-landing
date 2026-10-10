@@ -18,6 +18,11 @@ const researchComparison = [
 
 const fitzpatrickColours = ['#f5d5c0', '#e8bd9b', '#d29f76', '#b57e56', '#7d4b32', '#4a2c1d'];
 const monkColours = ['#f6ede4', '#f3e7db', '#f7ead0', '#eadaba', '#d7bd96', '#a07e56', '#825c43', '#604134', '#3a312a', '#292420'];
+const researchBoardTiles = [
+  [34, 92, 305, 186], [380, 27, 467, 249], [800, 51, 299, 100],
+  [35, 255, 175, 165], [383, 277, 152, 147], [559, 277, 207, 153],
+  [839, 184, 258, 264], [130, 399, 430, 200], [618, 451, 188, 103], [824, 473, 275, 118],
+];
 const qualityDecisions = [
   { quality: 'Good image', range: 'Quality 75+', actions: [['Show the finding.', 'standard'], ['Show the finding. Flag for review.', 'standard'], ['Show as uncertain. Flag for review.', 'caution']] },
   { quality: 'Fair image', range: 'Quality 50–74', actions: [['Show the finding. Note the image limits.', 'caution'], ['Show, flagged. Suggest a rescan.', 'caution'], ['Withhold severity. Request a rescan.', 'stop']] },
@@ -42,7 +47,7 @@ const lessons = [
 ];
 
 function OpportunityCard({ card, index }) {
-  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.18, rootMargin: '0px 0px -12% 0px', repeat: true });
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
   const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
   return <div ref={ref} className="opportunity-card-slot">
     <article className={`review-reveal${revealed ? ' is-revealed' : ''}${immediate ? ' motion-disabled' : ''}`} style={{ '--review-delay': `${index * 120}ms` }}>
@@ -54,8 +59,10 @@ function OpportunityCard({ card, index }) {
 export default function LumisCaseStudy() {
   const [activeSection, setActiveSection] = useState('lumis-hero');
   const firstFlowScene = useRef(null);
-  const biasDrawing = useRevealOnScroll({ threshold: 0.2, rootMargin: '0px 0px -20% 0px', repeat: true });
-  const workflowDrawing = useRevealOnScroll({ threshold: 0.16, rootMargin: '0px 0px -20% 0px', repeat: true });
+  const biasDrawing = useRevealOnScroll({ threshold: 0.2, rootMargin: '0px 0px -20% 0px' });
+  const workflowDrawing = useRevealOnScroll({ threshold: 0.16, rootMargin: '0px 0px -20% 0px' });
+  const boardDrawing = useRevealOnScroll({ threshold: 0.12, rootMargin: '0px 0px -18% 0px' });
+  const tonesDrawing = useRevealOnScroll({ threshold: 0.5, rootMargin: '0px 0px -10% 0px' });
   const canDraw = typeof window !== 'undefined' && typeof window.IntersectionObserver === 'function';
 
   useEffect(() => {
@@ -165,7 +172,7 @@ export default function LumisCaseStudy() {
         </header>
         <div className="lumis-problem-body">
           <p className="lumis-problem-copy">Dermatology is taught with photographs. A student learns what eczema looks like by seeing a hundred pictures of eczema. Dermatology textbooks have found images of dark skin making up somewhere between 4% and 18% of the total, and in some books, zero images of common conditions like acne or psoriasis on dark skin at all.</p>
-          <figure className="lumis-bias-figure">
+          <figure className={`lumis-bias-figure ${canDraw && !biasDrawing.reducedMotion ? 'can-draw' : ''} ${biasDrawing.revealed ? 'is-drawing' : ''}`}>
             <div ref={biasDrawing.ref} className={`lumis-bias-diagram ${canDraw && !biasDrawing.reducedMotion ? 'can-draw' : ''} ${biasDrawing.revealed ? 'is-drawing' : ''}`} aria-label="How the blind spot is inherited">
               <div className="bias-card bias-teaching"><strong>Teaching images</strong><span>4–18% dark skin</span></div>
               <img className="bias-arrow arrow-top-one" src={`${base}assets/lumis/diagram-arrow-right.svg`} alt="" />
@@ -280,8 +287,12 @@ export default function LumisCaseStudy() {
         <div className="lumis-section-heading">
           <LumisAnimatedHeading label="Research" title="My findings, exploring through articles and datasets" id="research-title" />
         </div>
-        <figure className="lumis-research-board">
+        <figure ref={boardDrawing.ref} className={`lumis-research-board ${canDraw && !boardDrawing.reducedMotion ? 'can-populate' : ''} ${boardDrawing.revealed ? 'is-populating' : ''}`}>
           <img src={`${base}assets/lumis/research-board.png`} alt="Research board with dermatology datasets, competitor analysis, articles, early workflow ideas and skin tone references" loading="lazy" />
+          {researchBoardTiles.map(([x, y, width, height], index) => <div className="lumis-board-tile" aria-hidden="true" key={index} style={{
+            left: `${x / 1127 * 100}%`, top: `${y / 627 * 100}%`, width: `${width / 1127 * 100}%`, height: `${height / 627 * 100}%`,
+            '--tile-index': index, '--crop-width': `${1127 / width * 100}%`, '--crop-left': `${-x / width * 100}%`, '--crop-top': `${-y / height * 100}%`,
+          }}><div className="lumis-board-tile-face"><img src={`${base}assets/lumis/research-board.png`} alt="" loading="lazy" /></div></div>)}
         </figure>
         <div className="lumis-research-findings">
           <div className="lumis-research-comparison">
@@ -295,13 +306,13 @@ export default function LumisCaseStudy() {
             <p className="lumis-research-source">Assessed from public documentation, demo recordings and user reviews</p>
           </div>
 
-          <div className="lumis-research-tones">
+          <div ref={tonesDrawing.ref} className={`lumis-research-tones ${canDraw && !tonesDrawing.reducedMotion ? 'can-sequence' : ''} ${tonesDrawing.revealed ? 'is-sequencing' : ''}`}>
             <h3>Why the dashboard records Monk, not Fitzpatrick</h3>
             <div className="lumis-tone-scale">
               <h4>Fitzpatrick, 1975</h4>
               <p>Six types. Built to predict how skin burns in the sun, not to describe colour — so it has no official hex values.</p>
               <div className="lumis-tone-scroll"><div className="lumis-fitzpatrick-swatches">
-                {fitzpatrickColours.map((colour, index) => <div className="lumis-tone-swatch" key={colour}><span style={{ backgroundColor: colour }} /><small>{['I', 'II', 'III', 'IV', 'V', 'VI'][index]}</small></div>)}
+                {fitzpatrickColours.map((colour, index) => <div className="lumis-tone-swatch" style={{ '--swatch-index': index }} key={colour}><span style={{ backgroundColor: colour }} /><small>{['I', 'II', 'III', 'IV', 'V', 'VI'][index]}</small></div>)}
                 <span className="lumis-tone-note">Swatches illustrative</span>
               </div></div>
             </div>
@@ -309,7 +320,7 @@ export default function LumisCaseStudy() {
               <h4>Monk Skin Tone, 2022</h4>
               <p>Ten shades with published values. Four of them sit in the dark range, where Fitzpatrick has two.</p>
               <div className="lumis-tone-scroll"><div className="lumis-monk-swatches">
-                {monkColours.map((colour, index) => <div className={`lumis-tone-swatch${index >= 6 ? ' lumis-tone-dark' : ''}`} key={colour}><span style={{ backgroundColor: colour }} /><small>{index + 1}</small></div>)}
+                {monkColours.map((colour, index) => <div className={`lumis-tone-swatch${index >= 6 ? ' lumis-tone-dark' : ''}`} style={{ '--swatch-index': index }} key={colour}><span style={{ backgroundColor: colour }} /><small>{index + 1}</small></div>)}
               </div></div>
             </div>
           </div>

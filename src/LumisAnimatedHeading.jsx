@@ -5,7 +5,6 @@ export default function LumisAnimatedHeading({ label, title, id, as: Tag = 'h2',
   const { ref, revealed, reducedMotion } = useRevealOnScroll({
     threshold: 0.15,
     rootMargin: Tag === 'h1' ? '0px' : '0px 0px -20% 0px',
-    repeat: true,
   });
   const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
 

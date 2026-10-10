@@ -11,7 +11,7 @@ test('opportunity cards mask on view and error colors match the problem chart', 
     behavior: 'instant',
   }));
   await expect(cards.first()).toHaveClass(/is-revealed/);
-  await expect(cards.first()).toHaveCSS('animation-name', 'review-unveil');
+  await expect(cards.first()).toHaveCSS('animation-name', 'lumis-opportunity-unveil');
 
   const problemAlert = page.locator('.bias-alert').first();
   const solutionError = page.locator('.workflow-error');
@@ -22,7 +22,7 @@ test('opportunity cards mask on view and error colors match the problem chart', 
   expect(await problemAlert.locator('strong').evaluate(element => getComputedStyle(element).color))
     .toBe(await solutionError.locator('strong').evaluate(element => getComputedStyle(element).color));
 
-  await expect(page.locator('.lumis-research-comparison h3')).toHaveCSS('color', 'rgb(127, 108, 114)');
+  await expect(page.locator('.lumis-research-comparison h3')).toHaveCSS('color', 'rgb(74, 59, 64)');
 
   await page.setViewportSize({ width: 390, height: 844 });
   await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
