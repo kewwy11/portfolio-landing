@@ -56,6 +56,23 @@ function OpportunityCard({ card, index }) {
   </div>;
 }
 
+function ConsiderationCard({ visual, title, description }) {
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.2, rootMargin: '0px 0px -14% 0px' });
+  const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
+  return <article ref={ref} className={`lumis-consideration${!immediate ? ' can-reveal' : ''}${revealed ? ' is-revealed' : ''}`}>
+    <figure><img src={`${base}assets/lumis/${visual}`} alt={`${title} interface concept`} loading="lazy" /></figure>
+    <div><h3>{title}</h3><p>{description}</p></div>
+  </article>;
+}
+
+function LessonRow({ items, index }) {
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.18, rootMargin: '0px 0px -12% 0px' });
+  const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
+  return <div ref={ref} className={`lumis-lesson-row${!immediate ? ' can-reveal' : ''}${revealed ? ' is-revealed' : ''}`} style={{ '--lesson-row': index }}>
+    {items.map(([title, description]) => <article className="lumis-lesson" key={title}><h3>{title}</h3><p>{description}</p></article>)}
+  </div>;
+}
+
 export default function LumisCaseStudy() {
   const [activeSection, setActiveSection] = useState('lumis-hero');
   const firstFlowScene = useRef(null);
@@ -289,6 +306,7 @@ export default function LumisCaseStudy() {
         </div>
         <figure ref={boardDrawing.ref} className={`lumis-research-board ${canDraw && !boardDrawing.reducedMotion ? 'can-populate' : ''} ${boardDrawing.revealed ? 'is-populating' : ''}`}>
           <img src={`${base}assets/lumis/research-board.png`} alt="Research board with dermatology datasets, competitor analysis, articles, early workflow ideas and skin tone references" loading="lazy" />
+          <span className="lumis-board-title" aria-hidden="true">What I dug through</span>
           {researchBoardTiles.map(([x, y, width, height], index) => <div className="lumis-board-tile" aria-hidden="true" key={index} style={{
             left: `${x / 1127 * 100}%`, top: `${y / 627 * 100}%`, width: `${width / 1127 * 100}%`, height: `${height / 627 * 100}%`,
             '--tile-index': index, '--crop-width': `${1127 / width * 100}%`, '--crop-left': `${-x / width * 100}%`, '--crop-top': `${-y / height * 100}%`,
@@ -333,7 +351,7 @@ export default function LumisCaseStudy() {
         {[
           {
             number: 'Decision One',
-            question: 'How do we give a doctor AI help without replacing their judgement?',
+            question: ['How do we give a doctor AI help without', 'replacing their judgement?'],
             options: [
               ['design-decision-ai-immediate.png', 'Option A: Show the reading straight away'],
               ['design-decision-ai-on-request.png', 'Option B: Photo first, AI on request.'],
@@ -341,17 +359,17 @@ export default function LumisCaseStudy() {
           },
           {
             number: 'Decision Two',
-            question: "What should the AI do when it can't read the photo?",
+            question: ["What should the AI do when it can't", 'read the photo?'],
             options: [
               ['design-decision-withhold.png', 'Option A: Withhold and say why.'],
               ['design-decision-warning.png', 'Option B: Show the reading with a warning.'],
             ],
           },
         ].map(({ number, question, options }) => (
-          <article className="lumis-decision" key={question}>
+          <article className="lumis-decision" key={question[0]}>
             <div className="lumis-decision-heading">
               <p>{number}</p>
-              <h3>{question}</h3>
+              <h3>{question.map((line, index) => <React.Fragment key={line}>{index > 0 && <br />}{line}</React.Fragment>)}</h3>
             </div>
             <div className="lumis-decision-options">
               {options.map(([image, label]) => (
@@ -383,10 +401,7 @@ export default function LumisCaseStudy() {
           <LumisAnimatedHeading label="Product Considerations" title="Skin tone was one half, I considered other factors...." id="product-considerations-title" />
         </div>
         <div className="lumis-considerations-list">
-          {productConsiderations.map(([visual, title, description]) => <article className="lumis-consideration" key={title}>
-            <figure><img src={`${base}assets/lumis/${visual}`} alt={`${title} interface concept`} loading="lazy" /></figure>
-            <div><h3>{title}</h3><p>{description}</p></div>
-          </article>)}
+          {productConsiderations.map(([visual, title, description]) => <ConsiderationCard key={title} visual={visual} title={title} description={description} />)}
         </div>
       </section>
       <section id="reflection" className="lumis-reflection" aria-labelledby="reflection-title">
@@ -394,10 +409,7 @@ export default function LumisCaseStudy() {
           <LumisAnimatedHeading label="Reflection" title="The lessons" id="reflection-title" />
         </div>
         <div className="lumis-lessons">
-          {lessons.map(([title, description]) => <article className="lumis-lesson" key={title}>
-            <h3>{title}</h3>
-            <p>{description}</p>
-          </article>)}
+          {[0, 2].map((start, index) => <LessonRow key={start} items={lessons.slice(start, start + 2)} index={index} />)}
         </div>
       </section>
     </main>

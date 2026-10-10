@@ -221,12 +221,19 @@
 .lumis-research .lumis-section-heading h2 { width: min(640px, 100%); }
 .lumis-research-board { position: relative; width: 100%; margin: 0; overflow: hidden; border: 1px solid #eceef2; border-radius: 8px; background: #f9fafb; }
 .lumis-research-board img { display: block; width: 100%; height: auto; }
-.lumis-board-tile { position: absolute; overflow: hidden; background: #f7f8f9; pointer-events: none; }
+.lumis-research-board.can-populate > img { opacity: 0; }
+.lumis-research-board.can-populate.is-populating > img { animation: lumis-board-background 260ms ease both; animation-delay: 3740ms; }
+.lumis-board-title { display: none; position: absolute; top: 5.2%; left: 3%; color: #aebccd; font-family: 'DM Mono', monospace; font-size: clamp(5px, 1.2vw, 13px); letter-spacing: .22em; text-transform: uppercase; pointer-events: none; }
+.lumis-research-board.can-populate .lumis-board-title { display: block; }
+.lumis-research-board.can-populate.is-populating .lumis-board-title { animation: lumis-board-title-out 260ms ease both; animation-delay: 3740ms; }
+.lumis-board-tile { position: absolute; overflow: hidden; pointer-events: none; }
 .lumis-board-tile-face { position: absolute; inset: 0; overflow: hidden; }
 .lumis-board-tile-face img { position: absolute; left: var(--crop-left); top: var(--crop-top); width: var(--crop-width); max-width: none; }
 .lumis-research-board.can-populate .lumis-board-tile-face { opacity: 0; transform: scale(.72); }
 .lumis-research-board.can-populate.is-populating .lumis-board-tile-face { animation: lumis-board-pop 700ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--tile-index) * 340ms); }
 @keyframes lumis-board-pop { from { opacity: 0; transform: scale(.72); } to { opacity: 1; transform: scale(1); } }
+@keyframes lumis-board-background { from { opacity: 0; } to { opacity: 1; } }
+@keyframes lumis-board-title-out { from { opacity: 1; } to { opacity: 0; } }
 .lumis-research-findings { display: flex; flex-direction: column; gap: 32px; min-width: 0; }
 .lumis-research h3 { margin: 0 0 24px; color: var(--lumis-body); font-family: Poppins, sans-serif; font-size: 28px; font-weight: 500; line-height: 1.35; }
 .lumis-research-table-scroll, .lumis-tone-scroll { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
@@ -268,7 +275,7 @@
 .lumis-decision { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
 .lumis-decision-heading { display: flex; flex-direction: column; gap: 5px; }
 .lumis-decision-heading p, .lumis-decision-outcome p:first-child { margin: 0; color: var(--lumis-light); font-family: Poppins, sans-serif; font-size: 16px; line-height: 20px; }
-.lumis-decision-heading h3 { width: min(800px, 100%); margin: 0; color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 28px; font-weight: 600; line-height: 38px; letter-spacing: -.56px; }
+.lumis-decision-heading h3 { width: fit-content; max-width: min(800px, 100%); margin: 0; color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 28px; font-weight: 500; line-height: 1.35; letter-spacing: normal; }
 .lumis-decision-options { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .lumis-decision-option { display: grid; grid-template-columns: minmax(0, 732fr) minmax(0, 379fr); gap: 16px; align-items: end; width: 100%; min-width: 0; margin: 0; }
 .lumis-decision-option img { display: block; width: 100%; height: auto; }
@@ -290,13 +297,20 @@
 .lumis-product-considerations .lumis-section-heading h2 { width: min(800px, 100%); }
 .lumis-considerations-list { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
 .lumis-consideration { display: grid; grid-template-columns: minmax(0, 612fr) minmax(0, 495fr); gap: 20px; align-items: end; min-width: 0; }
+.lumis-consideration.can-reveal figure, .lumis-consideration.can-reveal > div { opacity: 0; transform: translateY(28px); }
+.lumis-consideration.can-reveal.is-revealed figure, .lumis-consideration.can-reveal.is-revealed > div { animation: lumis-paired-rise 720ms cubic-bezier(.16, 1, .3, 1) both; }
+.lumis-consideration.can-reveal.is-revealed > div { animation-delay: 110ms; }
+@keyframes lumis-paired-rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
 .lumis-consideration figure { width: 100%; min-width: 0; margin: 0; }
 .lumis-consideration img { display: block; width: 100%; height: auto; }
 .lumis-consideration > div { padding-bottom: 0; min-width: 0; }
 .lumis-consideration h3 { margin: 0 0 10px; color: var(--lumis-light); font-family: Poppins, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; }
 .lumis-consideration p { margin: 0; color: var(--lumis-body); font-family: Poppins, sans-serif; font-size: 18px; line-height: 27px; }
 .lumis-reflection { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 24px; }
-.lumis-lessons { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.lumis-lessons { display: flex; flex-direction: column; gap: 24px; }
+.lumis-lesson-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.lumis-lesson-row.can-reveal .lumis-lesson { opacity: 0; transform: translateY(28px); }
+.lumis-lesson-row.can-reveal.is-revealed .lumis-lesson { animation: lumis-paired-rise 720ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--lesson-row) * 180ms); }
 .lumis-lesson { min-width: 0; padding: 16px 24px; border: 1px solid #f6dcae; border-radius: 30px; background: #f8eedd; }
 .lumis-lesson h3 { margin: 0 0 10px; color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 20px; font-weight: 500; line-height: 32px; }
 .lumis-lesson p { margin: 0; color: var(--lumis-body); font-family: Poppins, sans-serif; font-size: 16px; font-weight: 300; line-height: 24px; letter-spacing: .16px; }
@@ -304,7 +318,7 @@
 .lumis-research h3, .lumis-consideration h3, .lumis-monk-scale h4 { color: var(--lumis-heading); }
 @media (prefers-reduced-motion: reduce) {
   .lumis-bias-figure :is(figcaption, .lumis-problem-copy), .lumis-bias-figure + .lumis-problem-copy,
-  .lumis-opportunity-cards .review-reveal, .lumis-board-tile-face, .lumis-research-tones :is(.lumis-tone-swatch, .lumis-tone-note) { animation: none !important; opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  .lumis-opportunity-cards .review-reveal, .lumis-research-board > img, .lumis-board-tile-face, .lumis-research-tones :is(.lumis-tone-swatch, .lumis-tone-note), .lumis-consideration figure, .lumis-consideration > div, .lumis-lesson { animation: none !important; opacity: 1 !important; transform: none !important; clip-path: none !important; }
 }
 @media (max-width: 1200px) {
   .lumis-case-study { grid-template-columns: 180px minmax(0, 1fr); padding-inline: 32px; }
@@ -389,6 +403,7 @@
   .lumis-quality-matrix > p { margin-top: 24px; }
   .lumis-consideration { grid-template-columns: 1fr; gap: 16px; }
   .lumis-consideration h3 { margin-bottom: 6px; }
-  .lumis-lessons { grid-template-columns: 1fr; gap: 16px; }
+  .lumis-lessons { gap: 16px; }
+  .lumis-lesson-row { grid-template-columns: 1fr; gap: 16px; }
   .lumis-lesson { padding: 20px; border-radius: 22px; }
 }
