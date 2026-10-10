@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 
 test('board has no waiting card boxes, decision questions wrap deliberately, and lower rows rise once', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 });
-  await page.goto('/projects/lumis');
+  await page.goto('/projects/lumis', { waitUntil: 'domcontentloaded' });
 
   const board = page.locator('.lumis-research-board');
   await expect(board.locator('.lumis-board-tile').first()).toHaveCSS('background-color', 'rgba(0, 0, 0, 0)');
