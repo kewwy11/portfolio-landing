@@ -13,6 +13,9 @@
 .lumis-content > *, .lumis-opportunity-body > *, .lumis-better-workflow > * { min-width: 0; max-width: 100%; }
 .lumis-intro { display: flex; flex-direction: column; gap: 24px; padding-bottom: 48px; scroll-margin-top: 24px; }
 .lumis-heading { display: flex; flex-direction: column; gap: 7px; }
+.lumis-animated-heading { display: flex; flex-direction: column; gap: 7px; width: 100%; min-width: 0; }
+.lumis-animated-heading .scroll-heading { display: block; }
+.lumis-animated-heading .heading-mask { overflow: clip; }
 .lumis-heading p { color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 16px; line-height: 21px; text-transform: uppercase; }
 .lumis-heading h1 { font-family: Poppins, sans-serif; font-weight: 700; font-size: 40px; line-height: 60px; color: var(--lumis-heading); }
 .lumis-hero-image { position: relative; width: 100%; aspect-ratio: 1127 / 626; overflow: hidden; }

@@ -37,7 +37,8 @@ test('Lumis case study matches hero geometry and works on mobile', async ({ page
   await expect(page.locator('.lumis-sidebar a[href="#problem"]')).toHaveAttribute('aria-current', 'location');
   await expect(page.locator('.lumis-sidebar a[href="#problem"]')).toHaveCSS('color', 'rgb(127, 108, 114)');
   await page.locator('#opportunity').evaluate(node => node.scrollIntoView({ block: 'start' }));
-  await expect(page.locator('.lumis-sidebar a[href="#opportunity"]')).toHaveAttribute('aria-current', 'location');
+  await expect(page.locator('.lumis-sidebar a[href="#opportunity"]')).toHaveCount(0);
+  await expect(page.locator('.lumis-sidebar a[href="#problem"]')).toHaveAttribute('aria-current', 'location');
   await page.locator('#solution').evaluate(node => node.scrollIntoView({ block: 'start' }));
   await expect(page.locator('.lumis-sidebar a[href="#solution"]')).toHaveAttribute('aria-current', 'location');
   await page.screenshot({ path: 'test-results/lumis-desktop.png', fullPage: true });

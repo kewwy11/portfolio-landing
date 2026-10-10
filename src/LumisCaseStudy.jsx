@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
+import LumisAnimatedHeading from './LumisAnimatedHeading.jsx';
+import TypewriterText from './TypewriterText.jsx';
 import './lumis-case-study.css';
 
 const base = import.meta.env.BASE_URL;
 const sections = [
-  ['Overview', 'overview'], ['Problem', 'problem'], ['Opportunity', 'opportunity'], ['Solution', 'solution'], ['Core flows', 'core-flows'],
-  ['Supporting Screens'], ['Research', 'research'], ['Design Decisions', 'design-decisions'], ['Product Considerations', 'product-considerations'], ['Reflection', 'reflection'],
+  ['Overview', 'overview'], ['Problem', 'problem'], ['Solution', 'solution'], ['Core flows', 'core-flows'],
+  ['Research', 'research'], ['Design Decisions', 'design-decisions'], ['Product Considerations', 'product-considerations'], ['Reflection', 'reflection'],
 ];
 
 const researchComparison = [
@@ -39,7 +41,7 @@ export default function LumisCaseStudy() {
   const firstFlowScene = useRef(null);
 
   useEffect(() => {
-    const nodes = ['lumis-hero', 'overview', 'problem', 'opportunity', 'solution', 'core-flows', 'research', 'design-decisions', 'product-considerations', 'reflection'].map(id => document.getElementById(id)).filter(Boolean);
+    const nodes = ['lumis-hero', 'overview', 'problem', 'solution', 'core-flows', 'research', 'design-decisions', 'product-considerations', 'reflection'].map(id => document.getElementById(id)).filter(Boolean);
     let frame;
     const updateActiveSection = () => {
       frame = undefined;
@@ -102,16 +104,13 @@ export default function LumisCaseStudy() {
       <a className="lumis-back" href={`${base}projects`}><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
       <nav aria-label="Case study sections">
         <a className={activeSection === 'lumis-hero' ? 'lumis-section-active' : ''} href="#lumis-hero" aria-current={activeSection === 'lumis-hero' ? 'location' : undefined}>Hero</a>
-        {sections.map(([label, id]) => id
-          ? <a key={label} className={activeSection === id ? 'lumis-section-active' : ''} href={`#${id}`} aria-current={activeSection === id ? 'location' : undefined}>{label}</a>
-          : <span key={label} aria-disabled="true">{label}</span>)}
+        {sections.map(([label, id]) => <a key={label} className={activeSection === id ? 'lumis-section-active' : ''} href={`#${id}`} aria-current={activeSection === id ? 'location' : undefined}>{label}</a>)}
       </nav>
     </aside>
     <main className="lumis-content" aria-labelledby="lumis-title">
       <div id="lumis-hero" className="lumis-intro">
         <header className="lumis-heading">
-          <p>Lumis x Dermatology AI x Concept 2026</p>
-          <h1 id="lumis-title">Dermatology without the blind spots</h1>
+          <LumisAnimatedHeading label="Lumis x Dermatology AI x Concept 2026" title="Dermatology without the blind spots" id="lumis-title" as="h1" duration={1650} />
         </header>
         <figure className="lumis-hero-image">
           <img src={`${base}assets/lumis/scan-review.png`} alt="A dermatologist reviews a facial skin scan on a tablet, with mapped skin concerns and a stylus." fetchPriority="high" />
@@ -128,8 +127,7 @@ export default function LumisCaseStudy() {
       <section id="overview" className="lumis-overview" aria-labelledby="overview-title">
         <div className="lumis-overview-heading">
           <div>
-            <p className="lumis-eyebrow">Overview</p>
-            <h2 id="overview-title">What makes dermatologists trust AI on dark skin?</h2>
+            <LumisAnimatedHeading label="Overview" title="What makes dermatologists trust AI on dark skin?" id="overview-title" duration={950} />
           </div>
           <p className="lumis-overview-summary">This is a self-directed concept exploring the clinician side of Lumis, an AI dermatology platform built for skin of colour.</p>
         </div>
@@ -145,7 +143,7 @@ export default function LumisCaseStudy() {
       <section id="problem" className="lumis-problem" aria-labelledby="problem-title">
         <header className="lumis-problem-banner">
           <img src={`${base}assets/lumis/problem-skin.jpg`} alt="Close-up of dark skin texture" />
-          <div><p>The problem - Cause</p><h2 id="problem-title">Skin AI was trained on skin that doesn’t represent everyone.</h2></div>
+          <div><LumisAnimatedHeading label="The problem - Cause" title="Skin AI was trained on skin that doesn’t represent everyone." id="problem-title" labelClassName="lumis-banner-label" duration={1250} /></div>
         </header>
         <div className="lumis-problem-body">
           <p className="lumis-problem-copy">Dermatology is taught with photographs. A student learns what eczema looks like by seeing a hundred pictures of eczema. Dermatology textbooks have found images of dark skin making up somewhere between 4% and 18% of the total, and in some books, zero images of common conditions like acne or psoriasis on dark skin at all.</p>
@@ -171,13 +169,12 @@ export default function LumisCaseStudy() {
       <section id="opportunity" className="lumis-opportunity" aria-labelledby="opportunity-title">
         <header className="lumis-opportunity-banner">
           <img src={`${base}assets/lumis/opportunity-skin.png`} alt="Close-up of a person’s face and skin" />
-          <div><p>The opportunity</p><h2>A second opinion only matters<br />when it can challenge the first.</h2></div>
+          <div><LumisAnimatedHeading label="The opportunity" lines={['A second opinion only matters', 'when it can challenge the first.']} labelClassName="lumis-banner-label" duration={1100} /></div>
         </header>
         <div className="lumis-opportunity-body">
           <div className="lumis-opportunity-intro">
             <div>
-              <p className="lumis-subeyebrow">The gap in the workflow</p>
-              <h2 id="opportunity-title">Human review is necessary.<br />But humans make mistakes too.</h2>
+              <LumisAnimatedHeading label="The gap in the workflow" lines={['Human review is necessary.', 'But humans make mistakes too.']} id="opportunity-title" labelClassName="lumis-subeyebrow" duration={1250} />
             </div>
             <p>Both models and clinicians can miss patterns on underrepresented skin. A safer review process needs more than an approve button: it needs context, a way to disagree, and a way to spot repeated errors.</p>
           </div>
@@ -191,11 +188,10 @@ export default function LumisCaseStudy() {
 
       <section id="solution" className="lumis-solution" aria-labelledby="solution-title">
         <div className="lumis-section-heading">
-          <p className="lumis-eyebrow">The solution</p>
-          <h2 id="solution-title">Designing beyond blind trust</h2>
+          <LumisAnimatedHeading label="The solution" title="Designing beyond blind trust" id="solution-title" duration={1100} />
         </div>
         <div className="lumis-better-workflow">
-          <div className="lumis-workflow-intro"><p className="lumis-subeyebrow">A better workflow</p><p>The goal is not blind trust in AI or clinicians. It is to give dermatologists the evidence, control and visibility to question uncertain findings.</p></div>
+          <div className="lumis-workflow-intro"><TypewriterText as="p" className="lumis-subeyebrow" duration={1200}>A better workflow</TypewriterText><p>The goal is not blind trust in AI or clinicians. It is to give dermatologists the evidence, control and visibility to question uncertain findings.</p></div>
           <div className="lumis-workflow-diagram" aria-label="A safer AI dermatology review workflow">
             <div className="workflow-step workflow-upload"><strong>Patient uploads a scan</strong><span>Phone camera, at home</span></div>
             <img className="workflow-connector workflow-right-one" src={`${base}assets/lumis/workflow-arrow-right.svg`} alt="" />
@@ -225,8 +221,7 @@ export default function LumisCaseStudy() {
 
       <section id="core-flows" className="lumis-core-flows" aria-labelledby="core-flows-title">
         <div className="lumis-section-heading">
-          <p className="lumis-eyebrow">Core flows</p>
-          <h2 id="core-flows-title">Designing the core experience</h2>
+          <LumisAnimatedHeading label="Core flows" title="Designing the core experience" id="core-flows-title" duration={1050} />
         </div>
 
         <div className="lumis-flow-list">
@@ -266,8 +261,7 @@ export default function LumisCaseStudy() {
 
       <section id="research" className="lumis-research" aria-labelledby="research-title">
         <div className="lumis-section-heading">
-          <p className="lumis-eyebrow">Research</p>
-          <h2 id="research-title">My findings, exploring through articles and datasets</h2>
+          <LumisAnimatedHeading label="Research" title="My findings, exploring through articles and datasets" id="research-title" duration={1000} />
         </div>
         <figure className="lumis-research-board">
           <img src={`${base}assets/lumis/research-board.png`} alt="Research board with dermatology datasets, competitor analysis, articles, early workflow ideas and skin tone references" loading="lazy" />
@@ -306,8 +300,7 @@ export default function LumisCaseStudy() {
       </section>
       <section id="design-decisions" className="lumis-design-decisions" aria-labelledby="design-decisions-title">
         <div className="lumis-section-heading">
-          <p className="lumis-eyebrow">Design Decisions</p>
-          <h2 id="design-decisions-title">How we kept AI in check.</h2>
+          <LumisAnimatedHeading label="Design Decisions" title="How we kept AI in check." id="design-decisions-title" duration={1300} />
         </div>
         {[
           {
@@ -359,8 +352,7 @@ export default function LumisCaseStudy() {
       </section>
       <section id="product-considerations" className="lumis-product-considerations" aria-labelledby="product-considerations-title">
         <div className="lumis-section-heading">
-          <p className="lumis-eyebrow">Product Considerations</p>
-          <h2 id="product-considerations-title">Skin tone was one half, I considered other factors....</h2>
+          <LumisAnimatedHeading label="Product Considerations" title="Skin tone was one half, I considered other factors...." id="product-considerations-title" duration={1450} />
         </div>
         <div className="lumis-considerations-list">
           {productConsiderations.map(([visual, title, description]) => <article className="lumis-consideration" key={title}>
@@ -371,8 +363,7 @@ export default function LumisCaseStudy() {
       </section>
       <section id="reflection" className="lumis-reflection" aria-labelledby="reflection-title">
         <div className="lumis-section-heading">
-          <p className="lumis-eyebrow">Reflection</p>
-          <h2 id="reflection-title">The lessons</h2>
+          <LumisAnimatedHeading label="Reflection" title="The lessons" id="reflection-title" duration={1100} />
         </div>
         <div className="lumis-lessons">
           {lessons.map(([title, description]) => <article className="lumis-lesson" key={title}>
