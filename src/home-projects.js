@@ -27,7 +27,7 @@ export const homeProjects = [
   },
   {
     id: 'beacon-trust', name: 'Beacon Trust', category: 'Branding',
-    image: 'home/project-beacon.png', height: 373,
+    image: 'home/project-beacon.png', height: 430,
     alt: 'White Beacon Trust symbol and wordmark on a blue background',
     tags: ['Brand Identity', 'Visual Direction'],
   },

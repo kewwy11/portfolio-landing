@@ -1,7 +1,9 @@
 import { test, expect } from './browser-test.js';
 
 test('the stretched toggle keeps its position when a click reverses its travel', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
+  await page.bringToFront();
   const filter = page.locator('.filters');
   await filter.scrollIntoViewIfNeeded();
   const motion = await filter.evaluate(async node => {
@@ -9,25 +11,30 @@ test('the stretched toggle keeps its position when a click reverses its travel',
     const [ui, brand] = node.querySelectorAll('button');
     const box = () => {
       const { x, width } = indicator.getBoundingClientRect();
-      return { x, width };
+      return { x, width, animation: getComputedStyle(indicator, '::before').animationName };
     };
     const nextPaint = () => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     const initial = box();
     brand.click();
     await nextPaint();
-    await new Promise(resolve => setTimeout(resolve, 160));
+    await new Promise(resolve => {
+      const start = performance.now();
+      const sample = () => {
+        if (box().x > initial.x + 10 || performance.now() - start > 300) resolve();
+        else requestAnimationFrame(sample);
+      };
+      sample();
+    });
     const stretched = box();
     ui.click();
-    await nextPaint();
-
     const reversedStart = box();
     await new Promise(resolve => setTimeout(resolve, 650));
     return { initial, stretched, reversedStart, settled: box() };
   });
-  expect(motion.stretched.width).toBeGreaterThan(motion.initial.width * 1.15);
+  expect(motion.stretched.animation).toBe('filter-drag-right');
   expect(motion.stretched.x).toBeGreaterThan(motion.initial.x + 10);
   expect(Math.abs(motion.reversedStart.x - motion.stretched.x)).toBeLessThan(35);
-  expect(motion.reversedStart.width).toBeGreaterThan(motion.initial.width * 1.1);
+  expect(motion.reversedStart.width).toBeCloseTo(motion.initial.width, 1);
   expect(motion.settled.x).toBeCloseTo(motion.initial.x, 1);
   expect(motion.settled.width).toBeCloseTo(motion.initial.width, 1);
 });

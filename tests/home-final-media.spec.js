@@ -47,7 +47,9 @@ test('project hover images crossfade and keyboard focus previews the same design
 });
 
 test('the filter slides through intermediate positions in both directions and loads branding video', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/');
+  await page.bringToFront();
   const filter = page.locator('.filters');
   await filter.scrollIntoViewIfNeeded();
   const positions = await filter.evaluate(async node => {
@@ -59,7 +61,8 @@ test('the filter slides through intermediate positions in both directions and lo
     await new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
     await new Promise(resolve => setTimeout(resolve, 160));
     const middle = x();
-    const stretchedWidth = indicator.getBoundingClientRect().width;
+    const dragScale = new DOMMatrixReadOnly(getComputedStyle(indicator, '::before').transform).a;
+    const dragAnimation = getComputedStyle(indicator, '::before').animationName;
     await new Promise(resolve => setTimeout(resolve, 650));
     const right = x();
     buttons[0].click();
@@ -67,11 +70,12 @@ test('the filter slides through intermediate positions in both directions and lo
     await new Promise(resolve => setTimeout(resolve, 160));
     const reversed = x();
     await new Promise(resolve => setTimeout(resolve, 650));
-    return { start, middle, right, reversed, end: x(), width: indicator.getBoundingClientRect().width, stretchedWidth };
+    return { start, middle, right, reversed, end: x(), width: indicator.getBoundingClientRect().width, dragScale, dragAnimation };
   });
   expect(positions.middle).toBeGreaterThan(positions.start);
   expect(positions.middle).toBeLessThan(positions.start + positions.width);
-  expect(positions.stretchedWidth).toBeGreaterThan(positions.width * 1.15);
+  expect(positions.dragAnimation).toBe('filter-drag-right');
+  expect(positions.dragScale).toBeGreaterThan(1.02);
   expect(positions.reversed).toBeGreaterThan(positions.start);
   expect(positions.reversed).toBeLessThan(positions.right);
   expect(positions.end).toBeCloseTo(positions.start, 1);

@@ -30,14 +30,14 @@ const story = [
     ],
   },
   {
-    image: 'about-story-visuals.png', width: 523, minHeight: 180,
-    alt: 'A woman holding sliced fruit in a sunlit doorway',
+    image: 'about-story-lumis-collage.png', width: 523, minHeight: 180,
+    alt: 'Lumis identity and skincare campaign images arranged on a design board',
     groups: [['Creating visuals, experiences, and moments that leave a lasting impression with users.',
       'I call myself a generalist because there is no single way to achieve that in design, and every touchpoint should create that feeling.']],
   },
   {
-    image: 'about-story-brand.png', width: 523, minHeight: 360,
-    alt: 'Green Assure brand identity stationery arranged on a matching background',
+    image: 'about-story-photoshop.png', width: 523, minHeight: 360,
+    alt: 'Creative workspace with campaign visuals open in Photoshop',
     groups: [
       ['From a strategy that positions the Company to its target audience and plays to its strengths, to a brand and visual identity that can be spotted in a sea of competitors.',
         "Or it could be an application or website that makes users feel like they've escaped reality for a minute."],

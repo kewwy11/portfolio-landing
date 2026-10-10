@@ -95,7 +95,7 @@ test('Projects matches the desktop layout and includes both populated project ca
     const box = image.getBoundingClientRect();
     return { width: box.width, height: box.height };
   }));
-  for (const [index, height] of [430, 373].entries()) {
+  for (const [index, height] of [430, 430].entries()) {
     expect(brandSizes[index].width).toBeCloseTo(cardWidth, 1);
     expect(brandSizes[index].height).toBeCloseTo(cardWidth * height / 670, 1);
   }

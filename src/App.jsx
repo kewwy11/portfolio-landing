@@ -3,14 +3,16 @@ import LandingPage from './LandingPage.jsx';
 import AboutPage from './AboutPage.jsx';
 import ProjectsPage from './ProjectsPage.jsx';
 import ContactPage from './ContactPage.jsx';
+import LumisCaseStudy from './LumisCaseStudy.jsx';
 import { isAboutPage, isProjectsPage, isContactPage } from './navigation.js';
 
 export default function App() {
+  const lumis = window.location.pathname.replace(/\/+$/, '') === `${import.meta.env.BASE_URL}projects/lumis`;
   const about = isAboutPage();
   const projects = isProjectsPage();
   const contact = isContactPage();
   useEffect(() => {
-    document.title = about ? 'About — Grateful Erhis'
+    document.title = lumis ? 'Lumis Dermatologists — Grateful Erhis' : about ? 'About — Grateful Erhis'
       : projects ? 'Projects — Grateful Erhis'
         : contact ? 'Contact — Grateful Erhis' : 'Grateful Erhis — Visual Designer';
     if (!window.location.hash) return;
@@ -27,6 +29,6 @@ export default function App() {
       });
     });
     return () => { mounted = false; cancelAnimationFrame(frame); };
-  }, [about, projects, contact]);
-  return about ? <AboutPage /> : projects ? <ProjectsPage /> : contact ? <ContactPage /> : <LandingPage />;
+  }, [about, projects, contact, lumis]);
+  return lumis ? <LumisCaseStudy /> : about ? <AboutPage /> : projects ? <ProjectsPage /> : contact ? <ContactPage /> : <LandingPage />;
 }

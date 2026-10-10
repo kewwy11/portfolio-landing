@@ -1,5 +1,19 @@
 import { test, expect } from './browser-test.js';
 
+test('About story uses all three updated Figma images', async ({ page }) => {
+  await page.goto('/about');
+  const images = page.locator('.story-visual-image');
+  await expect(images).toHaveCount(3);
+  const loaded = await images.evaluateAll(async nodes => {
+    await Promise.all(nodes.map(node => node.decode()));
+    return nodes.map(node => ({ name: node.getAttribute('src').split('/').pop(), width: node.naturalWidth }));
+  });
+  expect(loaded.map(image => image.name)).toEqual([
+    'about-story-design-board.png', 'about-story-lumis-collage.png', 'about-story-photoshop.png',
+  ]);
+  expect(loaded.every(image => image.width > 0)).toBe(true);
+});
+
 test('About includes the three story pairs, experience, shared contact, and footer in the correct order', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1440, height: 1000 });
@@ -49,6 +63,8 @@ test('About includes the three story pairs, experience, shared contact, and foot
   expect(await copies.evaluateAll(nodes => nodes.map(node => node.getBoundingClientRect().width))).toEqual([538, 523, 523]);
   const storyImages = page.locator('.story-visual-image');
   await expect(storyImages).toHaveCount(3);
+  expect(await storyImages.evaluateAll(images => images.map(image => image.getAttribute('src').split('/').pop())))
+    .toEqual(['about-story-design-board.png', 'about-story-lumis-collage.png', 'about-story-photoshop.png']);
   for (const image of await storyImages.all()) {
     await expect.poll(() => image.evaluate(node => node.complete && node.naturalWidth > 0)).toBe(true);
   }
