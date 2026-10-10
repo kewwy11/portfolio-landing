@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import LumisAnimatedHeading from './LumisAnimatedHeading.jsx';
+import useRevealOnScroll from './useRevealOnScroll.js';
 import './lumis-case-study.css';
 
 const base = import.meta.env.BASE_URL;
@@ -38,6 +39,9 @@ const lessons = [
 export default function LumisCaseStudy() {
   const [activeSection, setActiveSection] = useState('lumis-hero');
   const firstFlowScene = useRef(null);
+  const biasDrawing = useRevealOnScroll({ threshold: 0.05 });
+  const workflowDrawing = useRevealOnScroll({ threshold: 0.05 });
+  const canDraw = typeof window !== 'undefined' && typeof window.IntersectionObserver === 'function';
 
   useEffect(() => {
     const nodes = ['lumis-hero', 'overview', 'problem', 'solution', 'core-flows', 'research', 'design-decisions', 'product-considerations', 'reflection'].map(id => document.getElementById(id)).filter(Boolean);
@@ -147,7 +151,7 @@ export default function LumisCaseStudy() {
         <div className="lumis-problem-body">
           <p className="lumis-problem-copy">Dermatology is taught with photographs. A student learns what eczema looks like by seeing a hundred pictures of eczema. Dermatology textbooks have found images of dark skin making up somewhere between 4% and 18% of the total, and in some books, zero images of common conditions like acne or psoriasis on dark skin at all.</p>
           <figure className="lumis-bias-figure">
-            <div className="lumis-bias-diagram" aria-label="How the blind spot is inherited">
+            <div ref={biasDrawing.ref} className={`lumis-bias-diagram ${canDraw && !biasDrawing.reducedMotion ? 'can-draw' : ''} ${biasDrawing.revealed ? 'is-drawing' : ''}`} aria-label="How the blind spot is inherited">
               <div className="bias-card bias-teaching"><strong>Teaching images</strong><span>4–18% dark skin</span></div>
               <img className="bias-arrow arrow-top-one" src={`${base}assets/lumis/diagram-arrow-right.svg`} alt="" />
               <div className="bias-card bias-model"><strong>Model trained</strong><span>Learns from that pool</span></div>
@@ -192,7 +196,7 @@ export default function LumisCaseStudy() {
         </div>
         <div className="lumis-better-workflow">
           <div className="lumis-workflow-intro"><p className="lumis-subeyebrow">A better workflow</p><p>The goal is not blind trust in AI or clinicians. It is to give dermatologists the evidence, control and visibility to question uncertain findings.</p></div>
-          <div className="lumis-workflow-diagram" aria-label="A safer AI dermatology review workflow">
+          <div ref={workflowDrawing.ref} className={`lumis-workflow-diagram ${canDraw && !workflowDrawing.reducedMotion ? 'can-draw' : ''} ${workflowDrawing.revealed ? 'is-drawing' : ''}`} aria-label="A safer AI dermatology review workflow">
             <div className="workflow-step workflow-upload"><strong>Patient uploads a scan</strong><span>Phone camera, at home</span></div>
             <img className="workflow-connector workflow-right-one" src={`${base}assets/lumis/workflow-arrow-right.svg`} alt="" />
             <div className="workflow-step workflow-blue workflow-quality"><strong>Image quality check</strong><span>Lighting, focus and clarity</span></div>
