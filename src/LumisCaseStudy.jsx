@@ -39,8 +39,8 @@ const lessons = [
 export default function LumisCaseStudy() {
   const [activeSection, setActiveSection] = useState('lumis-hero');
   const firstFlowScene = useRef(null);
-  const biasDrawing = useRevealOnScroll({ threshold: 0.05 });
-  const workflowDrawing = useRevealOnScroll({ threshold: 0.05 });
+  const biasDrawing = useRevealOnScroll({ threshold: 0.2, rootMargin: '0px 0px -20% 0px', repeat: true });
+  const workflowDrawing = useRevealOnScroll({ threshold: 0.16, rootMargin: '0px 0px -20% 0px', repeat: true });
   const canDraw = typeof window !== 'undefined' && typeof window.IntersectionObserver === 'function';
 
   useEffect(() => {

@@ -16,10 +16,10 @@
 .lumis-animated-heading { display: flex; flex-direction: column; gap: 7px; width: 100%; min-width: 0; }
 .lumis-animated-heading .lumis-slide-heading { display: block; }
 .lumis-animated-heading .lumis-label-mask { overflow: clip; padding-block: .035em; margin-block: -.035em; }
-.lumis-animated-heading .lumis-label-text { display: block; opacity: 0; transform: translateY(20px); }
+.lumis-animated-heading .lumis-label-text { display: block; opacity: .001; transform: translateY(32px); }
 .lumis-animated-heading .heading-mask { overflow: clip; }
-.lumis-animated-heading.is-revealed :is(.lumis-label-text, .heading-text) { animation: lumis-heading-rise 420ms cubic-bezier(.22, 1, .36, 1) both; }
-@keyframes lumis-heading-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+.lumis-animated-heading.is-revealed :is(.lumis-label-text, .heading-text) { animation: hero-text-enter 400ms cubic-bezier(.12, .23, .5, 1) both; }
+.lumis-animated-heading.is-revealed .heading-mask:nth-child(n + 2) .heading-text { animation-delay: 200ms; }
 .lumis-animated-heading.motion-disabled :is(.lumis-label-text, .heading-text) { animation: none; opacity: 1; transform: none; }
 @media (prefers-reduced-motion: reduce) { .lumis-animated-heading :is(.lumis-label-text, .heading-text) { animation: none !important; opacity: 1; transform: none; } }
 .lumis-heading p { color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 16px; line-height: 21px; text-transform: uppercase; }
@@ -135,8 +135,8 @@
 .workflow-loop { position: absolute; left: calc(100% - 117px); top: 154px; width: 2px; height: 206px; background: #d4dce8; }
 
 /* Reveal the diagrams in reading order without moving any layout boxes. */
-.lumis-bias-diagram { --draw-pace: 185ms; }
-.lumis-workflow-diagram { --draw-pace: 155ms; }
+.lumis-bias-diagram { --draw-pace: 230ms; }
+.lumis-workflow-diagram { --draw-pace: 195ms; }
 .lumis-bias-diagram .bias-teaching, .lumis-workflow-diagram .workflow-upload { --draw-order: 0; }
 .lumis-bias-diagram .arrow-left-down, .lumis-workflow-diagram .workflow-right-one { --draw-order: 1; }
 .lumis-bias-diagram .bias-doctors, .lumis-workflow-diagram .workflow-quality { --draw-order: 2; }
@@ -155,25 +155,35 @@
 .lumis-workflow-diagram .workflow-result { --draw-order: 15; }
 
 :is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw :is(.bias-card, .bias-arrow, .workflow-step, .workflow-connector, .workflow-review-group > img, .workflow-review-group > small, .workflow-unreadable-group > img, .workflow-unreadable-group > p, .workflow-monitor-group > img, .workflow-monitor-group > small, .workflow-loop) { opacity: 0; }
-:is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw.is-drawing :is(.bias-card, .bias-arrow, .workflow-step, .workflow-connector, .workflow-review-group > img, .workflow-review-group > small, .workflow-unreadable-group > img, .workflow-unreadable-group > p, .workflow-monitor-group > img, .workflow-monitor-group > small) {
-  animation: lumis-draw-across 420ms cubic-bezier(.22, 1, .36, 1) both;
+:is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw.is-drawing :is(.bias-card, .workflow-step) {
+  animation: lumis-card-draw 640ms cubic-bezier(.16, 1, .3, 1) both;
   animation-delay: calc(var(--draw-order) * var(--draw-pace));
+}
+:is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw.is-drawing :is(.bias-arrow, .workflow-connector, .workflow-review-group > img, .workflow-review-group > small, .workflow-unreadable-group > img, .workflow-unreadable-group > p, .workflow-monitor-group > img, .workflow-monitor-group > small) {
+  animation: lumis-draw-across 480ms cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: calc(var(--draw-order) * var(--draw-pace));
+}
+:is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw.is-drawing :is(.bias-card, .workflow-step) :is(strong, span) {
+  animation: lumis-card-content 540ms cubic-bezier(.16, 1, .3, 1) both;
+  animation-delay: calc(var(--draw-order) * var(--draw-pace) + 90ms);
 }
 :is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw.is-drawing :is(.arrow-left-down, .workflow-unreadable-group > img) { animation-name: lumis-draw-down; }
 :is(.lumis-bias-diagram, .lumis-workflow-diagram).can-draw.is-drawing :is(.arrow-loop-up, .workflow-review-group > img, .workflow-monitor-group > img) { animation-name: lumis-draw-up; }
 .lumis-workflow-diagram.can-draw.is-drawing .workflow-left { animation-name: lumis-draw-left; }
 .lumis-workflow-diagram.can-draw.is-drawing .workflow-loop {
-  animation: lumis-draw-line 430ms cubic-bezier(.22, 1, .36, 1) both;
+  animation: lumis-draw-line 520ms cubic-bezier(.16, 1, .3, 1) both;
   animation-delay: calc(var(--draw-order) * var(--draw-pace));
   transform-origin: bottom;
 }
 @keyframes lumis-draw-across { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0); } }
+@keyframes lumis-card-draw { from { opacity: 0; transform: translate3d(0, 16px, 0) scale(.97); clip-path: inset(0 100% 0 0 round 14px); } to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); clip-path: inset(0 round 14px); } }
+@keyframes lumis-card-content { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes lumis-draw-left { from { opacity: 0; clip-path: inset(0 0 0 100%); } to { opacity: 1; clip-path: inset(0); } }
 @keyframes lumis-draw-down { from { opacity: 0; clip-path: inset(0 0 100% 0); } to { opacity: 1; clip-path: inset(0); } }
 @keyframes lumis-draw-up { from { opacity: 0; clip-path: inset(100% 0 0 0); } to { opacity: 1; clip-path: inset(0); } }
 @keyframes lumis-draw-line { from { opacity: 0; transform: scaleY(0); } to { opacity: 1; transform: scaleY(1); } }
 @media (prefers-reduced-motion: reduce) {
-  :is(.lumis-bias-diagram, .lumis-workflow-diagram) :is(.bias-card, .bias-arrow, .workflow-step, .workflow-connector, .workflow-review-group > img, .workflow-review-group > small, .workflow-unreadable-group > img, .workflow-unreadable-group > p, .workflow-monitor-group > img, .workflow-monitor-group > small, .workflow-loop) { animation: none !important; opacity: 1 !important; clip-path: none !important; }
+  :is(.lumis-bias-diagram, .lumis-workflow-diagram) :is(.bias-card, .bias-arrow, .workflow-step, .workflow-connector, .workflow-review-group > img, .workflow-review-group > small, .workflow-unreadable-group > img, .workflow-unreadable-group > p, .workflow-monitor-group > img, .workflow-monitor-group > small, .workflow-loop, .bias-card strong, .bias-card span, .workflow-step strong, .workflow-step span) { animation: none !important; opacity: 1 !important; clip-path: none !important; }
 }
 
 .lumis-core-flows { width: 100%; min-width: 0; max-width: 100%; margin: 0; padding: 48px 0; scroll-margin-top: 24px; }

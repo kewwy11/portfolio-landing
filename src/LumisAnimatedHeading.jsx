@@ -2,7 +2,11 @@ import React from 'react';
 import useRevealOnScroll from './useRevealOnScroll.js';
 
 export default function LumisAnimatedHeading({ label, title, id, as: Tag = 'h2', lines, labelClassName = 'lumis-eyebrow' }) {
-  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.15 });
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({
+    threshold: 0.15,
+    rootMargin: Tag === 'h1' ? '0px' : '0px 0px -20% 0px',
+    repeat: true,
+  });
   const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
 
   return <div ref={ref} className={`lumis-animated-heading${revealed ? ' is-revealed' : ''}${immediate ? ' motion-disabled' : ''}`}>
