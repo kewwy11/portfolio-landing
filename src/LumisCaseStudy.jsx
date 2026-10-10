@@ -24,6 +24,11 @@ const qualityDecisions = [
   { quality: 'Poor image', range: 'Below 50', actions: [['Withhold analysis. Request a rescan.', 'stop'], ['Withhold analysis. Request a rescan.', 'stop'], ['Withhold analysis. Request a rescan.', 'stop']] },
 ];
 const confidenceLevels = ['High confidence', 'Medium confidence', 'Low confidence'];
+const opportunityCards = [
+  ['01', 'Make limitations visible', 'When the image cannot support a finding, the system should withhold it rather than create false certainty.', 'Quality gates + uncertainty'],
+  ['02', 'Design for disagreement', 'Give clinicians the original scan, history and progression first; let them review and override AI findings individually.', 'Clinical review + comparison'],
+  ['03', 'Make blind spots measurable', 'Track where clinicians disagree with AI across skin tones, then investigate recurring patterns instead of hiding them in averages.', 'MST analytics + feedback'],
+];
 const productConsiderations = [
   ['consideration-environment.png', 'Environment as a clinical input', 'Humidity drives sebum production. UV deepens the dark marks left behind after a breakout heals.'],
   ['consideration-comparison.png', 'Comparison, because change is harder to see', "On darker skin, a healing lesion and an active one can look alike in a single photo, because what's left behind is pigment rather than redness. Two scans side by side is how a doctor tells recovery"],
@@ -35,6 +40,16 @@ const lessons = [
   ['Designing for disagreement', "I realized that adding a dermatologist to the workflow isn't enough. The challenge is giving them the right evidence to question AI findings, rather than simply approving whatever the system suggests."],
   ['What I still need to validate', "No dermatologist has tested this concept yet. I'd want to see whether reviewing individual findings slows down their workflow, and how to make the process efficient without encouraging doctors to blindly approve everything."],
 ];
+
+function OpportunityCard({ card, index }) {
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.18, rootMargin: '0px 0px -12% 0px', repeat: true });
+  const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
+  return <div ref={ref} className="opportunity-card-slot">
+    <article className={`review-reveal${revealed ? ' is-revealed' : ''}${immediate ? ' motion-disabled' : ''}`} style={{ '--review-delay': `${index * 120}ms` }}>
+      <span>{card[0]}</span><div><h3>{card[1]}</h3><p>{card[2]}</p></div><small>{card[3]}</small>
+    </article>
+  </div>;
+}
 
 export default function LumisCaseStudy() {
   const [activeSection, setActiveSection] = useState('lumis-hero');
@@ -183,9 +198,7 @@ export default function LumisCaseStudy() {
             <p>Both models and clinicians can miss patterns on underrepresented skin. A safer review process needs more than an approve button: it needs context, a way to disagree, and a way to spot repeated errors.</p>
           </div>
           <div className="lumis-opportunity-cards">
-            <article><span>01</span><div><h3>Make limitations visible</h3><p>When the image cannot support a finding, the system should withhold it rather than create false certainty.</p></div><small>Quality gates + uncertainty</small></article>
-            <article><span>02</span><div><h3>Design for disagreement</h3><p>Give clinicians the original scan, history and progression first; let them review and override AI findings individually.</p></div><small>Clinical review + comparison</small></article>
-            <article><span>03</span><div><h3>Make blind spots measurable</h3><p>Track where clinicians disagree with AI across skin tones, then investigate recurring patterns instead of hiding them in averages.</p></div><small>MST analytics + feedback</small></article>
+            {opportunityCards.map((card, index) => <OpportunityCard key={card[0]} card={card} index={index} />)}
           </div>
         </div>
       </section>
