@@ -1,24 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import RevealHeading from './RevealHeading.jsx';
-import TypewriterText from './TypewriterText.jsx';
+import React from 'react';
 import useRevealOnScroll from './useRevealOnScroll.js';
 
-export default function LumisAnimatedHeading({ label, title, id, as = 'h2', lines, labelClassName = 'lumis-eyebrow', duration = 650 }) {
+export default function LumisAnimatedHeading({ label, title, id, as: Tag = 'h2', lines, labelClassName = 'lumis-eyebrow' }) {
   const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.15 });
-  const [headingReady, setHeadingReady] = useState(false);
+  const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
 
-  useEffect(() => {
-    if (!revealed) return undefined;
-    if (reducedMotion) {
-      setHeadingReady(true);
-      return undefined;
-    }
-    const timer = window.setTimeout(() => setHeadingReady(true), Math.max(0, duration - 200));
-    return () => window.clearTimeout(timer);
-  }, [revealed, reducedMotion, duration]);
-
-  return <div className="lumis-animated-heading" ref={ref}>
-    <TypewriterText as="p" className={labelClassName} active={revealed} duration={duration}>{label}</TypewriterText>
-    <RevealHeading as={as} id={id} lines={lines} ready={headingReady}>{title}</RevealHeading>
+  return <div ref={ref} className={`lumis-animated-heading${revealed ? ' is-revealed' : ''}${immediate ? ' motion-disabled' : ''}`}>
+    <p className={`${labelClassName} lumis-label-mask`}><span className="lumis-label-text">{label}</span></p>
+    <Tag id={id} className="lumis-slide-heading">
+      {(lines || [title]).map((line, index) => <span className="heading-mask" key={index}><span className="heading-text">{line}</span></span>)}
+    </Tag>
   </div>;
 }

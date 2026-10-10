@@ -14,12 +14,14 @@
 .lumis-intro { display: flex; flex-direction: column; gap: 24px; padding-bottom: 48px; scroll-margin-top: 24px; }
 .lumis-heading { display: flex; flex-direction: column; gap: 7px; }
 .lumis-animated-heading { display: flex; flex-direction: column; gap: 7px; width: 100%; min-width: 0; }
-.lumis-animated-heading .scroll-heading { display: block; }
+.lumis-animated-heading .lumis-slide-heading { display: block; }
+.lumis-animated-heading .lumis-label-mask { overflow: clip; padding-block: .035em; margin-block: -.035em; }
+.lumis-animated-heading .lumis-label-text { display: block; opacity: 0; transform: translateY(20px); }
 .lumis-animated-heading .heading-mask { overflow: clip; }
-.lumis-animated-heading .scroll-heading.is-revealed .heading-text { animation: lumis-heading-rise 420ms cubic-bezier(.22, 1, .36, 1) both; }
+.lumis-animated-heading.is-revealed :is(.lumis-label-text, .heading-text) { animation: lumis-heading-rise 420ms cubic-bezier(.22, 1, .36, 1) both; }
 @keyframes lumis-heading-rise { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-.lumis-animated-heading .scroll-heading.motion-disabled .heading-text { animation: none; opacity: 1; transform: none; }
-@media (prefers-reduced-motion: reduce) { .lumis-animated-heading .scroll-heading .heading-text { animation: none !important; opacity: 1; transform: none; } }
+.lumis-animated-heading.motion-disabled :is(.lumis-label-text, .heading-text) { animation: none; opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .lumis-animated-heading :is(.lumis-label-text, .heading-text) { animation: none !important; opacity: 1; transform: none; } }
 .lumis-heading p { color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 16px; line-height: 21px; text-transform: uppercase; }
 .lumis-heading h1 { font-family: Poppins, sans-serif; font-weight: 700; font-size: 40px; line-height: 60px; color: var(--lumis-heading); }
 .lumis-hero-image { position: relative; width: 100%; aspect-ratio: 1127 / 626; overflow: hidden; }
