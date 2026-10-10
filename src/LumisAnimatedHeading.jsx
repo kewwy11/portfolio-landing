@@ -3,7 +3,7 @@ import RevealHeading from './RevealHeading.jsx';
 import TypewriterText from './TypewriterText.jsx';
 import useRevealOnScroll from './useRevealOnScroll.js';
 
-export default function LumisAnimatedHeading({ label, title, id, as = 'h2', lines, labelClassName = 'lumis-eyebrow', duration = 1400 }) {
+export default function LumisAnimatedHeading({ label, title, id, as = 'h2', lines, labelClassName = 'lumis-eyebrow', duration = 650 }) {
   const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.15 });
   const [headingReady, setHeadingReady] = useState(false);
 
@@ -13,7 +13,7 @@ export default function LumisAnimatedHeading({ label, title, id, as = 'h2', line
       setHeadingReady(true);
       return undefined;
     }
-    const timer = window.setTimeout(() => setHeadingReady(true), Math.max(0, duration - 250));
+    const timer = window.setTimeout(() => setHeadingReady(true), Math.max(0, duration - 200));
     return () => window.clearTimeout(timer);
   }, [revealed, reducedMotion, duration]);
 
