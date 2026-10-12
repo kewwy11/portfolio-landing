@@ -42,19 +42,22 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
     </div>
     <div id={gridId} className="project-grid" aria-live="polite" aria-atomic="true" data-category={category}>
       {filtered.map((project, index) => {
-        const height = page && category === 'UI/UX' ? 500 : project.height;
-        const ImageWrapper = project.id === 'lumis' ? 'a' : 'div';
+        const height = page ? 500 : project.height;
+        const href = project.id === 'lumis' ? `${import.meta.env.BASE_URL}projects/lumis`
+          : project.id === 'piggyvest' ? 'https://www.behance.net/gallery/231953873/Piggyvest-Case-Study' : undefined;
+        const external = project.id === 'piggyvest';
+        const ImageWrapper = href ? 'a' : 'div';
         return <article key={project.id} className={`project project-${index}`} data-project={project.id}
           style={{ '--project-height': `${height}px`, '--project-aspect': `670 / ${height}` }}>
           <ImageWrapper className={`project-image${project.hoverImage ? ' project-image-swap' : ''}${project.image || project.video ? '' : ' project-placeholder'}`}
-            href={project.id === 'lumis' ? `${import.meta.env.BASE_URL}projects/lumis` : undefined}
-            tabIndex={project.id !== 'lumis' && project.hoverImage ? 0 : undefined} role={project.id !== 'lumis' && project.hoverImage ? 'img' : undefined}
-            aria-label={project.id === 'lumis' ? `View ${project.name} case study` : project.hoverImage ? `${project.name}: focus to preview another design` : undefined}>
+            href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}
+            tabIndex={!href && project.hoverImage ? 0 : undefined} role={!href && project.hoverImage ? 'img' : undefined}
+            aria-label={href ? `View ${project.name} case study${external ? ' on Behance (opens in a new tab)' : ''}` : project.hoverImage ? `${project.name}: focus to preview another design` : undefined}>
             <Media image={project.image} video={project.video} alt={project.alt} loading={page && index < 2 ? 'eager' : 'lazy'} />
             {project.hoverImage && <img className="project-hover-image" src={`${import.meta.env.BASE_URL}assets/${project.hoverImage}`} alt={project.hoverAlt} loading="eager" decoding="async" aria-hidden="true" />}
           </ImageWrapper>
           <div className="project-caption">
-            <RevealHeading as="h3" ready={ready}>{project.id === 'lumis' ? <a href={`${import.meta.env.BASE_URL}projects/lumis`}>{project.name}</a> : project.name}</RevealHeading>
+            <RevealHeading as="h3" ready={ready}>{href ? <a href={href} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{project.name}</a> : project.name}</RevealHeading>
             {project.tags.length > 0 && <ul className="tags" aria-label="Project type">
               {project.tags.map(tag => <li key={tag}>{tag}</li>)}
             </ul>}

@@ -9,6 +9,17 @@ const brandProjects = [
   { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], video: true },
   { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], image: 'home/project-beacon.png' },
 ];
+const piggyvestCaseStudy = 'https://www.behance.net/gallery/231953873/Piggyvest-Case-Study';
+
+test('Piggyvest image and title open the Behance case study from both galleries', async ({ page }) => {
+  for (const route of ['/', '/projects']) {
+    await page.goto(route, { waitUntil: 'domcontentloaded' });
+    const card = page.locator('[data-project="piggyvest"]');
+    await expect(card.locator('.project-image')).toHaveAttribute('href', piggyvestCaseStudy);
+    await expect(card.locator('.project-caption h3 a')).toHaveAttribute('href', piggyvestCaseStudy);
+    await expect(card.locator('.project-image')).toHaveAttribute('target', '_blank');
+  }
+});
 
 async function expectGallery(page, category) {
   const home = !new URL(page.url()).pathname.startsWith('/projects');
@@ -95,7 +106,7 @@ test('Projects matches the desktop layout and includes both populated project ca
     const box = image.getBoundingClientRect();
     return { width: box.width, height: box.height };
   }));
-  for (const [index, height] of [430, 430].entries()) {
+  for (const [index, height] of [500, 500].entries()) {
     expect(brandSizes[index].width).toBeCloseTo(cardWidth, 1);
     expect(brandSizes[index].height).toBeCloseTo(cardWidth * height / 670, 1);
   }
