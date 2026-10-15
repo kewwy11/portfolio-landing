@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { projects, projectCategories } from './projects.js';
 import { homeProjects } from './home-projects.js';
 import Media from './Media.jsx';
@@ -43,7 +43,7 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
     <div id={gridId} className="project-grid" aria-live="polite" aria-atomic="true" data-category={category}>
       {filtered.map((project, index) => {
         const height = page ? 500 : project.height;
-        const href = project.id === 'lumis' ? `${import.meta.env.BASE_URL}projects/lumis`
+        const href = project.id === 'beacon-trust' ? `${import.meta.env.BASE_URL}projects/beacon-trust` : project.id === 'lumis' ? `${import.meta.env.BASE_URL}projects/lumis`
           : project.id === 'piggyvest' ? 'https://www.behance.net/gallery/231953873/Piggyvest-Case-Study' : undefined;
         const external = project.id === 'piggyvest';
         const ImageWrapper = href ? 'a' : 'div';
@@ -67,3 +67,4 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
     </div>
   </div>;
 }
+

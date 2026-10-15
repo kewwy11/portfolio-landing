@@ -3,7 +3,7 @@
 
 
 .lumis-case-study { --lumis-blue: #2563eb; --lumis-body: #7f6c72; --lumis-light: #af9ca2; --lumis-heading: #4a3b40; --lumis-error-bg: #fff1f3; --lumis-error-border: #f9cdd5; --lumis-error-heading: #b0233c; --lumis-error-copy: #f43f5e; width: 100%; max-width: 1440px; min-height: 1024px; margin-inline: auto; padding: 56px 40px 72px; overflow-x: clip; color: var(--lumis-body); background: var(--cream); font-family: Poppins, sans-serif; display: grid; grid-template-columns: 209px minmax(0, 1fr); column-gap: 24px; align-items: start; }
-.lumis-sidebar { position: fixed; top: 56px; left: max(40px, calc((100vw - 1440px) / 2 + 40px)); width: 209px; z-index: 2; font-family: Sora, sans-serif; font-size: 14px; padding-bottom: 24px; background: var(--cream); }
+.lumis-sidebar { position: fixed; top: 56px; left: max(40px, calc((100vw - 1440px) / 2 + 40px)); width: 209px; z-index: 2; font-family: Poppins, sans-serif; font-size: 14px; padding-bottom: 24px; background: var(--cream); }
 .lumis-back { display: flex; align-items: center; gap: 8px; color: var(--lumis-body); width: fit-content; margin-bottom: 20px; line-height: 20px; }
 .lumis-back img { width: 20px; height: 20px; transform: rotate(180deg); }
 .lumis-sidebar nav { display: flex; flex-direction: column; gap: 10px; }

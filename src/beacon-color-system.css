@@ -1,0 +1,46 @@
+.beacon-color-system { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 19px; width: 100%; scroll-margin-top: 24px; font-family: 'Beacon Story Inter', Inter, sans-serif; }
+.beacon-color-panel { position: relative; min-width: 0; overflow: hidden; --panel-scale: 1; }
+.beacon-color-canvas { position: absolute; top: 0; left: 0; width: 554px; transform: scale(var(--panel-scale)); transform-origin: top left; }
+.beacon-colors { background: #fff; }
+.beacon-color-right { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.beacon-color-stack { position: absolute; top: 115.5px; left: 80px; width: 395px; height: 395px; }
+.beacon-color-stack-state { position: absolute; inset: 0; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-stack-state.is-current { opacity: 1; }
+.beacon-color-card { position: absolute; left: 0; width: 395px; height: 245px; padding: 20px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+.beacon-color-card-top { display: flex; justify-content: space-between; align-items: center; }
+.beacon-color-card-top > img { display: block; flex: none; }
+.beacon-color-card-menu { display: grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; }
+.beacon-color-card-menu img { display: block; transform: translateY(.5px); }
+.beacon-color-card-label { display: flex; justify-content: space-between; font-size: 13px; font-weight: 400; line-height: normal; }
+.beacon-color-card-label span { text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.beacon-color-card-label span:first-child { letter-spacing: -.26px; }
+.beacon-color-caption { position: absolute; top: 542.5px; left: 80px; width: 395px; height: 20px; text-align: center; color: #879194; font-size: 16px; line-height: normal; letter-spacing: -.16px; }
+.beacon-color-caption p { position: absolute; inset-inline: 0; margin: 0; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.beacon-color-caption p.is-current { opacity: 1; }
+.beacon-color-ratio { position: absolute; left: 80px; top: 676px; display: flex; width: 395px; height: 34px; }
+.beacon-color-ratio span { flex: none; padding: 12px; display: flex; align-items: center; font-size: 14px; font-weight: 400; line-height: 10px; letter-spacing: -.14px; transition: width var(--color-transition) cubic-bezier(.4, 0, .2, 1), background-color var(--color-transition) cubic-bezier(.4, 0, .2, 1), color var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-photo-state { position: absolute; inset: 0; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-photo-state.is-current { opacity: 1; }
+.beacon-color-photo-image { display: block; width: 554px; height: 367px; object-fit: cover; }
+.beacon-color-photo-shade { position: absolute; inset: 0; }
+.beacon-color-glass { position: absolute; z-index: 1; left: 64.25px; top: 183.75px; transform: translateY(-50%); width: 426px; height: 72px; padding: 16px 20px 16px 16px; display: flex; align-items: flex-start; gap: 10px; border-radius: 20px; color: #fff; background: linear-gradient(120deg, rgb(255 255 255 / 20%), rgb(255 255 255 / 3%) 48%, rgb(255 255 255 / 14%)); -webkit-backdrop-filter: blur(7px) saturate(140%); backdrop-filter: blur(7px) saturate(140%); box-shadow: inset 1px 1px 1px rgb(255 255 255 / 65%), inset -1px -1px 1px rgb(255 255 255 / 45%), 0 3px 12px rgb(0 0 0 / 6%); transition: height var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-glass-tall { height: 81px; align-items: flex-start; }
+.beacon-color-app-icon { position: relative; width: 40px; height: 40px; border-radius: 10px; flex: none; transition: background-color var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-app-icon img { position: absolute; left: 8.667px; top: 8px; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-app-icon img.is-current { opacity: 1; }
+.beacon-color-notification-copy { width: 340px; flex: none; display: flex; flex-direction: column; gap: 10px; transition: gap var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-glass-tall .beacon-color-notification-copy { gap: 12px; }
+.beacon-color-notification-title { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.beacon-color-notification-title strong { font-size: 16px; font-weight: 500; line-height: normal; letter-spacing: -.32px; text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.beacon-color-notification-title > span { color: #f5f5f5; font-size: 13px; line-height: normal; letter-spacing: -.26px; text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.beacon-color-messages { position: relative; height: 10px; transition: height var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-glass-tall .beacon-color-messages { height: 25px; }
+.beacon-color-messages p { position: absolute; inset: 0; margin: 0; color: #f5f5f5; font-size: 13px; line-height: normal; font-weight: 400; letter-spacing: -.26px; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); text-box-trim: trim-both; text-box-edge: cap alphabetic; }
+.beacon-color-messages p.is-current { opacity: 1; }
+.beacon-color-badge-background { position: absolute; inset: 0; transition: background-color var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-badge-ring { position: absolute; left: 277px; top: 183.067px; width: 186.544px; height: 186.665px; transition: transform var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-badge-symbol { position: absolute; left: 220.57px; top: 126.51px; width: 112.86px; height: 113.12px; }
+.beacon-color-badge-ring img,.beacon-color-badge-symbol img { position: absolute; top: 0; left: 0; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-badge-ring img.is-current,.beacon-color-badge-symbol img.is-current { opacity: 1; }
+@media (max-width: 760px) { .beacon-color-system { grid-template-columns: 1fr; gap: 16px; } }
+@media (prefers-reduced-motion: reduce) { .beacon-color-system *, .beacon-color-system *::before, .beacon-color-system *::after { transition: none !important; } }
