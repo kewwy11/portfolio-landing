@@ -1,9 +1,12 @@
+import BeaconLogoReveal from './BeaconLogoReveal';
+import BeaconBackgroundVideo from './BeaconBackgroundVideo';
 import React, { useEffect, useState } from 'react';
 import './beacon-case-study.css';
 import BeaconColorSystem from './BeaconColorSystem';
 import BeaconSocialGrid from './BeaconSocialGrid';
 import BeaconApplication from './BeaconApplication';
 import BeaconAboutMotion from './BeaconAboutMotion';
+import { BeaconLogoShowcase, BeaconTypography } from './BeaconBrandMotion';
 
 const base = import.meta.env.BASE_URL;
 const sections = ['Hero', 'About', 'The Logo', 'The Visual System', 'The Application', 'Reflection'];
@@ -43,6 +46,7 @@ function BeaconStorySet({ duplicate = false }) {
       <div className="beacon-story-assets-lettering"><img src={`${base}assets/beacon/story-assets-lettering.svg`} alt="Your assets should work as hard as you" /></div>
     </article>
     <article className="beacon-story-card beacon-story-notification">
+      <BeaconBackgroundVideo className="beacon-story-background" src={`${base}assets/beacon/story-home.mp4`} autoPlay loop muted playsInline preload="metadata" aria-label="A couple celebrating their new home" />
       <BeaconStoryHeader index={5} />
       <div className="beacon-story-toast"><div className="beacon-story-toast-mark"><img src={`${base}assets/beacon/story-notification-mark.svg`} alt="" /></div><div><div className="beacon-story-toast-heading"><strong>Beacon Trust</strong><span>now</span></div><p>Your loan has been approved. ₦4,500,000 is on its way.</p></div></div>
     </article>
@@ -51,7 +55,6 @@ function BeaconStorySet({ duplicate = false }) {
 
 export default function BeaconCaseStudy() {
   const [activeSection, setActiveSection] = useState('beacon-hero');
-  const [logoReveal, setLogoReveal] = useState(50);
 
   useEffect(() => {
     const ids = ['beacon-hero', 'beacon-about', 'beacon-the-logo', 'beacon-the-visual-system', 'beacon-the-application'];
@@ -79,7 +82,7 @@ export default function BeaconCaseStudy() {
     <main className="beacon-content">
       <section id="beacon-hero" className="beacon-hero" aria-labelledby="beacon-title">
         <div className="beacon-hero-art">
-          <img src={`${base}assets/beacon/hero-dinner.png`} alt="Friends laughing together around a dinner table" fetchPriority="high" />
+          <BeaconBackgroundVideo className="beacon-hero-video" src={`${base}assets/beacon/hero-dinner.mp4`} poster={`${base}assets/beacon/hero-dinner.png`} autoPlay loop muted playsInline preload="metadata" aria-label="Friends laughing together around a dinner table" />
           <div className="beacon-hero-top" aria-hidden="true">
             <span>Building futures together</span>
             <span>Finance built on community</span>
@@ -107,17 +110,8 @@ export default function BeaconCaseStudy() {
           <h2 id="beacon-logo-title">The Logo</h2>
           <p>Our logo is a symbol of connection and support. Everyone has a place here, whatever their financial background or goals. The shapes: Helping hands, representing a community reaching out with support. The center represents you and your community. Everything we do revolves around being a beacon of support and financial growth.</p>
         </div>
-        <div className="beacon-logo-showcase">
-          <div className="beacon-logo-left">
-            <img className="beacon-logo-photo" src={`${base}assets/beacon/logo-car.png`} alt="Friends enjoying a drive together" loading="lazy" />
-            <div className="beacon-logo-icon-panel">
-              <div className="beacon-logo-icon-tile"><img src={`${base}assets/beacon/logo-small.svg`} alt="Beacon Trust symbol" loading="lazy" /></div>
-              <div className="beacon-logo-dots" aria-hidden="true"><i /><i /><i /></div>
-            </div>
-          </div>
-          <div className="beacon-logo-large-panel"><img src={`${base}assets/beacon/logo-blue.svg`} alt="Beacon Trust symbol in Beacon Blue" loading="lazy" /></div>
-        </div>
-        <div className="beacon-logo-lockup"><img className="beacon-lockup-symbol" src={`${base}assets/beacon/logo-white.svg`} alt="" loading="lazy" /><img className="beacon-lockup-wordmark" src={`${base}assets/beacon/wordmark-white.svg`} alt="Beacon Trust" loading="lazy" /></div>
+        <BeaconLogoShowcase />
+        <BeaconLogoReveal />
       </section>
       <section id="beacon-the-visual-system" className="beacon-visual-system" aria-labelledby="beacon-visual-title">
         <div className="beacon-section-intro beacon-visual-intro">
@@ -125,11 +119,7 @@ export default function BeaconCaseStudy() {
           <div><p>For the visual system, we started with the colour. Beacon Blue leads everything, a deep electric blue that carries trust without falling into the navy every other bank already owns. Against it is an amber colour, a warm accent that matters in a layout, and a light lavender that gives the system somewhere quiet to breathe. The typography pairs a high-contrast serif with a clean geometric sans, so the brand can sound editorial and human in its headlines while staying plain and functional everywhere else. Numbers always take the serif, which gives figures the weight they need to carry a whole post on their own.</p><p>The Photography style moves the brand away from the coins, handshakes, and boardrooms that fintech usually reaches for. Instead we looked at the lives the money is actually for: friends celebrating together, shop owners standing in their own doorways, handymen/women deep in their work, and so on. Light does the rest, falling across surfaces and picking out the quiet moments in between, which gives the set a warmth that ties back to the name.</p><p>The social system turns all of this into something a small team can actually run. Six templates cover everything the brand posts, from statement cards to stat cards, asset spotlights, testimonials, and a how-it-works carousel. The result is a brand that looks consistent at a glance but never repeats itself twice in a row.</p></div>
         </div>
         <div className="beacon-visual-display">
-        <div className="beacon-type-photo"><img src={`${base}assets/beacon/type-photo.png`} alt="Craftsperson at work in a sunlit workshop" loading="lazy" /><div className="beacon-type-line">Building better<br />futures <em>together</em></div><img className="beacon-type-trace beacon-type-trace-inter" src={`${base}assets/beacon/type-trace-inter.svg`} alt="" aria-hidden="true" /><img className="beacon-type-trace beacon-type-trace-canela" src={`${base}assets/beacon/type-trace-canela.svg`} alt="" aria-hidden="true" /><span className="beacon-type-note beacon-type-note-inter">Main typeface: Inter</span><span className="beacon-type-note beacon-type-note-canela">Canela sans serif</span></div>
-        <div className="beacon-type-grid">
-          <div className="beacon-type-left"><div className="beacon-type-sample"><p>Inter x Canela</p><h3>Built for people <em>building</em> something.</h3></div><div className="beacon-comparison"><span className="beacon-comparison-sans">Beacon <em>Trust</em></span><span className="beacon-comparison-label">Slide to reveal</span><span className="beacon-comparison-divider" style={{left:`${logoReveal}%`}}><b>‹›</b></span><input type="range" min="0" max="100" value={logoReveal} onChange={event => setLogoReveal(Number(event.target.value))} aria-label="Move the Beacon Trust type comparison divider" /></div></div>
-          <div className="beacon-type-right"><div className="beacon-type-statement">No paperwork mountain. Just a few minutes...</div><img src={`${base}assets/beacon/lifestyle-photo.png`} alt="A person relaxing at home" loading="lazy" /></div>
-        </div>
+        <BeaconTypography />
         <div className="beacon-story-strip" aria-label="Beacon Trust social media story designs">
           <div className="beacon-story-track"><BeaconStorySet /><BeaconStorySet duplicate /></div>
         </div>

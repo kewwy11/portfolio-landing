@@ -1,6 +1,8 @@
 .beacon-about-motion .beacon-futures-panel{position:relative;overflow:hidden}
-.beacon-about-motion .beacon-written-headline{position:relative;width:100%;max-width:480px;text-wrap:nowrap;will-change:transform}
-.beacon-written-word,.beacon-written-letter{display:inline-block}
+.beacon-about-motion .beacon-written-headline{position:relative;width:100%;max-width:480px;text-wrap:nowrap;will-change:auto}
+.beacon-written-word{display:inline-block;font-kerning:normal;font-feature-settings:"kern" 1}
+.beacon-about-motion .beacon-futures-panel{container-type:inline-size}
+.beacon-about-motion .beacon-written-headline{font-family:'Beacon Story Inter',Inter,sans-serif;font-size:min(32px,8.8cqw);line-height:1.28125;letter-spacing:-.02em;text-wrap:nowrap}
 .beacon-about-motion .beacon-community-panel p{display:flex;justify-content:center;gap:.3em}
 .beacon-community-reveal{display:inline-block;overflow:hidden;padding-block:.1em}
 .beacon-community-reveal>span{display:block;will-change:transform}

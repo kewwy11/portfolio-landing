@@ -10,7 +10,7 @@
 .beacon-content { grid-column: 2; width: 100%; min-width: 0; }
 .beacon-hero { display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 24px; }
 .beacon-hero-art { position: relative; width: 100%; height: 780px; overflow: hidden; color: white; }
-.beacon-hero-art > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
+.beacon-hero-art > img, .beacon-hero-art > video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center center; }
 .beacon-hero-art::after { content: ''; position: absolute; inset: 0; background: rgb(0 0 0 / 20%); pointer-events: none; }
 .beacon-hero-top { position: absolute; z-index: 1; top: 32px; left: 24px; right: 24px; display: flex; justify-content: space-between; gap: 24px; font-family: Inter, sans-serif; font-size: 14px; font-weight: 400; line-height: normal; text-transform: uppercase; }
 .beacon-hero-top span { display: flex; align-items: center; gap: 8px; }
@@ -109,7 +109,7 @@
   .beacon-sidebar nav { flex-direction: row; overflow-x: auto; gap: 8px; padding-bottom: 8px; }
   .beacon-sidebar nav a { flex: none; white-space: nowrap; }
   .beacon-hero-art { aspect-ratio: 3 / 4; }
-  .beacon-hero-art > img { object-position: 56% center; }
+  .beacon-hero-art > img, .beacon-hero-art > video { object-position: 56% center; }
   .beacon-hero-top { top: 18px; left: 16px; right: 16px; gap: 12px; font-size: 9px; line-height: 14px; }
   .beacon-hero-top span { gap: 5px; }
   .beacon-hero-top span::before { width: 6px; height: 6px; }
@@ -197,3 +197,8 @@
 @keyframes beacon-story-scroll { to { transform: translate3d(-2180px,0,0); } }
 @media (prefers-reduced-motion: reduce) { .beacon-story-track { animation: none; } .beacon-story-strip { overflow-x: auto; } }
 @media (max-width: 760px) { .beacon-story-strip { height: 759px; } .beacon-story-track { top: 24px; left: 20px; } }
+
+.beacon-logo-reveal-mask{width:min(710.14px,100%);overflow:hidden}
+.beacon-logo-reveal-art{display:flex;align-items:center;gap:2.53%;width:100%}
+.beacon-logo-reveal-art .beacon-lockup-symbol{width:15.175%;height:auto;flex:none}
+.beacon-logo-reveal-art .beacon-lockup-wordmark{width:82.295%;height:auto;flex:none}

@@ -3,7 +3,7 @@ import { gsap } from 'gsap';
 import './beacon-about-motion.css';
 
 function Word({ children, name }) {
-  return <span className={`beacon-written-word ${name || ''}`}>{[...children].map((letter, index) => <span className="beacon-written-letter" key={index}>{letter}</span>)}</span>;
+  return <span className={`beacon-written-word ${name || ''}`}>{children}</span>;
 }
 
 export default function BeaconAboutMotion() {
@@ -17,27 +17,48 @@ export default function BeaconAboutMotion() {
       const headline = root.querySelector('.beacon-written-headline');
       const panel = root.querySelector('.beacon-futures-panel');
       const future = root.querySelector('.beacon-future-word');
-      const letters = name => root.querySelectorAll(`.${name} .beacon-written-letter`);
+      const word = name => root.querySelector(`.${name}`);
+      const type = (name, duration) => {
+        const element = word('beacon-' + name + '-word');
+        const text = element.firstChild;
+        const range = document.createRange();
+        const bounds = element.getBoundingClientRect();
+        // Reveal at actual glyph boundaries, retaining the font's native kerning.
+        const frames = [...text.textContent].map((_, i) => {
+          range.setStart(text, 0);
+          range.setEnd(text, i + 1);
+          const edge = (range.getBoundingClientRect().right - bounds.left) / bounds.width;
+          return { clipPath: 'inset(-10% ' + Math.max(-2, (1 - edge) * 100 - .3) + '% -10% 0)', duration: duration / text.length, ease: 'steps(1)' };
+        });
+        return { keyframes: frames };
+      };
       const words = root.querySelectorAll('.beacon-community-reveal > span');
       const offsets = [[0,-24],[-24,0],[24,0],[0,24]];
-      const timeline = gsap.timeline({ repeat: -1, repeatDelay: .8, paused: true, defaults: { ease: 'power2.inOut' } });
+      const focus = () => ({
+        scale: panel.clientWidth * 1.65 / future.offsetWidth,
+        x: panel.clientWidth / 2 - (headline.offsetLeft + future.offsetLeft + future.offsetWidth / 2),
+        y: panel.clientHeight / 2 - (headline.offsetTop + future.offsetTop + future.offsetHeight / 2),
+      });
+      const timeline = gsap.timeline({ repeat: -1, repeatDelay: .35, paused: true, defaults: { ease: 'power2.inOut' } });
       timeline.set(rings, { strokeDasharray: 1, strokeDashoffset: 1, opacity: 1, x: i => offsets[i][0], y: i => offsets[i][1] }, 0)
-        .set(root.querySelectorAll('.beacon-written-letter'), { opacity: 0 }, 0)
+        .set(root.querySelectorAll('.beacon-written-word'), { clipPath: 'inset(0 100% -10% 0)' }, 0)
         .set(words, { yPercent: 110 }, 0)
-        .set(headline, { x: 0, y: 0, scale: 1, opacity: 1 }, 0)
-        .to(rings, { strokeDashoffset: 0, duration: 1.9, stagger: .3 }, .2)
-        .to(rings, { x: 0, y: 0, duration: 2.3, stagger: .18 }, 1)
-        .to(letters('beacon-building-word'), { opacity: 1, duration: .12, stagger: .11 }, 3.2)
-        .to(letters('beacon-better-word'), { opacity: 1, duration: .12, stagger: .11 }, 4.3)
-        .set(headline, { transformOrigin: () => `${future.offsetLeft + future.offsetWidth / 2}px ${future.offsetTop + future.offsetHeight / 2}px` }, 5.1)
-        .to(headline, { scale: () => panel.clientWidth * .9 / future.offsetWidth, x: () => panel.clientWidth / 2 - (headline.offsetLeft + future.offsetLeft + future.offsetWidth / 2), y: () => panel.clientHeight / 2 - (headline.offsetTop + future.offsetTop + future.offsetHeight / 2), duration: 1.1 }, 5.1)
-        .to(letters('beacon-future-word'), { opacity: 1, duration: .14, stagger: .16 }, 5.35)
-        .to(headline, { x: 0, y: 0, scale: 1, duration: 1.25 }, 7.1)
-        .to(letters('beacon-together-word'), { opacity: 1, duration: .12, stagger: .1 }, 8.5)
-        .to(words, { yPercent: 0, duration: 1.1, stagger: .3 }, 10)
-        .to(rings, { strokeDashoffset: -1, duration: 1.8, stagger: .18 }, 13)
-        .to(headline, { opacity: 0, duration: .7 }, 14)
-        .to(words, { yPercent: -110, duration: .7, stagger: .15 }, 14);
+        .set(headline, { force3D: false, x: () => -panel.clientWidth * .3, y: 32, scale: .86, opacity: 1, transformOrigin: () => (future.offsetLeft + future.offsetWidth / 2) + 'px ' + (future.offsetTop + future.offsetHeight / 2) + 'px' }, 0)
+        .to(rings, { strokeDashoffset: 0, duration: 1.45, stagger: .2 }, .08)
+        .to(rings, { x: 0, y: 0, duration: 1.7, stagger: .12 }, .55)
+        .to(words, { yPercent: 0, duration: .7, stagger: .22 }, .08)
+        .to(word('beacon-building-word'), type('building', .65), .08)
+        .to(headline, { x: () => -panel.clientWidth * .08, y: -12, scale: 1.05, duration: 1.55 }, .08)
+        .to(word('beacon-better-word'), type('better', .5), .85)
+        .to(word('beacon-future-word'), type('future', .65), 1.35)
+        .to(headline, { scale: () => focus().scale, x: () => focus().x, y: () => focus().y, duration: 1.05, ease: 'power3.inOut' }, 1.55)
+        // Travel across the enlarged lettering before pulling back to the full phrase.
+        .to(headline, { x: () => focus().x - panel.clientWidth * .32, duration: .85, ease: 'sine.inOut' }, 2.6)
+        .to(headline, { x: 0, y: 0, scale: 1, duration: 1.65, ease: 'power3.inOut' }, 3.45)
+        .to(word('beacon-together-word'), type('together', 1.3), 3.6)
+        .to(rings, { strokeDashoffset: -1, duration: 1.15, stagger: .12 }, 6.25)
+        .to(headline, { opacity: 0, duration: .5 }, 7)
+        .to(words, { yPercent: -110, duration: .5, stagger: .12 }, 7);
       let visible = false;
       const sync = () => visible && !document.hidden ? timeline.resume() : timeline.pause();
       observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: .1 });

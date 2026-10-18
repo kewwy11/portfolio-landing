@@ -1,3 +1,4 @@
+import BeaconBackgroundVideo from './BeaconBackgroundVideo';
 import React, { useEffect, useRef } from 'react';
 import './beacon-social-grid.css';
 
@@ -22,8 +23,8 @@ function Lockup({ word = 'imgGroup', mark = 'imgGroup1', top = false }) {
 function Footer({ mark = 'imgGroup2', swap = false }) {
   return <footer className={`beacon-grid-footer ${swap ? 'can-swap' : ''}`}><img src={art(mark)} alt="Beacon Trust symbol" /><p>Building better<br />futures together</p></footer>;
 }
-function Photo({ photo, alt, word, mark, top, community = false, ...props }) {
-  return <Card {...props} className="beacon-grid-photo"><img className={`beacon-grid-photo-art ${community ? 'community-crop' : ''}`} src={asset(photo)} alt={alt} /><Lockup word={word} mark={mark} top={top} /></Card>;
+function Photo({ photo, video, alt, word, mark, top, community = false, ...props }) {
+  return <Card {...props} className="beacon-grid-photo">{video ? <BeaconBackgroundVideo className="beacon-grid-photo-art" src={asset(video)} poster={asset(photo)} autoPlay loop muted playsInline preload="metadata" aria-label={alt} /> : <img className={`beacon-grid-photo-art ${community ? 'community-crop' : ''}`} src={asset(photo)} alt={alt} />}<Lockup word={word} mark={mark} top={top} /></Card>;
 }
 function Approval(props) {
   return <Card {...props} width={263.1} height={328.875} className="beacon-grid-approval"><small className="beacon-grid-handle">@beacon_tc</small><div className="beacon-grid-approval-copy"><img src={art('approval-text')} alt="72%" /><p>of our loans are approved<br />on the same day</p></div><div className="beacon-grid-growth">{[24.666,34.062,18.793,50.506,85.742].map((height, index) => <i key={index} style={{height, '--bar-order': index}} />)}</div></Card>;
@@ -45,7 +46,7 @@ export default function BeaconSocialGrid() {
     <LoanCard x={576} y={-80} />
     <Card x={861} y={-52} width={265.6} height={332} className="beacon-grid-fast"><div className="beacon-grid-fast-heading"><img src={art('fast-text')} alt="Fast means fast" /><p>Time from valuation to cash</p></div><div className="beacon-grid-speed-bars"><div><p><span>Beacon Trust</span><span>4 hours</span></p><i /></div><div><p><span>Traditional lenders</span><span>3 weeks</span></p><i /></div></div><Footer mark="imgGroup8" /></Card>
     <Approval x={0} y={305} />
-    <Photo x={288} y={313} width={263} height={328.75} photo="social-workspace.png" alt="Sunlit train interior overlooking the mountains" word="imgGroup9" mark="imgGroup10" top />
+    <Photo x={288} y={313} width={263} height={328.75} photo="social-workspace.png" video="train-interior.mp4" alt="Sunlit train interior overlooking the mountains" word="imgGroup9" mark="imgGroup10" top />
     <Card x={576} y={274.2} width={263.159} height={328.949} className="beacon-grid-amount"><small className="beacon-grid-handle">@beacon_tc</small><div className="beacon-grid-amount-copy"><div className="beacon-grid-amount-heading"><img src={art('amount-text')} alt="₦2.4B" /></div><p><span>unlocked for small</span><span>businesses this year.</span></p></div><Footer swap /></Card>
     <Photo x={861} y={304} width={265.8} height={332.25} photo="mosaic-imgFrame89.png" alt="Stylist washing a customer's hair" word="imgGroup4" mark="imgGroup5" />
     <Photo x={0} y={660} width={264.8} height={331} photo="mosaic-imgFrame89.png" alt="Stylist working in her salon" />

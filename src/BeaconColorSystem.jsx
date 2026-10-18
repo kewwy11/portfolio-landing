@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { gsap } from 'gsap';
 import './beacon-color-system.css';
 
 const asset = name => `${import.meta.env.BASE_URL}assets/beacon/${name}`;
@@ -64,20 +65,76 @@ export default function BeaconColorSystem() {
   const badgeTick = Math.floor(step / 3);
   const badgeIndex = badgeTick % badges.length;
   const palette = palettes[paletteIndex];
+  const previousPalette = useRef(paletteIndex);
+  const order = useRef([0, 1, 2]);
+  const [cardColors, setCardColors] = useState(palettes[0].cards);
+  useLayoutEffect(() => {
+    const cards = [...ref.current.querySelectorAll('.beacon-color-card')];
+    if (previousPalette.current === paletteIndex) {
+      cards.forEach((card, index) => gsap.set(card, { y: index * 75, z: (index - 1) * 3, zIndex: 0 }));
+      return;
+    }
+    const oldOrder = order.current;
+    const nextOrder = [oldOrder[2], oldOrder[0], oldOrder[1]];
+    const nextColors = [...cardColors];
+    nextOrder.forEach((id, slot) => { nextColors[id] = palettes[paletteIndex].cards[slot]; });
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const motion = { progress: 0 };
+    const setters = cards.map(card => ({
+      y: gsap.quickSetter(card, 'y', 'px'),
+      z: gsap.quickSetter(card, 'z', 'px'),
+      scale: gsap.quickSetter(card, 'scale'),
+    }));
+    const starts = cards.map(card => ({
+      background: getComputedStyle(card).backgroundColor,
+      ink: getComputedStyle(card).color,
+    }));
+    const blends = nextColors.map((color, id) => ({
+      background: gsap.utils.interpolate(starts[id].background, colors[color]),
+      ink: gsap.utils.interpolate(starts[id].ink, ['mist', 'lavender'].includes(color) ? colors.dark : '#fff'),
+    }));
+    let labelsUpdated = false;
+    // One progress curve drives every card for the entire rearrangement.
+    // Real depth replaces the abrupt z-index switch; there are no staggered starts.
+    const timeline = gsap.to(motion, {
+      progress: 1, duration: reduced ? 0 : 1.3, ease: 'sine.inOut',
+      onUpdate: () => {
+        const p = motion.progress;
+        oldOrder.forEach((id, slot) => {
+          const nextSlot = (slot + 1) % 3;
+          const lift = slot === 2 ? Math.sin(Math.PI * p) : 0;
+          setters[id].y(slot * 75 + (nextSlot - slot) * 75 * p - lift * 28);
+          setters[id].z((slot - 1) * 3 + (nextSlot - slot) * 3 * p);
+          setters[id].scale(1 - lift * .018);
+          cards[id].style.backgroundColor = blends[id].background(p);
+          cards[id].style.color = blends[id].ink(p);
+        });
+        if (!labelsUpdated && p >= .5) {
+          labelsUpdated = true;
+          setCardColors(nextColors);
+        }
+      },
+      onComplete: () => {
+        setCardColors(nextColors);
+        nextOrder.forEach((id, slot) => gsap.set(cards[id], { y: slot * 75, z: (slot - 1) * 3, scale: 1, rotation: 0, backgroundColor: colors[nextColors[id]], color: ['mist', 'lavender'].includes(nextColors[id]) ? colors.dark : '#fff' }));
+      },
+    });
+    previousPalette.current = paletteIndex;
+    order.current = nextOrder;
+    return () => timeline.kill();
+  }, [paletteIndex]);
   const rotation = -18.43 - Math.floor(badgeTick / 3) * 360 - [0, 122.32, 225][badgeIndex];
   return <div ref={ref} id="beacon-color-system" className="beacon-color-system" style={{ '--color-transition': `${transitionMs}ms` }} aria-label="Beacon Trust colour palette and brand applications">
     <ScaledPanel height={750} className="beacon-colors" >
       <div className="beacon-color-stack" data-palette={paletteIndex}>
-        {palettes.map((state, index) => <div className={`beacon-color-stack-state ${index === paletteIndex ? 'is-current' : ''}`} key={state.title} aria-hidden={index !== paletteIndex}>
-          {state.cards.map((color, slot) => {
-            const light = ['mist', 'lavender'].includes(color);
-            const ink = light ? 'dark' : color === 'dark' && index === 2 ? 'mist' : 'white';
-            return <div className="beacon-color-card" key={slot} style={{ top: slot * 75, background: colors[color], color: light ? colors.dark : '#fff' }}>
-              <div className="beacon-color-card-top"><img src={asset(`palette-mark-${ink}.svg`)} alt="" /><span className="beacon-color-card-menu" style={{ background: color === 'mist' ? '#f5f5f5' : 'rgb(255 255 255 / 20%)' }}><img src={asset(`palette-dots-${ink}.svg`)} alt="" /></span></div>
-              <div className="beacon-color-card-label"><span>{names[color]}</span><span>{colors[color].toUpperCase()}</span></div>
-            </div>;
-          })}
-        </div>)}
+        {cardColors.map((color, id) => {
+          const light = ['mist', 'lavender'].includes(color);
+          const ink = light ? 'dark' : color === 'dark' && paletteIndex === 2 ? 'mist' : 'white';
+          return <div className="beacon-color-card" key={id} style={{ top: 0, background: colors[palettes[0].cards[id]], color: '#fff' }}>
+            <div className="beacon-color-card-top"><img src={asset(`palette-mark-${ink}.svg`)} alt="" /><span className="beacon-color-card-menu" style={{ background: color === 'mist' ? '#f5f5f5' : 'rgb(255 255 255 / 20%)' }}><img src={asset(`palette-dots-${ink}.svg`)} alt="" /></span></div>
+            <div className="beacon-color-card-label"><span>{names[color]}</span><span>{colors[color].toUpperCase()}</span></div>
+          </div>;
+        })}
       </div>
       <div className="beacon-color-caption">{palettes.map((state, index) => <p key={state.title} className={index === paletteIndex ? 'is-current' : ''} aria-hidden={index !== paletteIndex}>{state.title}</p>)}</div>
       <div className="beacon-color-ratio" aria-label={palette.title}>
