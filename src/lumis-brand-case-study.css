@@ -1,0 +1,154 @@
+@font-face {
+  font-family: 'Lumis Brand Sora';
+  src: url('/assets/lumis-brand/Sora-Variable.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+}
+
+.lumis-brand-case-study {
+  width: 100%;
+  max-width: 1440px;
+  min-height: 100vh;
+  margin-inline: auto;
+  padding: 56px 40px 72px;
+  display: grid;
+  grid-template-columns: 209px minmax(0, 1fr);
+  gap: 24px;
+  overflow-x: clip;
+  background: #faf3e8;
+  color: #604d53;
+  font-family: Poppins, sans-serif;
+}
+
+.lumis-brand-sidebar {
+  position: fixed;
+  top: 56px;
+  left: max(40px, calc((100vw - 1440px) / 2 + 40px));
+  width: 209px;
+  z-index: 2;
+  padding-right: 24px;
+  padding-bottom: 24px;
+  background: #faf3e8;
+  font-size: 14px;
+}
+.lumis-brand-back { display: flex; align-items: center; gap: 8px; width: fit-content; margin-bottom: 20px; color: #64748b; line-height: 20px; }
+.lumis-brand-back img { width: 20px; height: 20px; transform: rotate(180deg); }
+.lumis-brand-sidebar nav { display: flex; flex-direction: column; gap: 10px; }
+.lumis-brand-sidebar nav > * { display: block; padding: 8px 10px; color: #8695aa; line-height: 18px; }
+.lumis-brand-sidebar nav .is-active { border-left: 2px solid #2563eb; color: #526077; }
+.lumis-brand-content { grid-column: 2; width: 100%; min-width: 0; }
+.lumis-brand-content > section { scroll-margin-top: 24px; }
+.lumis-brand-case-study figure { margin: 0; }
+.lumis-brand-case-study h1, .lumis-brand-case-study h2 { margin-block: 0; }
+
+.lumis-brand-hero-art {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1127 / 780;
+  overflow: hidden;
+  color: #fff;
+}
+.lumis-brand-hero-photo { width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.lumis-brand-hero-shade { position: absolute; inset: 0; background: rgb(0 0 0 / 20%); pointer-events: none; }
+.lumis-brand-hero-pills { position: absolute; inset: 32px 32px auto; display: flex; align-items: flex-start; justify-content: space-between; }
+.lumis-brand-hero-pills span { display: grid; place-items: center; min-height: 39px; padding: 8px 16px; border: .6px solid #fff; border-radius: 50px; font: 300 14px/1.2 'Lumis Brand Sora', sans-serif; letter-spacing: -.02em; white-space: nowrap; }
+.lumis-brand-hero-pills span:nth-child(2) { min-width: 86px; }
+.lumis-brand-logo { position: absolute; left: 50%; top: 50%; width: min(484px, 52%); transform: translate(-50%, -50%); display: flex; align-items: center; gap: 5%; margin: 0; }
+.lumis-brand-logo img:first-child { display: block; width: 29.15%; height: auto; }
+.lumis-brand-logo img:last-child { display: block; width: 65.85%; height: auto; }
+.lumis-brand-hero-tagline { position: absolute; left: 50%; bottom: 49px; transform: translateX(-50%); color: white; font: 300 20px/1.2 'Lumis Brand Sora', sans-serif; text-align: center; text-transform: uppercase; white-space: nowrap; }
+.lumis-brand-details { display: grid; grid-template-columns: 239px repeat(3, minmax(0, 1fr)) max-content; gap: 24px; margin: 24px 0 0; }
+.lumis-brand-details > div { min-width: 0; }
+.lumis-brand-details dt { margin-bottom: 10px; color: #af9ca2; font: 400 16px/1.3 'DM Mono', monospace; text-transform: uppercase; }
+.lumis-brand-details dd { margin: 0; font: 400 20px/29px Poppins, sans-serif; }
+
+.lumis-brand-story, .lumis-brand-strategy { display: flex; flex-direction: column; gap: 48px; padding-top: 48px; }
+.lumis-brand-section-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 0 16px; }
+.lumis-brand-section-intro h2 { color: #2c2527; font: 400 32px/1.15 Gind, sans-serif; text-transform: uppercase; text-wrap: balance; }
+.lumis-brand-intro-copy { color: #604d53; font: 400 16px/1.45 Poppins, sans-serif; }
+.lumis-brand-intro-copy p { margin: 0; }
+.lumis-brand-intro-copy ul { margin: 0; padding: 0; list-style: none; }
+.lumis-brand-intro-copy li::before { content: '–'; }
+
+.lumis-brand-story-card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1127 / 652;
+  overflow: hidden;
+  background: #1d4ed8;
+  color: #eff6ff;
+  container-type: inline-size;
+}
+.lumis-brand-story-where, .lumis-brand-story-meets { position: absolute; margin: 0; font: 600 min(115px, 10.2cqw)/.87 'Lumis Brand Sora', sans-serif; letter-spacing: -.02em; text-transform: uppercase; white-space: nowrap; }
+.lumis-brand-story-where { top: 32px; left: 32px; }
+.lumis-brand-story-meets { right: 32px; bottom: 32px; text-align: right; }
+.lumis-brand-story-image { position: absolute; z-index: 1; left: 32.65%; top: 29.91%; width: 33.63%; height: 40.34%; overflow: hidden; }
+.lumis-brand-story-image img { position: absolute; left: 0; top: -58.94%; width: 111.08%; height: auto; max-width: none; }
+.lumis-brand-story-est, .lumis-brand-story-line { position: absolute; margin: 0; color: #eceef2; font: 400 14px/1.3 'Lumis Brand Sora', sans-serif; letter-spacing: -.01em; text-transform: uppercase; }
+.lumis-brand-story-est { top: 32px; right: 32px; }
+.lumis-brand-story-line { left: 32px; bottom: 40px; }
+
+.lumis-brand-strategy { gap: 24px; }
+.lumis-brand-strategy > .lumis-brand-section-intro { margin-bottom: 24px; }
+.lumis-brand-strategy-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.lumis-brand-promise, .lumis-brand-portrait { position: relative; min-width: 0; aspect-ratio: 555 / 780; overflow: hidden; }
+.lumis-brand-promise { display: grid; place-items: center; background: #1d4ed8; color: white; text-align: center; }
+.lumis-brand-promise > p { margin: 0; font: 800 clamp(32px, 5vw, 72px)/1.04 'Lumis Brand Sora', sans-serif; letter-spacing: -.02em; text-transform: uppercase; }
+.lumis-brand-promise small { position: absolute; left: 8%; right: 8%; bottom: 6%; color: #eceef2; font: 400 12px/1.35 'Lumis Brand Sora', sans-serif; letter-spacing: -.02em; text-transform: uppercase; }
+.lumis-brand-portrait img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; }
+.lumis-brand-strategy-list { display: flex; flex-direction: column; justify-content: flex-end; min-height: 614px; padding: 64px 24px 24px; background: #1d4ed8; color: #fff; }
+.lumis-brand-strategy-item { min-height: 72px; border-top: .5px solid rgb(255 255 255 / 50%); }
+.lumis-brand-strategy-item.is-open { min-height: 292px; }
+.lumis-brand-strategy-item button { display: grid; grid-template-columns: 56px minmax(0, 1fr); align-items: center; gap: 24px; width: 50%; min-height: 72px; padding: 20px 16px; background: transparent; color: inherit; text-align: left; cursor: pointer; }
+.lumis-brand-strategy-number { display: flex; align-items: center; gap: 10px; font: 600 20px/1.2 'Lumis Brand Sora', sans-serif; white-space: nowrap; }
+.lumis-brand-strategy-number i { width: 10px; height: 10px; flex: none; background: white; }
+.lumis-brand-strategy-name { font: 700 20px/1.2 'Lumis Brand Sora', sans-serif; text-transform: uppercase; white-space: nowrap; }
+.lumis-brand-strategy-copy { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; width: 50%; margin: -72px 0 0 auto; padding: 32px 16px; color: #eceef2; font: 400 20px/30px 'Lumis Brand Sora', sans-serif; }
+.lumis-brand-strategy-copy[hidden] { display: none; }
+.lumis-brand-strategy-bullet { width: 10px; height: 10px; margin-top: 10px; border-radius: 50%; background: white; }
+
+@media (max-width: 1200px) {
+  .lumis-brand-details { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px; }
+  .lumis-brand-details dd { font-size: 16px; line-height: 1.45; }
+  .lumis-brand-strategy-copy { font-size: 16px; line-height: 1.45; }
+  .lumis-brand-strategy-item.is-open { min-height: 250px; }
+}
+
+@media (max-width: 760px) {
+  .lumis-brand-case-study { display: block; padding: 24px 16px 56px; }
+  .lumis-brand-sidebar { position: static; width: 100%; padding: 0 0 20px; }
+  .lumis-brand-back { margin-bottom: 12px; }
+  .lumis-brand-sidebar nav { flex-direction: row; gap: 6px; overflow-x: auto; white-space: nowrap; scrollbar-width: none; }
+  .lumis-brand-sidebar nav > * { flex: none; }
+  .lumis-brand-hero-art { aspect-ratio: 4 / 5; }
+  .lumis-brand-hero-pills { inset: 16px 12px auto; gap: 4px; }
+  .lumis-brand-hero-pills span { min-height: 30px; padding: 5px 7px; font-size: clamp(8px, 2vw, 11px); }
+  .lumis-brand-hero-pills span:nth-child(2) { min-width: 0; }
+  .lumis-brand-logo { width: 72%; }
+  .lumis-brand-hero-tagline { bottom: 24px; font-size: 12px; }
+  .lumis-brand-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+  .lumis-brand-details dt { font-size: 12px; margin-bottom: 5px; }
+  .lumis-brand-details dd { font-size: 14px; }
+  .lumis-brand-story, .lumis-brand-strategy { gap: 24px; padding-top: 40px; }
+  .lumis-brand-section-intro { grid-template-columns: 1fr; gap: 16px; padding: 0; }
+  .lumis-brand-section-intro h2 { font-size: 28px; }
+  .lumis-brand-intro-copy { font-size: 14px; }
+  .lumis-brand-story-card { aspect-ratio: 1 / 1.05; }
+  .lumis-brand-story-where, .lumis-brand-story-meets { font-size: 10cqw; }
+  .lumis-brand-story-where { top: 8%; left: 5%; }
+  .lumis-brand-story-meets { right: 5%; bottom: 6%; }
+  .lumis-brand-story-image { left: 32%; top: 31%; width: 40%; height: 37%; }
+  .lumis-brand-story-est, .lumis-brand-story-line { font-size: 9px; }
+  .lumis-brand-story-est { top: 7%; right: 5%; }
+  .lumis-brand-story-line { left: 5%; bottom: 7%; }
+  .lumis-brand-strategy-pair { grid-template-columns: 1fr; gap: 12px; }
+  .lumis-brand-promise, .lumis-brand-portrait { aspect-ratio: 1 / 1.12; }
+  .lumis-brand-promise > p { font-size: clamp(36px, 10vw, 64px); }
+  .lumis-brand-promise small { font-size: 10px; }
+  .lumis-brand-strategy-list { min-height: 0; padding: 36px 14px 16px; }
+  .lumis-brand-strategy-item.is-open { min-height: 0; }
+  .lumis-brand-strategy-item button { width: 100%; min-height: 70px; }
+  .lumis-brand-strategy-copy { width: 100%; margin: 0; padding: 0 16px 32px; font-size: 15px; }
+  .lumis-brand-strategy-name, .lumis-brand-strategy-number { font-size: 16px; }
+}

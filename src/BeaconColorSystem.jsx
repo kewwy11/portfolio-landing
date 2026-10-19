@@ -124,6 +124,8 @@ export default function BeaconColorSystem() {
     return () => timeline.kill();
   }, [paletteIndex]);
   const rotation = -18.43 - Math.floor(badgeTick / 3) * 360 - [0, 122.32, 225][badgeIndex];
+  const [firstStop, secondStop] = [palette.widths[0], palette.widths[0] + palette.widths[1]];
+  const ratioBackground = `linear-gradient(90deg, ${colors[palette.ratio[0]]} 0 ${firstStop}px, ${colors[palette.ratio[1]]} ${firstStop}px ${secondStop}px, ${colors[palette.ratio[2]]} ${secondStop}px 100%)`;
   return <div ref={ref} id="beacon-color-system" className="beacon-color-system" style={{ '--color-transition': `${transitionMs}ms` }} aria-label="Beacon Trust colour palette and brand applications">
     <ScaledPanel height={750} className="beacon-colors" >
       <div className="beacon-color-stack" data-palette={paletteIndex}>
@@ -137,8 +139,8 @@ export default function BeaconColorSystem() {
         })}
       </div>
       <div className="beacon-color-caption">{palettes.map((state, index) => <p key={state.title} className={index === paletteIndex ? 'is-current' : ''} aria-hidden={index !== paletteIndex}>{state.title}</p>)}</div>
-      <div className="beacon-color-ratio" aria-label={palette.title} style={{ backgroundColor: colors[palette.ratio.at(-1)] }}>
-        {palette.ratio.map((color, slot) => <span key={slot} style={{ width: palette.widths[slot], background: colors[color], color: ['mist', 'lavender', 'yellow'].includes(color) ? colors.dark : colors.mist }}>{palette.labels[slot]}</span>)}
+      <div className="beacon-color-ratio" aria-label={palette.title} style={{ backgroundImage: ratioBackground }}>
+        {palette.ratio.map((color, slot) => <span key={slot} style={{ width: palette.widths[slot], color: ['mist', 'lavender', 'yellow'].includes(color) ? colors.dark : colors.mist }}>{palette.labels[slot]}</span>)}
       </div>
     </ScaledPanel>
     <div className="beacon-color-right">
