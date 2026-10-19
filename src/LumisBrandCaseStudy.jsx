@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LumisBrandSections from './LumisBrandSections.jsx';
 import './lumis-brand-case-study.css';
 
 const base = import.meta.env.BASE_URL;
@@ -7,6 +8,10 @@ const navigation = [
   ['Hero', 'lumis-brand-hero'],
   ['Lumis Story', 'lumis-brand-story'],
   ['Brand Strategy', 'lumis-brand-strategy'],
+  ['The Identity', 'lumis-brand-identity'],
+  ['Lumis Voice', 'lumis-brand-voice'],
+  ['Lumis Visuals', 'lumis-brand-visuals'],
+  ['Application', 'lumis-brand-application'],
 ];
 
 const strategyItems = [
@@ -59,8 +64,6 @@ export default function LumisBrandCaseStudy() {
         {navigation.map(([label, id]) => <a key={id} href={`#${id}`}
           className={activeSection === id ? 'is-active' : undefined}
           aria-current={activeSection === id ? 'location' : undefined}>{label}</a>)}
-        {['The Identity', 'Lumis Voice', 'Lumis Visuals', 'Application'].map(label =>
-          <span key={label}>{label}</span>)}
       </nav>
     </aside>
 
@@ -132,6 +135,7 @@ export default function LumisBrandCaseStudy() {
           </div>)}
         </div>
       </section>
+      <LumisBrandSections />
     </main>
   </div>;
 }

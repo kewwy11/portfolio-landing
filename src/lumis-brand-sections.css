@@ -1,0 +1,174 @@
+.lb-section { display: flex; flex-direction: column; gap: 48px; padding-top: 48px; }
+.lb-section .lumis-brand-section-intro { flex: none; }
+.lb-section .lumis-brand-intro-copy p { margin: 0; }
+.lb-identity { gap: 24px; }
+.lb-identity > .lumis-brand-section-intro { margin-bottom: 24px; }
+.lb-logo-stage { display: grid; place-items: center; width: 100%; aspect-ratio: 1134 / 600; background: #fff8eb; color: #1d4ed8; font: 600 20px 'Lumis Brand Sora', sans-serif; }
+.lb-identity-pair, .lb-type-pair, .lb-voice-pair, .lb-visual-pair, .lb-app-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; }
+.lb-identity-pair > *, .lb-type-pair > * { min-width: 0; aspect-ratio: 555 / 700; }
+.lb-logo-anatomy { position: relative; display: grid; place-items: center; background: #0f172a; color: #4b5563; container-type: inline-size; }
+.lb-anatomy-symbol { width: 42%; height: auto; }
+.lb-anatomy-callout { position: absolute; padding: .75cqw 1cqw; border-radius: 4px; background: white; font: 400 clamp(8px, 1.2cqw, 12px)/1.2 Poppins, sans-serif; white-space: nowrap; }
+.lb-anatomy-callout::after { content: ''; position: absolute; border-left: 1px dotted #fff; }
+.lb-anatomy-top { top: 23%; left: 50%; transform: translateX(-50%); }
+.lb-anatomy-top::after { top: 100%; left: 50%; height: 14cqw; }
+.lb-anatomy-left { top: 52%; left: 11%; }
+.lb-anatomy-left::after { top: 50%; left: 100%; width: 8cqw; height: 0; border: 0; border-top: 1px dotted white; }
+.lb-anatomy-right { top: 41%; right: 11%; }
+.lb-anatomy-right::after { top: 50%; right: 100%; width: 8cqw; height: 0; border: 0; border-top: 1px dotted white; }
+.lb-anatomy-bottom { bottom: 19%; left: 50%; transform: translateX(-50%); }
+.lb-anatomy-bottom::after { bottom: 100%; left: 50%; height: 15cqw; }
+.lb-consultation-card { position: relative; overflow: hidden; background: #e1d8d0; }
+.lb-consultation-card > img { width: 100%; height: 100%; object-fit: cover; }
+.lb-consultation-brand { position: absolute; left: 50%; top: 38%; width: 50%; transform: translate(-50%, -50%); color: white; text-align: center; text-shadow: 0 1px 8px rgb(0 0 0 / 30%); }
+.lb-consultation-brand > p { display: flex; align-items: center; justify-content: center; gap: 16px; font: 400 14px 'Lumis Brand Sora', sans-serif; }
+.lb-consultation-brand > p img { width: 25%; }
+.lb-consultation-brand > img { width: 100%; margin: 10px auto; }
+.lb-consultation-brand small { font: 400 12px/1.4 'Lumis Brand Sora', sans-serif; text-transform: uppercase; }
+.lb-lockup { display: flex; align-items: center; gap: 8px; }
+.lb-lockup img:first-child { width: 28%; }
+.lb-lockup img:last-child { width: 66%; }
+.lb-palette { position: relative; width: 100%; aspect-ratio: 1134 / 700; overflow: hidden; background: #af7d61; }
+.lb-palette > img { width: 100%; height: 100%; object-fit: cover; }
+.lb-palette-cards { position: absolute; left: 6%; right: 6%; top: 50%; transform: translateY(-50%); display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 2.3%; }
+.lb-palette-card { min-width: 0; padding: 5px; background: white; }
+.lb-palette-swatch { display: block; width: 100%; aspect-ratio: 1; }
+.lb-palette-card dl { margin: 12px 4px 3px; color: #64748b; font: 400 clamp(7px, .75vw, 12px)/1.35 Poppins, sans-serif; }
+.lb-palette-card dl div { display: grid; grid-template-columns: 30px 1fr; gap: 4px; }
+.lb-palette-card dt, .lb-palette-card dd { min-width: 0; margin: 0; }
+.lb-type-pair > * { aspect-ratio: 559 / 730; }
+.lb-type-card { display: flex; flex-direction: column; justify-content: space-between; min-width: 0; padding: 32px; container-type: inline-size; font-family: 'Lumis Brand Sora', sans-serif; }
+.lb-type-sora { background: #1d4ed8; color: #fff; }
+.lb-type-mono { background: #eff6ff; color: #1d4ed8; }
+.lb-type-top, .lb-type-bottom { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.lb-type-top span { padding: 9px 14px; border: 1px solid currentColor; border-radius: 50px; font-size: clamp(9px, 1.25cqw, 14px); white-space: nowrap; }
+.lb-type-card strong { align-self: center; font-weight: 100; font-size: min(60cqw, 340px); line-height: 1; letter-spacing: -.06em; white-space: nowrap; }
+.lb-type-mono strong { font-family: 'DM Mono', monospace; font-weight: 400; letter-spacing: -.1em; }
+.lb-type-bottom { font-size: clamp(8px, 1.25cqw, 14px); text-transform: uppercase; }
+.lb-identity-stories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 57px 42px; overflow: hidden; background: #fff8eb; }
+.lb-story-card { position: relative; min-width: 0; aspect-ratio: 374 / 665; overflow: hidden; color: white; font-family: 'Lumis Brand Sora', sans-serif; }
+.lb-story-collage { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 100%; height: 100%; }
+.lb-story-collage img { width: 100%; height: 100%; object-fit: cover; }
+.lb-story-ui { position: absolute; inset: 0; padding: 14px; display: flex; flex-direction: column; align-items: center; background: rgb(0 0 0 / 14%); }
+.lb-social-header { display: flex; align-items: center; gap: 8px; width: 100%; color: white; font: 600 12px 'Lumis Brand Sora', sans-serif; }
+.lb-social-header.is-dark { color: #64748b; }
+.lb-social-avatar { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #1d4ed8; }
+.lb-social-avatar img { width: 56%; }
+.lb-social-more { margin-left: auto; letter-spacing: .1em; }
+.lb-story-kicker { margin: 24px 0 18px; font: 400 clamp(10px, 1.35vw, 17px) 'DM Mono', monospace; }
+.lb-poll { display: flex; flex-direction: column; gap: 7px; width: 80%; padding: 12px; border-radius: 18px; background: white; color: #0f172a; font-size: clamp(8px, .8vw, 11px); }
+.lb-poll b { margin: -12px -12px 2px; padding: 14px 10px; border-radius: 18px 18px 0 0; background: #0f172a; color: white; text-align: center; }
+.lb-poll span { padding: 8px; border-radius: 8px; background: #f8fafc; }
+.lb-story-ui > small { margin-top: auto; font: 400 9px 'DM Mono', monospace; }
+.lb-story-type { display: flex; flex-direction: column; padding: 14px; background: #1d4ed8; }
+.lb-story-type > small { margin: 50px auto 30px; font: 400 9px 'DM Mono', monospace; }
+.lb-story-type > p { align-self: flex-start; width: 75%; font-size: clamp(10px, 1vw, 13px); }
+.lb-story-type > strong { margin-top: auto; font: 400 clamp(24px, 3.4vw, 48px)/.92 'DM Mono', monospace; letter-spacing: -.08em; }
+.lb-story-stat > img { width: 100%; height: 100%; object-fit: cover; }
+.lb-story-stat > div { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 14px; background: rgb(0 0 0 / 14%); }
+.lb-story-stat small:nth-child(2) { margin: 22% auto 0; font: 400 13px 'DM Mono', monospace; }
+.lb-story-stat strong { margin: 20px auto; font-size: clamp(60px, 7vw, 105px); font-weight: 600; }
+.lb-story-stat p { margin-top: auto; font-size: clamp(12px, 1.2vw, 18px); font-weight: 700; }
+.lb-story-stat small:last-child { margin-bottom: 16%; font-size: 11px; }
+.lb-social-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; }
+.lb-social-sample { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; aspect-ratio: 555 / 700; padding: 8%; background: #0f172a; }
+.lb-social-light { position: relative; align-items: flex-start; overflow: hidden; padding-left: 7%; padding-right: 0; background: #0f172a; }
+.lb-social-sample .lb-social-header, .lb-social-sample .lb-social-footer, .lb-social-photo { width: 100%; max-width: 412px; }
+.lb-social-light .lb-social-header { padding: 10px; border-radius: 16px 16px 0 0; background: white; }
+.lb-social-photo { aspect-ratio: 1; overflow: hidden; border-radius: 20px; }
+.lb-social-light .lb-social-photo { border-radius: 0; }
+.lb-social-photo img { width: 100%; height: 100%; object-fit: cover; }
+.lb-social-footer { display: flex; gap: 8px; color: white; font-size: 26px; }
+.lb-social-footer span:last-child { margin-left: auto; }
+.lb-social-light .lb-social-footer { padding: 6px 10px; border-radius: 0 0 16px 16px; background: white; color: #1d4ed8; }
+.lb-social-light .lb-social-header, .lb-social-light .lb-social-photo, .lb-social-light .lb-social-footer { width: 80%; max-width: none; }
+.lb-social-next { position: absolute; left: 84%; top: 20%; width: 74%; height: 60%; border: 12px solid white; border-radius: 16px; object-fit: cover; }
+.lb-voice-pair > * { min-width: 0; aspect-ratio: 555 / 550; }
+.lb-voice-traits { display: flex; flex-direction: column; justify-content: space-between; padding: 32px; background: #eff6ff; color: #64748b; font: 400 16px 'Lumis Brand Sora', sans-serif; }
+.lb-voice-pill { align-self: flex-start; padding: 10px 16px; border: 1px solid #1d4ed8; border-radius: 50px; color: #1d4ed8; font-size: 14px; }
+.lb-voice-row { display: grid; grid-template-columns: 86px minmax(0, 1fr) 90px; align-items: center; gap: 10px; }
+.lb-voice-row strong { color: #1d4ed8; text-align: right; font-weight: 600; }
+.lb-voice-meter { height: 38px; background: #e5e7eb; }
+.lb-voice-meter i { display: block; height: 100%; background: #1d4ed8; }
+.lb-voice-example { display: grid; place-items: center; background: #f59e0b; }
+.lb-message-stack { position: relative; width: 75%; max-width: 427px; padding-top: 28px; }
+.lb-message-stack > div:not(.lb-message-front) { position: absolute; left: 4%; top: 0; width: 92%; height: 90%; border-radius: 18px; background: #ffcf78; }
+.lb-message-stack > div:nth-child(2) { top: 14px; left: 2%; width: 96%; background: #ffdc9d; }
+.lb-message-front { position: relative; padding: 18px; border-radius: 18px; background: #fff8eb; color: #1d4ed8; font: 600 14px 'Lumis Brand Sora', sans-serif; }
+.lb-message-front p + p { margin-top: 12px; color: #ef1b23; }
+.lb-positive, .lb-negative { display: inline-grid; place-items: center; width: 20px; height: 20px; margin-right: 5px; border-radius: 50%; background: #1d4ed8; color: white; }
+.lb-negative { background: #ef1b23; }
+.lb-visuals { gap: 32px; }
+.lb-visuals > .lumis-brand-section-intro { margin-bottom: 16px; }
+.lb-people-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); width: 100%; }
+.lb-person-card { position: relative; min-width: 0; aspect-ratio: 1 / 1.88; overflow: hidden; background: #744836; }
+.lb-person-card > img { width: 100%; height: 100%; object-fit: cover; }
+.lb-person-tags { position: absolute; inset: 20% 5% 15%; display: flex; flex-direction: column; align-items: flex-end; justify-content: space-around; color: #feeac7; font: 400 clamp(8px, .8vw, 11px) 'Lumis Brand Sora', sans-serif; }
+.lb-person-tags span { padding: 8px 12px; border: .5px solid currentColor; border-radius: 50px; background: rgb(21 30 45 / 18%); }
+.lb-person-tags span:nth-child(2) { align-self: flex-start; }
+.lb-person-card figcaption { position: absolute; left: 5%; right: 5%; bottom: 4%; display: flex; justify-content: space-between; padding-top: 10px; border-top: .5px solid #feeac7; color: #fff8eb; font: 400 10px 'Lumis Brand Sora', sans-serif; }
+.lb-visual-pair > * { min-width: 0; aspect-ratio: 555 / 780; overflow: hidden; }
+.lb-lifestyle, .lb-visual-consult, .lb-pattern-photo { position: relative; }
+.lb-lifestyle > img, .lb-visual-consult > img, .lb-pattern-photo > img:first-child { width: 100%; height: 100%; object-fit: cover; }
+.lb-care-menu { position: absolute; left: 18%; top: 48%; display: flex; flex-direction: column; gap: 10px; width: 52%; color: white; font: 400 12px 'Lumis Brand Sora', sans-serif; }
+.lb-care-menu > * { padding: 12px 16px; border-radius: 25px; background: rgb(15 23 42 / 65%); backdrop-filter: blur(8px); }
+.lb-care-menu b { background: white; color: #1d4ed8; }
+.lb-visual-consult p { position: absolute; left: 5%; right: 5%; bottom: 7%; color: white; font: 600 clamp(16px, 2.5vw, 28px)/1.18 'Lumis Brand Sora', sans-serif; text-align: center; text-shadow: 0 2px 8px rgb(0 0 0 / 35%); }
+.lb-pattern-photo .lb-pattern { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.lb-visual-stat { display: flex; flex-direction: column; padding: 32px; background: #1d4ed8; color: white; font-family: 'Lumis Brand Sora', sans-serif; }
+.lb-visual-stat > p { font-size: clamp(18px, 2.4vw, 28px); font-weight: 600; line-height: 1.2; }
+.lb-stat-dots { display: grid; grid-template-columns: repeat(10, 1fr); gap: 8px; margin-top: auto; }
+.lb-stat-dots i { aspect-ratio: 1; border-radius: 50%; background: #eff6ff; }
+.lb-stat-dots i:nth-last-child(-n+5) { background: #cbd5e1; }
+.lb-visual-stat small { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; font-size: 10px; }
+.lb-application-gallery { display: flex; flex-direction: column; gap: 32px; }
+.lb-application-gallery figure { margin: 0; }
+.lb-app-wide { width: 100%; aspect-ratio: 1127 / 780; overflow: hidden; }
+.lb-app-wide img, .lb-app-pair figure > img:first-child { width: 100%; height: 100%; object-fit: cover; }
+.lb-app-pair > * { min-width: 0; height: min(69.2vw, 780px); }
+.lb-app-stack { display: grid; grid-template-rows: repeat(2, 1fr); gap: 16px; }
+.lb-app-stack img { width: 100%; height: 100%; min-height: 0; object-fit: cover; }
+.lb-app-pair figure { position: relative; overflow: hidden; background: white; }
+.lb-app-cards > * { height: min(62vw, 700px); }
+.lb-app-cards .lb-card-background { width: 100%; height: 100%; object-fit: cover; }
+.lb-app-cards .lb-card-front, .lb-app-cards .lb-card-back { position: absolute; width: 63%; height: auto; object-fit: contain; box-shadow: 0 6px 22px rgb(0 0 0 / 16%); }
+.lb-app-cards .lb-card-front { left: 13%; top: 16%; }
+.lb-app-cards .lb-card-back { right: 10%; bottom: 15%; }
+.lb-app-finale { width: 100%; }
+.lb-app-finale > div { position: relative; display: flex; align-items: center; justify-content: center; height: min(34.6vw, 390px); overflow: hidden; }
+.lb-app-finale > div:first-child { gap: 9%; background: #fff8eb; color: #1d4ed8; }
+.lb-app-finale > div:first-child > img { width: 25%; height: 64%; object-fit: cover; }
+.lb-app-finale span { font: italic clamp(14px, 2.5vw, 28px) 'DM Mono', monospace; }
+.lb-app-finale > div:last-child { background: white; }
+.lb-app-finale > div:last-child > img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
+.lb-app-finale > div:last-child > p { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 20px 24px; background: #fff8eb; color: #1d4ed8; font: 600 clamp(15px, 2.5vw, 28px)/1.3 'Lumis Brand Sora', sans-serif; }
+
+@media (max-width: 760px) {
+  .lb-section { gap: 22px; padding-top: 40px; }
+  .lb-identity > .lumis-brand-section-intro, .lb-visuals > .lumis-brand-section-intro { margin-bottom: 0; }
+  .lb-logo-stage { font-size: 14px; }
+  .lb-identity-pair, .lb-type-pair, .lb-voice-pair, .lb-visual-pair, .lb-app-pair { grid-template-columns: 1fr; gap: 12px; }
+  .lb-palette { aspect-ratio: auto; min-height: 420px; }
+  .lb-palette-cards { grid-template-columns: repeat(5, minmax(90px, 1fr)); left: 12px; right: 12px; gap: 8px; overflow-x: auto; }
+  .lb-palette-card dl { font-size: 7px; }
+  .lb-palette-card dl div { grid-template-columns: 22px 1fr; }
+  .lb-type-card { aspect-ratio: 1 / 1.08; padding: 20px; }
+  .lb-identity-stories { display: flex; gap: 12px; padding: 18px; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .lb-story-card { flex: 0 0 72%; scroll-snap-align: start; }
+  .lb-story-type > strong { font-size: 8vw; }
+  .lb-social-pair, .lb-people-grid { grid-template-columns: 1fr; gap: 12px; }
+  .lb-social-sample { aspect-ratio: 1 / 1.1; }
+  .lb-voice-pair > * { aspect-ratio: 1 / 1.1; }
+  .lb-voice-traits { padding: 20px; font-size: 12px; }
+  .lb-voice-row { grid-template-columns: 67px 1fr 67px; gap: 6px; }
+  .lb-voice-meter { height: 24px; }
+  .lb-message-front { font-size: 10px; }
+  .lb-person-card { aspect-ratio: 1 / 1.3; }
+  .lb-person-tags { font-size: 10px; }
+  .lb-visual-stat > p { font-size: 20px; }
+  .lb-visual-pair > * { aspect-ratio: 1 / 1.1; }
+  .lb-app-pair > *, .lb-app-cards > * { height: auto; aspect-ratio: 1 / 1.1; }
+  .lb-app-stack { aspect-ratio: auto; height: auto; }
+  .lb-app-stack img { aspect-ratio: 1 / .7; }
+  .lb-app-finale > div { height: 200px; }
+}
