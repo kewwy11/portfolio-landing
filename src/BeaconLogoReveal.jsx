@@ -6,13 +6,14 @@ export default function BeaconLogoReveal() {
   useLayoutEffect(() => {
     const media = gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)', () => {
+      const mask = ref.current.querySelector('.beacon-logo-reveal-mask');
       const artwork = ref.current.querySelector('.beacon-logo-reveal-art');
-      const motion = gsap.fromTo(artwork, { yPercent: 110 }, { yPercent: 0, duration: 1.05, ease: 'power3.out', paused: true });
+      const motion = gsap.fromTo(artwork, { yPercent: 115 }, { yPercent: 0, duration: 1.3, ease: 'power3.out', paused: true });
       const observer = new IntersectionObserver(([entry]) => {
-        if (entry.isIntersecting) motion.play();
-        else if (entry.intersectionRatio === 0) motion.pause(0);
-      }, { threshold: [0, .25] });
-      observer.observe(ref.current);
+        if (entry.isIntersecting && entry.intersectionRatio >= .15) motion.restart();
+        else if (!entry.isIntersecting) motion.pause(0);
+      }, { rootMargin: '0px 0px -12% 0px', threshold: [0, .15] });
+      observer.observe(mask);
       return () => { observer.disconnect(); motion.kill(); };
     }, ref);
     return () => media.revert();

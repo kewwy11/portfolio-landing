@@ -35,30 +35,28 @@ export default function BeaconAboutMotion() {
       const words = root.querySelectorAll('.beacon-community-reveal > span');
       const offsets = [[0,-24],[-24,0],[24,0],[0,24]];
       const focus = () => ({
-        scale: panel.clientWidth * 1.65 / future.offsetWidth,
+        scale: Math.min(3.15, panel.clientWidth * .78 / future.offsetWidth),
         x: panel.clientWidth / 2 - (headline.offsetLeft + future.offsetLeft + future.offsetWidth / 2),
         y: panel.clientHeight / 2 - (headline.offsetTop + future.offsetTop + future.offsetHeight / 2),
       });
-      const timeline = gsap.timeline({ repeat: -1, repeatDelay: .35, paused: true, defaults: { ease: 'power2.inOut' } });
+      const timeline = gsap.timeline({ repeat: -1, repeatDelay: .45, paused: true, defaults: { ease: 'sine.inOut' } });
       timeline.set(rings, { strokeDasharray: 1, strokeDashoffset: 1, opacity: 1, x: i => offsets[i][0], y: i => offsets[i][1] }, 0)
         .set(root.querySelectorAll('.beacon-written-word'), { clipPath: 'inset(0 100% -10% 0)' }, 0)
         .set(words, { yPercent: 110 }, 0)
-        .set(headline, { force3D: false, x: () => -panel.clientWidth * .3, y: 32, scale: .86, opacity: 1, transformOrigin: () => (future.offsetLeft + future.offsetWidth / 2) + 'px ' + (future.offsetTop + future.offsetHeight / 2) + 'px' }, 0)
+        .set(headline, { force3D: false, x: 0, y: 0, scale: 1, opacity: 1, transformOrigin: () => (future.offsetLeft + future.offsetWidth / 2) + 'px ' + (future.offsetTop + future.offsetHeight / 2) + 'px' }, 0)
         .to(rings, { strokeDashoffset: 0, duration: 1.45, stagger: .2 }, .08)
         .to(rings, { x: 0, y: 0, duration: 1.7, stagger: .12 }, .55)
         .to(words, { yPercent: 0, duration: .7, stagger: .22 }, .08)
-        .to(word('beacon-building-word'), type('building', .65), .08)
-        .to(headline, { x: () => -panel.clientWidth * .08, y: -12, scale: 1.05, duration: 1.55 }, .08)
-        .to(word('beacon-better-word'), type('better', .5), .85)
-        .to(word('beacon-future-word'), type('future', .65), 1.35)
-        .to(headline, { scale: () => focus().scale, x: () => focus().x, y: () => focus().y, duration: 1.05, ease: 'power3.inOut' }, 1.55)
-        // Travel across the enlarged lettering before pulling back to the full phrase.
-        .to(headline, { x: () => focus().x - panel.clientWidth * .32, duration: .85, ease: 'sine.inOut' }, 2.6)
-        .to(headline, { x: 0, y: 0, scale: 1, duration: 1.65, ease: 'power3.inOut' }, 3.45)
-        .to(word('beacon-together-word'), type('together', 1.3), 3.6)
-        .to(rings, { strokeDashoffset: -1, duration: 1.15, stagger: .12 }, 6.25)
-        .to(headline, { opacity: 0, duration: .5 }, 7)
-        .to(words, { yPercent: -110, duration: .5, stagger: .12 }, 7);
+        .to(word('beacon-building-word'), type('building', .72), .12)
+        .to(word('beacon-better-word'), type('better', .58), .89)
+        .to(word('beacon-future-word'), type('future', .72), 1.5)
+        .to(headline, { scale: () => focus().scale, x: () => focus().x, y: () => focus().y, duration: 1.55, ease: 'sine.inOut' }, 2.25)
+        .to(headline, { x: () => focus().x - panel.clientWidth * .12, duration: .65, ease: 'sine.inOut' }, 3.8)
+        .to(headline, { x: 0, y: 0, scale: 1, duration: 1.75, ease: 'sine.inOut' }, 4.45)
+        .to(word('beacon-together-word'), type('together', 1.3), 4.67)
+        .to(rings, { strokeDashoffset: -1, duration: 1.15, stagger: .12 }, 7.3)
+        .to(headline, { opacity: 0, duration: .45 }, 8.05)
+        .to(words, { yPercent: -110, duration: .5, stagger: .12 }, 8.05);
       let visible = false;
       const sync = () => visible && !document.hidden ? timeline.resume() : timeline.pause();
       observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: .1 });

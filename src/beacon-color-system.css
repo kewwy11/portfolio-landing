@@ -19,6 +19,7 @@
 .beacon-color-caption p.is-current { opacity: 1; }
 .beacon-color-ratio { position: absolute; left: 80px; top: 676px; display: flex; width: 395px; height: 34px; }
 .beacon-color-ratio span { flex: none; padding: 12px; display: flex; align-items: center; font-size: 14px; font-weight: 400; line-height: 10px; letter-spacing: -.14px; transition: width var(--color-transition) cubic-bezier(.4, 0, .2, 1), background-color var(--color-transition) cubic-bezier(.4, 0, .2, 1), color var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
+.beacon-color-ratio span + span { margin-left: -1px; }
 .beacon-color-photo-state { position: absolute; inset: 0; opacity: 0; transition: opacity var(--color-transition) cubic-bezier(.4, 0, .2, 1); }
 .beacon-color-photo-state.is-current { opacity: 1; }
 .beacon-color-photo-image { display: block; width: 554px; height: 367px; object-fit: cover; }

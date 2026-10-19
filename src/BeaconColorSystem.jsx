@@ -137,7 +137,7 @@ export default function BeaconColorSystem() {
         })}
       </div>
       <div className="beacon-color-caption">{palettes.map((state, index) => <p key={state.title} className={index === paletteIndex ? 'is-current' : ''} aria-hidden={index !== paletteIndex}>{state.title}</p>)}</div>
-      <div className="beacon-color-ratio" aria-label={palette.title}>
+      <div className="beacon-color-ratio" aria-label={palette.title} style={{ backgroundColor: colors[palette.ratio.at(-1)] }}>
         {palette.ratio.map((color, slot) => <span key={slot} style={{ width: palette.widths[slot], background: colors[color], color: ['mist', 'lavender', 'yellow'].includes(color) ? colors.dark : colors.mist }}>{palette.labels[slot]}</span>)}
       </div>
     </ScaledPanel>

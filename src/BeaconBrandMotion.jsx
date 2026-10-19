@@ -110,19 +110,25 @@ function TypographySample() {
   const ref = useRef(null);
   useMotion(ref, root => {
     const text = root.querySelector('.bb-sample-text');
+    const lines = root.querySelectorAll('.bb-sample-line');
     const caption = root.querySelector('p');
-    const timeline = gsap.timeline({ repeat: -1, repeatDelay: .35, paused: true });
-    timeline.set(text, { transformOrigin: '210px 82px', force3D: false, x: -38, y: 0, scale: .92, opacity: 0 }, 0)
-      .to(text, { opacity: 1, x: 0, scale: 1, duration: .85, ease: 'power2.out' }, 0)
-      .to(caption, { opacity: 0, duration: .35 }, 1.2)
-      .to(text, { scale: 3.4, x: 40, y: -45, duration: 1.05, ease: 'power3.inOut' }, 1.35)
-      .to(text, { x: -125, duration: 1, ease: 'sine.inOut' }, 2.4)
-      .to(text, { scale: 1, x: 0, y: 0, duration: 1.45, ease: 'power3.inOut' }, 3.4)
-      .to(caption, { opacity: 1, duration: .5 }, 4.45)
-      .to(text, { opacity: 0, duration: .35 }, 6.15);
+    const timeline = gsap.timeline({ repeat: -1, repeatDelay: .45, paused: true });
+    timeline.set(text, { transformOrigin: '95px 82px', force3D: false, x: 0, y: 0, scale: 1, opacity: 1 }, 0)
+      .set(lines, { clipPath: 'inset(0 100% 0 0)' }, 0)
+      .to(lines[0], { clipPath: 'inset(0 0% 0 0)', duration: 1.05, ease: 'steps(16)' }, .15)
+      .to(lines[1], { clipPath: 'inset(0 0% 0 0)', duration: 1.35, ease: 'steps(19)' }, 1.25)
+      .to(caption, { opacity: 0, duration: .5, ease: 'sine.inOut' }, 2.55)
+      .to(text, { scale: 3.1, x: 143, y: -40, duration: 1.55, ease: 'sine.inOut' }, 2.7)
+      .to(text, { x: 72, duration: .7, ease: 'sine.inOut' }, 4.25)
+      .to(text, { scale: 1, x: 0, y: 0, duration: 1.75, ease: 'sine.inOut' }, 4.95)
+      .to(caption, { opacity: 1, duration: .55, ease: 'sine.inOut' }, 6.1)
+      .to(text, { opacity: 0, duration: .4 }, 7.75);
     return timeline;
   });
-  return <div ref={ref}><Canvas className="bb-sample"><p>Inter x Canela</p><img className="bb-sample-text" src={asset('type-sample-exact.svg')} alt="Built for people, building something."/></Canvas></div>;
+  return <div ref={ref}><Canvas className="bb-sample"><p>Inter x Canela</p><div className="bb-sample-text" role="img" aria-label="Built for people, building something.">
+    <span className="bb-sample-line bb-sample-line-one" aria-hidden="true"><img src={asset('type-sample-exact.svg')} alt="" /></span>
+    <span className="bb-sample-line bb-sample-line-two" aria-hidden="true"><img src={asset('type-sample-exact.svg')} alt="" /></span>
+  </div></Canvas></div>;
 }
 
 export function BeaconTypography() {
