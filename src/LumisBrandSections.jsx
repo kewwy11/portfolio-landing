@@ -47,7 +47,9 @@ function Identity() {
       <p>For social media, we used imagery showing different skin conditions across various skin tones, paired with language that felt fun, lively, and emotional rather than overly clinical.</p>
     </Intro>
 
-    <div className="lb-logo-stage"><p>Logo animation</p></div>
+    <div className="lb-logo-stage" aria-label="Lumis logo reveal">
+      <div className="lb-logo-stage-lockup"><img src={asset('hero-symbol.svg')} alt="" /><img src={asset('hero-wordmark.svg')} alt="" /></div>
+    </div>
 
     <div className="lb-identity-pair">
       <div className="lb-logo-anatomy">
