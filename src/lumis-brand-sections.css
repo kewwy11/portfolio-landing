@@ -3,17 +3,25 @@
 .lb-section .lumis-brand-intro-copy p { margin: 0; }
 .lb-identity { gap: 24px; }
 .lb-identity > .lumis-brand-section-intro { margin-bottom: 24px; }
-.lb-logo-stage { display: grid; place-items: center; width: 100%; aspect-ratio: 1134 / 600; overflow: hidden; background: #fff8eb; }
+.lb-logo-stage { position: relative; display: grid; place-items: center; width: 100%; aspect-ratio: 1134 / 600; overflow: hidden; background: #fff8eb; }
+.lb-logo-stage-label { position: absolute; margin: 0; color: #1d4ed8; font: 600 clamp(18px, 2.8vw, 32px)/1.2 'Lumis Brand Sora', sans-serif; transition: opacity .35s ease; }
+.lb-logo-stage.is-revealed .lb-logo-stage-label { opacity: 0; }
 .lb-logo-stage-lockup { display: flex; align-items: center; gap: 5%; width: min(46%, 520px); filter: brightness(0) saturate(100%) invert(29%) sepia(76%) saturate(2359%) hue-rotate(207deg) brightness(91%) contrast(95%); }
-.lb-logo-stage-lockup img:first-child { width: 29%; animation: lb-logo-symbol 6s cubic-bezier(.2,.75,.2,1) infinite both; }
-.lb-logo-stage-lockup img:last-child { width: 66%; animation: lb-logo-wordmark 6s cubic-bezier(.2,.75,.2,1) infinite both; }
-@keyframes lb-logo-symbol { 0%, 8% { opacity: 0; transform: scale(.78) rotate(-18deg); } 25%, 78% { opacity: 1; transform: scale(1) rotate(0); } 93%, 100% { opacity: 0; transform: scale(1.05) rotate(5deg); } }
-@keyframes lb-logo-wordmark { 0%, 18% { opacity: 0; clip-path: inset(0 100% 0 0); transform: translateX(-12px); } 40%, 78% { opacity: 1; clip-path: inset(0 0 0 0); transform: translateX(0); } 93%, 100% { opacity: 0; clip-path: inset(0 0 0 0); transform: translateX(8px); } }
-@media (prefers-reduced-motion: reduce) { .lb-logo-stage-lockup img { animation: none !important; } }
+.lb-logo-stage-lockup img { opacity: 0; clip-path: inset(100% 0 0 0); transform: translateY(28px); }
+.lb-logo-stage-lockup img:first-child { width: 29%; }
+.lb-logo-stage-lockup img:last-child { width: 66%; }
+.lb-logo-stage.is-revealed .lb-logo-stage-lockup img { animation: lb-logo-reveal .9s cubic-bezier(.22,1,.36,1) both; }
+.lb-logo-stage.is-revealed .lb-logo-stage-lockup img:last-child { animation-delay: .12s; }
+@keyframes lb-logo-reveal { to { opacity: 1; clip-path: inset(0 0 0 0); transform: translateY(0); } }
+@media (prefers-reduced-motion: reduce) { .lb-logo-stage.is-revealed .lb-logo-stage-lockup img { animation-duration: .01ms; animation-delay: 0ms; } }
 .lb-identity-pair, .lb-type-pair, .lb-voice-pair, .lb-visual-pair, .lb-app-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; }
 .lb-identity-pair > *, .lb-type-pair > * { min-width: 0; aspect-ratio: 555 / 700; }
 .lb-logo-anatomy { position: relative; display: grid; place-items: center; background: #0f172a; color: #4b5563; container-type: inline-size; }
-.lb-anatomy-symbol { width: 42%; height: auto; }
+.lb-anatomy-symbol { width: 42%; height: auto; transform: translateX(5.5cqw); }
+.lb-anatomy-focus { position: absolute; width: 7.2cqw; height: 7.2cqw; border: 1px dotted #fff; border-radius: 50%; }
+.lb-anatomy-focus-left { left: 34.1%; top: 44.1%; }
+.lb-anatomy-focus-center { left: 58%; top: 44.6%; }
+.lb-anatomy-focus-bottom { left: 52.1%; top: 58.4%; }
 .lb-anatomy-callout { position: absolute; padding: .75cqw 1cqw; border-radius: 4px; background: white; font: 400 clamp(8px, 1.2cqw, 12px)/1.2 Poppins, sans-serif; white-space: nowrap; }
 .lb-anatomy-callout::after { content: ''; position: absolute; border-left: 1px dotted #fff; }
 .lb-anatomy-top { top: 23%; left: 50%; transform: translateX(-50%); }
@@ -51,31 +59,42 @@
 .lb-type-card strong { align-self: center; font-weight: 100; font-size: min(60cqw, 340px); line-height: 1; letter-spacing: -.06em; white-space: nowrap; }
 .lb-type-mono strong { font-family: 'DM Mono', monospace; font-weight: 400; letter-spacing: -.1em; }
 .lb-type-bottom { font-size: clamp(8px, 1.25cqw, 14px); text-transform: uppercase; }
-.lb-identity-stories { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; padding: 57px 42px; overflow: hidden; background: #fff8eb; }
-.lb-story-card { position: relative; min-width: 0; aspect-ratio: 374 / 665; overflow: hidden; color: white; font-family: 'Lumis Brand Sora', sans-serif; }
+.lb-identity-stories { display: flex; gap: 32px; padding: 57px 42px; overflow: hidden; background: #fff8eb; }
+.lb-story-card { position: relative; flex: 0 0 374px; height: 665px; overflow: hidden; color: white; font-family: 'Lumis Brand Sora', sans-serif; }
 .lb-story-collage { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; width: 100%; height: 100%; }
 .lb-story-collage img { width: 100%; height: 100%; object-fit: cover; }
 .lb-story-ui { position: absolute; inset: 0; padding: 14px; display: flex; flex-direction: column; align-items: center; background: rgb(0 0 0 / 14%); }
+.lb-story-progress { display: flex; gap: 3px; width: 100%; height: 3px; margin-bottom: 10px; }
+.lb-story-progress i { flex: 1; border-radius: 2px; background: rgb(255 255 255 / 92%); }
+.lb-story-reply { position: absolute; right: 14px; bottom: 16px; left: 14px; display: flex; align-items: center; gap: 9px; height: 30px; color: #fff; font: 400 10px 'Lumis Brand Sora', sans-serif; }
+.lb-story-reply span { flex: 1; padding: 8px 10px; border: 1px solid rgb(255 255 255 / 85%); border-radius: 18px; }
+.lb-story-reply b { font: 400 17px/1 'Lumis Brand Sora', sans-serif; }
 .lb-social-header { display: flex; align-items: center; gap: 8px; width: 100%; color: white; font: 600 12px 'Lumis Brand Sora', sans-serif; }
+.lb-social-account { display: flex; flex-direction: column; gap: 2px; }
+.lb-social-account small { font: 400 8px/1.1 'Lumis Brand Sora', sans-serif; }
+.lb-social-sample .lb-social-account small, .lb-social-sample .lb-social-more b { display: none; }
 .lb-social-header.is-dark { color: #64748b; }
 .lb-social-avatar { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #1d4ed8; }
 .lb-social-avatar img { width: 56%; }
 .lb-social-more { margin-left: auto; letter-spacing: .1em; }
+.lb-social-more b { margin-left: 8px; font: 300 22px/1 'Lumis Brand Sora', sans-serif; }
 .lb-story-kicker { margin: 24px 0 18px; font: 400 clamp(10px, 1.35vw, 17px) 'DM Mono', monospace; }
 .lb-poll { display: flex; flex-direction: column; gap: 7px; width: 80%; padding: 12px; border-radius: 18px; background: white; color: #0f172a; font-size: clamp(8px, .8vw, 11px); }
 .lb-poll b { margin: -12px -12px 2px; padding: 14px 10px; border-radius: 18px 18px 0 0; background: #0f172a; color: white; text-align: center; }
 .lb-poll span { padding: 8px; border-radius: 8px; background: #f8fafc; }
-.lb-story-ui > small { margin-top: auto; font: 400 9px 'DM Mono', monospace; }
+.lb-story-ui > small { margin-top: auto; margin-bottom: 62px; font: 400 9px 'DM Mono', monospace; }
 .lb-story-type { display: flex; flex-direction: column; padding: 14px; background: #1d4ed8; }
 .lb-story-type > small { margin: 50px auto 30px; font: 400 9px 'DM Mono', monospace; }
-.lb-story-type > p { align-self: flex-start; width: 75%; font-size: clamp(10px, 1vw, 13px); }
-.lb-story-type > strong { margin-top: auto; font: 400 clamp(24px, 3.4vw, 48px)/.92 'DM Mono', monospace; letter-spacing: -.08em; }
+.lb-story-type > p { align-self: flex-start; width: 75%; margin: 0; font-size: 12px; }
+.lb-story-type > p + p { align-self: flex-end; width: 48%; margin-top: 34px; }
+.lb-story-next { align-self: flex-end; margin-top: auto; padding: 2px 14px; border: 1px solid rgb(255 255 255 / 65%); border-radius: 30px; font-size: 16px; }
+.lb-story-type > strong { margin-top: 24px; margin-bottom: 44px; font: 400 clamp(24px, 3.4vw, 48px)/.92 'DM Mono', monospace; letter-spacing: -.08em; }
 .lb-story-stat > img { width: 100%; height: 100%; object-fit: cover; }
 .lb-story-stat > div { position: absolute; inset: 0; display: flex; flex-direction: column; padding: 14px; background: rgb(0 0 0 / 14%); }
 .lb-story-stat small:nth-child(2) { margin: 22% auto 0; font: 400 13px 'DM Mono', monospace; }
 .lb-story-stat strong { margin: 20px auto; font-size: clamp(60px, 7vw, 105px); font-weight: 600; }
 .lb-story-stat p { margin-top: auto; font-size: clamp(12px, 1.2vw, 18px); font-weight: 700; }
-.lb-story-stat small:last-child { margin-bottom: 16%; font-size: 11px; }
+.lb-story-stat small:last-of-type { margin-bottom: 72px; font-size: 11px; }
 .lb-social-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; width: 100%; }
 .lb-social-sample { display: flex; flex-direction: column; align-items: center; justify-content: center; min-width: 0; aspect-ratio: 555 / 700; padding: 8%; background: #0f172a; }
 .lb-social-light { position: relative; align-items: flex-start; overflow: hidden; padding-left: 7%; padding-right: 0; background: #0f172a; }
@@ -160,7 +179,7 @@
   .lb-palette-card dl div { grid-template-columns: 22px 1fr; }
   .lb-type-card { aspect-ratio: 1 / 1.08; padding: 20px; }
   .lb-identity-stories { display: flex; gap: 12px; padding: 18px; overflow-x: auto; scroll-snap-type: x mandatory; }
-  .lb-story-card { flex: 0 0 72%; scroll-snap-align: start; }
+  .lb-story-card { flex: 0 0 72%; height: auto; aspect-ratio: 374 / 665; scroll-snap-align: start; }
   .lb-story-type > strong { font-size: 8vw; }
   .lb-social-pair, .lb-people-grid { grid-template-columns: 1fr; gap: 12px; }
   .lb-social-sample { aspect-ratio: 1 / 1.1; }

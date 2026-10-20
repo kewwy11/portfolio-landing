@@ -17,7 +17,7 @@ const navigation = [
 const strategyItems = [
   {
     number: '01', title: 'Vision',
-    copy: 'The vision for Lumis was simple: A brand where no skin tone feels left out. Where modern technology can be used to support faster and more accurate results. At the same time, Lumis needed to make people feel comfortable and seen, while maintaining its credibility within the medical field.',
+    copy: ['The vision for Lumis was simple: A brand where no skin tone feels left out. Where modern technology can be used to support faster and more accurate results.', 'At the same time, Lumis needed to make people feel comfortable and seen, while maintaining its credibility within the medical field.'],
   },
   {
     number: '02', title: 'Target Audience',
@@ -130,7 +130,7 @@ export default function LumisBrandCaseStudy() {
             </button>
             <div className="lumis-brand-strategy-copy" id={`lumis-brand-strategy-copy-${index}`} hidden={openStrategy !== index}>
               <span className="lumis-brand-strategy-bullet" aria-hidden="true" />
-              <p>{item.copy}</p>
+              <div>{(Array.isArray(item.copy) ? item.copy : [item.copy]).map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
             </div>
           </div>)}
         </div>

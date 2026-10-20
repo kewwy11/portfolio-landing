@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import './lumis-brand-sections.css';
 
 const root = `${import.meta.env.BASE_URL}assets/lumis-brand/`;
@@ -29,8 +29,16 @@ const palette = [
 function SocialHeader({ dark = false }) {
   return <div className={`lb-social-header${dark ? ' is-dark' : ''}`}>
     <span className="lb-social-avatar"><img src={asset('hero-symbol.svg')} alt="" /></span>
-    <span>Lumis</span><span className="lb-social-more">•••</span>
+    <span className="lb-social-account">Lumis<small>Ill Nickiminaj · Feeling Myself</small></span><span className="lb-social-more">••• <b aria-hidden="true">×</b></span>
   </div>;
+}
+
+function StoryProgress() {
+  return <div className="lb-story-progress" aria-hidden="true">{Array.from({ length: 5 }, (_, index) => <i key={index} />)}</div>;
+}
+
+function StoryReply() {
+  return <div className="lb-story-reply" aria-hidden="true"><span>Send message...</span><b>♡</b><b>○</b><b>➤</b></div>;
 }
 
 function SocialFooter() {
@@ -38,6 +46,22 @@ function SocialFooter() {
 }
 
 function Identity() {
+  const logoStageRef = useRef(null);
+  const [logoRevealed, setLogoRevealed] = useState(false);
+
+  useEffect(() => {
+    const stage = logoStageRef.current;
+    if (!stage) return;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting) {
+        setLogoRevealed(true);
+        observer.disconnect();
+      }
+    }, { threshold: 0.25 });
+    observer.observe(stage);
+    return () => observer.disconnect();
+  }, []);
+
   return <section id="lumis-brand-identity" className="lb-section lb-identity" aria-labelledby="lumis-brand-identity-title">
     <Intro id="lumis-brand-identity-title" title="The Identity">
       <p>We designed a logo that reflected what Lumis stood for: care, skin, people, and technology.</p>
@@ -47,13 +71,17 @@ function Identity() {
       <p>For social media, we used imagery showing different skin conditions across various skin tones, paired with language that felt fun, lively, and emotional rather than overly clinical.</p>
     </Intro>
 
-    <div className="lb-logo-stage" aria-label="Lumis logo reveal">
+    <div ref={logoStageRef} className={`lb-logo-stage${logoRevealed ? ' is-revealed' : ''}`} aria-label="Lumis logo reveal">
+      <p className="lb-logo-stage-label">Logo animation</p>
       <div className="lb-logo-stage-lockup"><img src={asset('hero-symbol.svg')} alt="" /><img src={asset('hero-wordmark.svg')} alt="" /></div>
     </div>
 
     <div className="lb-identity-pair">
       <div className="lb-logo-anatomy">
         <img className="lb-anatomy-symbol" src={asset('hero-symbol.svg')} alt="Lumis symbol" />
+        <span className="lb-anatomy-focus lb-anatomy-focus-left" aria-hidden="true" />
+        <span className="lb-anatomy-focus lb-anatomy-focus-center" aria-hidden="true" />
+        <span className="lb-anatomy-focus lb-anatomy-focus-bottom" aria-hidden="true" />
         <span className="lb-anatomy-callout lb-anatomy-top">The heart shape</span>
         <span className="lb-anatomy-callout lb-anatomy-left">Confidence symbol</span>
         <span className="lb-anatomy-callout lb-anatomy-right">A person</span>
@@ -82,10 +110,10 @@ function Identity() {
     <div className="lb-identity-stories" aria-label="Lumis social story concepts">
       <div className="lb-story-card lb-story-poll">
         <div className="lb-story-collage"><img src={asset('identity-story-person-2.png')} alt="Person with freckles" /><img src={asset('identity-story-person-1.png')} alt="Person with acne" /><img src={asset('identity-story-person-4.png')} alt="Person with psoriasis" /><img src={asset('identity-story-person-3.png')} alt="Person with rosacea" /></div>
-        <div className="lb-story-ui"><SocialHeader /><p className="lb-story-kicker">POLL OF THE DAY</p><div className="lb-poll"><b>WHAT'S YOUR BIGGEST CONCERN?</b>{['A. Acne','B. Hyperpigmentation','C. Rosacea','D. Eczema','E. Others'].map(option => <span key={option}>{option}</span>)}</div><small>LUMIS SKINCARE INSIGHTS</small></div>
+        <div className="lb-story-ui"><StoryProgress /><SocialHeader /><p className="lb-story-kicker">POLL OF THE DAY</p><div className="lb-poll"><b>WHAT'S YOUR BIGGEST CONCERN?</b>{['A. Acne','B. Hyperpigmentation','C. Rosacea','D. Eczema','E. Others'].map(option => <span key={option}>{option}</span>)}</div><small>LUMIS SKINCARE INSIGHTS</small><StoryReply /></div>
       </div>
-      <div className="lb-story-card lb-story-type"><SocialHeader /><small>LUMIS SKINCARE INSIGHTS</small><p>Most people see skin.<br /><br />Lumis dermatologists see patterns, possibilities, risk, progression, and what could be missed.</p><strong>WHAT YOUR<br />DERMA-<br />TOLOGIST<br />SEES.</strong></div>
-      <div className="lb-story-card lb-story-stat"><img src={asset('identity-story-person-5.png')} alt="Close-up of skin" loading="lazy" /><div><SocialHeader /><small>DID YOU KNOW?</small><strong>90%</strong><p>AI dermatology<br />tools are biased?</p><small>Discover what Lumis is doing differently.</small></div></div>
+      <div className="lb-story-card lb-story-type"><StoryProgress /><SocialHeader /><small>LUMIS SKINCARE INSIGHTS</small><p>Most people see skin.</p><p>Lumis dermatologists see patterns, possibilities, risk, progression, and what could be missed.</p><span className="lb-story-next" aria-hidden="true">⟶</span><strong>WHAT YOUR<br />DERMA-<br />TOLOGIST<br />SEES.</strong><StoryReply /></div>
+      <div className="lb-story-card lb-story-stat"><img src={asset('identity-story-person-5.png')} alt="Close-up of skin" loading="lazy" /><div><StoryProgress /><SocialHeader /><small>DID YOU KNOW?</small><strong>90%</strong><p>AI dermatology<br />tools are biased?</p><small>Discover what Lumis is doing differently.</small><StoryReply /></div></div>
     </div>
 
     <div className="lb-social-pair">

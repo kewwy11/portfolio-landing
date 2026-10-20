@@ -58,18 +58,22 @@
 .lumis-brand-logo img:first-child { display: block; width: 29.15%; height: auto; }
 .lumis-brand-logo img:last-child { display: block; width: 65.85%; height: auto; }
 .lumis-brand-hero-tagline { position: absolute; left: 50%; bottom: 49px; transform: translateX(-50%); color: white; font: 300 16px/1.2 'Lumis Brand Sora', sans-serif; text-align: center; text-transform: uppercase; white-space: nowrap; }
-.lumis-brand-details { display: grid; grid-template-columns: 239px repeat(3, minmax(0, 1fr)) max-content; gap: 24px; margin: 24px 0 0; }
+.lumis-brand-details { display: grid; grid-template-columns: 239px repeat(3, minmax(0, 1fr)) max-content; gap: 24px; margin: 31px 0 0; }
 .lumis-brand-details > div { min-width: 0; }
 .lumis-brand-details dt { margin-bottom: 10px; color: #af9ca2; font: 400 16px/1.3 'DM Mono', monospace; text-transform: uppercase; }
-.lumis-brand-details dd { margin: 0; font: 400 16px/1.45 Poppins, sans-serif; }
+.lumis-brand-details dd { margin: 0; font: 400 16px/29px Poppins, sans-serif; }
 
 .lumis-brand-story, .lumis-brand-strategy { display: flex; flex-direction: column; gap: 48px; padding-top: 48px; }
 .lumis-brand-section-intro { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; padding: 0 16px; }
 .lumis-brand-section-intro h2 { color: #2c2527; font: 400 32px/1.15 Gind, sans-serif; text-transform: uppercase; text-wrap: balance; }
 .lumis-brand-intro-copy { color: #604d53; font: 400 16px/1.45 Poppins, sans-serif; }
 .lumis-brand-intro-copy p { margin: 0; }
+.lumis-brand-intro-copy p + p { margin-top: 24px; }
+.lumis-brand-story .lumis-brand-intro-copy { color: #7f6c72; }
 .lumis-brand-intro-copy ul { margin: 0; padding: 0; list-style: none; }
-.lumis-brand-intro-copy li::before { content: '–'; }
+.lumis-brand-intro-copy li { position: relative; padding-left: 10px; }
+.lumis-brand-intro-copy li::before { content: '-'; position: absolute; left: 0; }
+.lumis-brand-intro-copy ul + p { margin-top: 24px; }
 
 .lumis-brand-story-card {
   position: relative;
@@ -105,6 +109,8 @@
 .lumis-brand-strategy-number i { width: 10px; height: 10px; flex: none; background: white; }
 .lumis-brand-strategy-name { font: 700 16px/1.2 'Lumis Brand Sora', sans-serif; text-transform: uppercase; white-space: nowrap; }
 .lumis-brand-strategy-copy { display: grid; grid-template-columns: 10px minmax(0, 1fr); gap: 10px; width: 50%; margin: -72px 0 0 auto; padding: 32px 16px; color: #eceef2; font: 400 16px/1.5 'Lumis Brand Sora', sans-serif; }
+.lumis-brand-strategy-copy p { margin: 0; }
+.lumis-brand-strategy-copy p + p { margin-top: 24px; }
 .lumis-brand-strategy-copy[hidden] { display: none; }
 .lumis-brand-strategy-bullet { width: 10px; height: 10px; margin-top: 10px; border-radius: 50%; background: white; }
 
