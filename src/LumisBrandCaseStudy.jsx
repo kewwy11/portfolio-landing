@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import LumisBrandSections from './LumisBrandSections.jsx';
 import './lumis-brand-case-study.css';
+import { LumisStoryMotion, LumisPortraitMotion, LumisStrategyMotion } from './LumisBrandMotion.jsx';
 
 const base = import.meta.env.BASE_URL;
 const asset = name => `${base}assets/lumis-brand/${name}`;
@@ -21,11 +22,11 @@ const strategyItems = [
   },
   {
     number: '02', title: 'Target Audience',
-    copy: 'Lumis is for people who have struggled to find skincare that understands their skin, especially people with darker skin tones who are often overlooked in dermatology and beauty.',
+    copy: ['Our target audience was people of colour, particularly a younger to middle generation from around 16 to their late 50s.', 'So we paid attention to the language they use, the words they could relate to, and the visual direction of the brand to make Lumis feel more familiar, approachable, and relevant to them.'],
   },
   {
     number: '03', title: 'Positioning',
-    copy: 'By bringing experienced dermatologists together with modern technology, Lumis makes expert care feel clear, inclusive, and approachable across every skin tone.',
+    copy: ['We positioned Lumis at the intersection of healthcare and skincare, especially for people of colour.', 'Warm and inviting enough to feel like a skincare brand, without compromising its credibility as a medical brand.'],
   },
 ];
 
@@ -38,7 +39,6 @@ function SectionIntro({ title, id, children }) {
 
 export default function LumisBrandCaseStudy() {
   const [activeSection, setActiveSection] = useState(navigation[0][1]);
-  const [openStrategy, setOpenStrategy] = useState(0);
 
   useEffect(() => {
     const update = () => {
@@ -95,13 +95,7 @@ export default function LumisBrandCaseStudy() {
           <p>Lumis is a brand that exists for people who have not felt at home in their own skin for years. It’s for those who have sought out solutions, but none actually addressed their skin conditions, either because of inaccessibility or the lack of representation and understanding of their skin tone.</p>
           <p>Lumis focuses on bringing experienced dermatologists from around the world together with modern technology to create faster workflows, more efficient diagnosis, and a more inclusive approach to dermatology across all skin tones.</p>
         </SectionIntro>
-        <div className="lumis-brand-story-card">
-          <p className="lumis-brand-story-where">Where<br />Tech</p>
-          <figure className="lumis-brand-story-image"><img src={asset('story-tablet.png')} alt="A dermatologist examines a skin analysis on a tablet" loading="lazy" /></figure>
-          <p className="lumis-brand-story-meets">Meets<br />Skincare</p>
-          <p className="lumis-brand-story-est">Est. 2026<br />Lumiscare.com</p>
-          <p className="lumis-brand-story-line">Clarity for<br />every skin.</p>
-        </div>
+        <LumisStoryMotion />
       </section>
 
       <section id="lumis-brand-strategy" className="lumis-brand-strategy" aria-labelledby="lumis-brand-strategy-title">
@@ -119,21 +113,9 @@ export default function LumisBrandCaseStudy() {
             <p>Clarity<br />for every<br />skin.</p>
             <small>Lumis is a dermatology brand that is inclusive of all skin tone, especially to darker skin tones that have been often overlooked in the dermatology and beauty space.</small>
           </div>
-          <figure className="lumis-brand-portrait"><img src={asset('strategy-portrait.png')} alt="Portrait of a woman with vitiligo" loading="lazy" /></figure>
+          <LumisPortraitMotion />
         </div>
-        <div className="lumis-brand-strategy-list" aria-label="Lumis brand strategy">
-          {strategyItems.map((item, index) => <div className={`lumis-brand-strategy-item${openStrategy === index ? ' is-open' : ''}`} key={item.number}>
-            <button type="button" aria-expanded={openStrategy === index} aria-controls={`lumis-brand-strategy-copy-${index}`}
-              onClick={() => setOpenStrategy(index)}>
-              <span className="lumis-brand-strategy-number"><i aria-hidden="true" />{item.number}</span>
-              <span className="lumis-brand-strategy-name">{item.title}</span>
-            </button>
-            <div className="lumis-brand-strategy-copy" id={`lumis-brand-strategy-copy-${index}`} hidden={openStrategy !== index}>
-              <span className="lumis-brand-strategy-bullet" aria-hidden="true" />
-              <div>{(Array.isArray(item.copy) ? item.copy : [item.copy]).map(paragraph => <p key={paragraph}>{paragraph}</p>)}</div>
-            </div>
-          </div>)}
-        </div>
+        <LumisStrategyMotion items={strategyItems} />
       </section>
       <LumisBrandSections />
     </main>

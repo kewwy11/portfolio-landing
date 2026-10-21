@@ -1,0 +1,88 @@
+@font-face { font-family: 'DM Mono'; src: url('/assets/lumis-brand/DMMono-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'DM Mono'; src: url('/assets/lumis-brand/DMMono-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+
+.lb-section.li-identity { gap: 24px; }
+.li-identity > .lumis-brand-section-intro { margin-bottom: 24px; }
+.li-identity .lumis-brand-intro-copy p + p { margin-top: 24px; }
+.li-identity .lumis-brand-intro-copy { font-size: 16px; line-height: 1.5; }
+.li-artboard { width: 100%; min-width: 0; position: relative; overflow: hidden; }
+.li-canvas { position: absolute; inset: 0 auto auto 0; transform-origin: top left; font-family: 'Lumis Brand Sora', sans-serif; }
+.li-canvas p { margin: 0; }
+.li-positioned { position: absolute; display: block; max-width: none; object-fit: cover; }
+.li-navy { background: #0f172a; }
+.li-amber { background: #f59e0b; }
+.li-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.li-logo-pair { gap: 23px; }
+.li-callout { position: absolute; height: 29px; display: grid; place-items: center; background: #fff; border-radius: 5px; font: 400 12px/1 'Lumis Brand Sora', sans-serif; color: #575757; white-space: nowrap; }
+.li-logo-placeholder { background: #fff8eb; color: #1d4ed8; }
+.li-logo-placeholder .li-canvas { display: grid; place-items: center; }
+.li-logo-placeholder p { font: 600 32px/1.2 'Lumis Brand Sora', sans-serif; }
+.li-palette { position: absolute; left: 76px; top: 50%; transform: translateY(-50%); display: flex; gap: 24px; }
+.li-swatch-card { width: 177px; padding: 5px; background: white; }
+.li-swatch { height: 166px; }
+.li-swatch-card dl { margin: 16px 5px 10px; color: #64748b; font: 400 12px/9px Poppins, sans-serif; }
+.li-swatch-card dl > div { display: flex; align-items: baseline; gap: 10px; margin-top: 10px; white-space: nowrap; }
+.li-swatch-card dt, .li-swatch-card dd { margin: 0; font-size: inherit; }
+.li-swatch-card dl > div:first-child { margin-top: 0; }
+.li-swatch-card dl > div:last-child { gap: 5px; }
+.li-type { color: #fff; background: #1d4ed8; }
+.li-type-mono { color: #1d4ed8; background: #eff6ff; }
+.li-type-labels, .li-type-caption { position: absolute; left: 32px; right: 32px; display: flex; justify-content: space-between; align-items: center; }
+.li-type-labels { top: 32px; }
+.li-type-labels span { height: 36px; display: flex; align-items: center; padding: 0 16px; border: 1px solid currentColor; border-radius: 50px; font-size: 14px; line-height: 1; white-space: nowrap; }
+.li-type-caption { bottom: 32px; font-size: 14px; line-height: 1; text-transform: uppercase; white-space: nowrap; }
+.li-specimen { position: absolute; left: 32px; top: 50%; transform: translateY(-50%); width: 495px; text-align: center; font: 100 360px/1 'Lumis Brand Sora', sans-serif; letter-spacing: -14.4px; }
+.li-type-mono .li-specimen { font-family: 'DM Mono', monospace; font-weight: 300; }
+.li-stories { display: flex; gap: 3.068%; padding: 5.06% 3.73%; background: #fff8eb; overflow-x: auto; scrollbar-width: none; }
+.li-stories::-webkit-scrollbar { display: none; }
+.li-stories > .li-artboard { flex: 0 0 35.87%; }
+.li-story { color: #fff; }
+.li-story-type { background: #1d4ed8; }
+.li-collage { position: absolute; inset: 0; display: grid; grid-template: 1fr 1fr / 1fr 1fr; }
+.li-collage > div { position: relative; overflow: hidden; }
+.li-collage > div::after { content: ''; position: absolute; inset: 0; background: rgb(0 0 0 / 30%); }
+.li-story-account { position: absolute; left: 13.855px; top: 29.1px; display: flex; gap: 8.313px; align-items: center; }
+.li-story-account > img { width: 34.638px; height: 34.638px; }
+.li-story-account b { display: block; font-size: 11.084px; line-height: 1.4; font-weight: 600; }
+.li-story-account small { display: block; font-size: 8.313px; line-height: 1.3; color: #d9d9d9; }
+.li-reply { position: absolute; left: 14.55px; top: 613.1px; width: 259.787px; height: 34.638px; border: .346px solid white; border-radius: 17.319px; display: flex; align-items: center; padding-left: 11.084px; font-size: 9.699px; }
+.li-insights { position: absolute; left: 0; top: 577.42px; width: 100%; text-align: center; font: 300 9.699px/1.4 'DM Mono', monospace; text-transform: uppercase; }
+.li-insights-top { top: 104.61px; }
+.li-poll-title { position: absolute; top: 98.37px; left: 13.855px; width: 346.382px; text-align: center; font: 400 19.397px/1.4 'DM Mono', monospace; text-transform: uppercase; }
+.li-poll { position: absolute; left: 62.695px; top: 201.248px; width: 248.702px; border-radius: 13.855px; overflow: hidden; color: #0f172a; background: white; }
+.li-poll > b { height: 45.03px; display: flex; align-items: center; justify-content: center; color: white; background: #0f172a; font-size: 11.084px; font-weight: 600; text-transform: uppercase; }
+.li-poll > div { display: flex; flex-direction: column; gap: 5.542px; padding: 11.084px; }
+.li-poll span { height: 34.638px; display: flex; align-items: center; gap: 14px; padding: 0 11.084px; background: #f9fafb; border-radius: 8.313px; font-size: 8.313px; font-weight: 600; }
+.li-poll i { font-style: normal; }
+.li-see-skin { position: absolute; left: 13.86px; top: 163.15px; font-size: 11.084px; line-height: 14.548px; }
+.li-see-patterns { position: absolute; left: 191.206px; top: 215.1px; width: 169.035px; font-size: 11.084px; line-height: 14.548px; }
+.li-story-headline { position: absolute; left: 13.86px; top: 408.04px; font: 500 55.421px/45.03px 'DM Mono', monospace; white-space: pre; letter-spacing: 0; }
+.li-did-you-know { position: absolute; left: 122.277px; top: 155.87px; font: 400 16.626px/1.4 'DM Mono', monospace; text-transform: uppercase; }
+.li-ninety { position: absolute; left: 13.86px; top: 211.29px; width: 324.214px; text-align: right; font: 600 76.204px/1.4 'Lumis Brand Sora', sans-serif; letter-spacing: -2.286px; }
+.li-ninety small { font-size: 30.482px; font-weight: 300; letter-spacing: -.914px; text-transform: uppercase; }
+.li-bias { position: absolute; left: 13.86px; top: 341.88px; width: 177.348px; }
+.li-bias b { font-size: 16.626px; line-height: 1.3; font-weight: 600; }
+.li-bias p { margin-top: 3.464px; font: 400 12.47px/1.3 Inter, sans-serif; }
+.li-single-post { position: absolute; left: 72px; top: 91px; width: 411.531px; }
+.li-post { width: 100%; }
+.li-post-header { height: 56.585px; display: flex; gap: 7.2px; align-items: center; color: white; }
+.li-post-header > span { width: 36.009px; height: 36.009px; display: grid; place-items: center; background: #1d4ed8; border-radius: 50%; }
+.li-post-header > span img { width: 50%; }
+.li-post-header b { font: 500 15.432px/1.3 Poppins, sans-serif; }
+.li-post-header > img { margin-left: auto; width: 26.75px; }
+.li-post-photo { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 30.865px; }
+.li-post-footer { display: flex; align-items: center; gap: 10.288px; height: 49.384px; padding-inline: 10.288px; }
+.li-post-footer img { width: 20.577px; height: 20.577px; }
+.li-post-footer img:last-child { margin-left: auto; }
+.li-post-track { position: absolute; left: 40px; top: 97px; display: flex; gap: 24px; }
+.li-post-light { width: 400px; flex: 0 0 400px; border-radius: 20px; overflow: hidden; background: white; }
+.li-post-light .li-post-header { height: 55px; color: #64748b; padding-inline: 10px; }
+.li-post-light .li-post-photo { border-radius: 0; }
+.li-post-light .li-post-footer { height: 52px; }
+@media (max-width: 760px) {
+  .lb-section.li-identity { gap: 16px; }
+  .li-identity > .lumis-brand-section-intro { margin-bottom: 16px; }
+  .li-pair { grid-template-columns: 1fr; gap: 16px; }
+  .li-stories { gap: 16px; padding: 20px; scroll-snap-type: x mandatory; }
+  .li-stories > .li-artboard { flex-basis: 85%; scroll-snap-align: center; }
+}

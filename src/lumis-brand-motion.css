@@ -1,0 +1,53 @@
+.lm-poster { background:#1d4ed8; }
+.lm-poster-scene { position:absolute; inset:0; font-family:'Lumis Brand Sora',sans-serif; }
+.lm-poster-heading { position:absolute; font-size:115px; font-weight:600; letter-spacing:-2.3px; text-transform:uppercase; line-height:100px; white-space:nowrap; }
+.lm-poster-heading > div { overflow:hidden; padding-block:8px; margin-block:-8px; }
+.lm-poster-heading span { display:block; }
+.lm-poster-top { top:32px; left:32px; }
+.lm-poster-bottom { top:484px; right:32px; text-align:right; }
+.lm-poster-photo { position:absolute; overflow:hidden; z-index:1; }
+.lm-poster-photo img { position:absolute; max-width:none; object-fit:cover; }
+.lm-poster-caption { position:absolute; margin:0; text-transform:uppercase; font-size:14px; line-height:1.3; letter-spacing:-.14px; }
+.lm-poster-est { top:32px; right:32px; }
+.lm-poster-tag { top:640px; left:32px; }
+.is-reversed .lm-poster-top { left:auto; right:32px; text-align:right; }
+.is-reversed .lm-poster-bottom { right:auto; left:32px; text-align:left; }
+.is-reversed .lm-poster-est { right:auto; left:32px; }
+.is-reversed .lm-poster-tag { left:auto; right:32px; }
+.lm-portraits { isolation:isolate; background:#d9c9bd; }
+.lm-portrait-frame { position:absolute; inset:0; overflow:hidden; transform-origin:center; }
+.lm-portrait-frame img { position:absolute; inset:0; }
+.lm-portrait-2 img { width:127.568%; height:113.205%; left:-13.964%; top:-13.205%; }
+.lm-portrait-3 img { width:113.333%; height:121.282%; left:-6.667%; top:-8.205%; }
+.lm-strategy { display:flex; flex-direction:column; justify-content:flex-end; min-height:614px; padding:64px 24px 24px; background:#1d4ed8; color:#fff; font-family:'Lumis Brand Sora',sans-serif; transition:background-color 1.1s cubic-bezier(.65,0,.35,1),color 1.1s; }
+.lm-strategy-1 { background:#f59e0b; }
+.lm-strategy-2 { background:#fff8eb; color:#604d53; }
+.lm-strategy-row { position:relative; border-top:.5px solid currentColor; }
+.lm-strategy-row button { display:flex; align-items:flex-start; gap:24px; width:50%; min-height:72px; padding:26px 16px; border:0; background:transparent; color:inherit; font:700 20px/1.25 'Lumis Brand Sora',sans-serif; text-transform:uppercase; text-align:left; cursor:pointer; }
+.lm-strategy-number { display:flex; gap:10px; align-items:center; flex:none; }
+.lm-strategy-number i { width:10px; height:10px; background:currentColor; }
+.lm-strategy-title { opacity:0; transform:translateY(12px); transition:opacity .5s,transform .8s cubic-bezier(.22,1,.36,1); }
+.is-active .lm-strategy-title,.lm-strategy-row button:focus-visible .lm-strategy-title { opacity:1; transform:translateY(0); }
+.lm-strategy-reveal { display:grid; grid-template-rows:0fr; transition:grid-template-rows 1.15s cubic-bezier(.65,0,.35,1); }
+.is-active .lm-strategy-reveal { grid-template-rows:1fr; }
+.lm-strategy-body { min-height:0; overflow:hidden; display:grid; grid-template-columns:10px 1fr; gap:10px; width:50%; margin-left:auto; opacity:0; transform:translateY(18px); transition:opacity .45s,transform .85s cubic-bezier(.22,1,.36,1); }
+.is-active .lm-strategy-body { opacity:1; transform:translateY(0); transition-delay:.3s; }
+.lm-strategy-body > div { padding:0 16px 32px 0; }
+.lm-strategy-body p { margin:0; font-size:16px; line-height:25px; }
+.lm-strategy-body p + p { margin-top:24px; }
+.lm-strategy-body > span { font-size:12px; line-height:25px; }
+@media(min-width:761px) {
+ .lm-strategy-row button { position:absolute; top:0; left:0; z-index:1; }
+ .lm-strategy-reveal { padding-top:72px; }
+ .lm-strategy-body { position:relative; top:-40px; }
+ .lm-strategy-body > div { padding-bottom:0; min-height:220px; }
+}
+@media(max-width:760px) {
+ .lm-strategy { min-height:640px; padding:40px 16px 16px; }
+ .lm-strategy-row button { width:100%; font-size:16px; gap:20px; }
+ .lm-strategy-body { width:100%; padding-inline:16px; }
+ .lm-strategy-body p { font-size:14px; line-height:1.6; }
+}
+@media(prefers-reduced-motion:reduce) {
+ .lm-strategy,.lm-strategy-reveal,.lm-strategy-title,.lm-strategy-body { transition:none; }
+}
