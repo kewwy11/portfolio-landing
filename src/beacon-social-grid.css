@@ -47,5 +47,5 @@
 .beacon-grid-move .beacon-grid-card-canvas{background:#0b0bd6}
 .beacon-grid-move .beacon-grid-loan-heading h3{color:white;font-size:28px;letter-spacing:-.84px;line-height:normal}
 .beacon-design-grid:not(.is-visible) *{animation-play-state:paused}
-@media(max-width:760px){.beacon-design-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;aspect-ratio:auto;overflow:visible}.beacon-grid-card{position:relative;left:auto;top:auto;width:100%}}
+@media(max-width:760px){.beacon-design-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;aspect-ratio:auto;overflow:visible}.beacon-grid-card{position:relative;left:auto;top:auto;width:100%}}
 @media(prefers-reduced-motion:reduce){.beacon-design-grid *{animation:none!important}}

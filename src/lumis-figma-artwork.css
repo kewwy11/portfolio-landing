@@ -4,6 +4,9 @@
 .lf-art img { display:block; }
 .lf-0{background-color:#0f172a;position:relative;width:100%;height:100%}
 .lf-1{position:absolute;inset:35.14% 23.39% 36.43% 34.77%}
+.lf-symbol-guide{position:absolute;inset:35.14% 23.39% 36.43% 34.77%;pointer-events:none}
+.lf-symbol-guide svg{display:block;width:100%;height:100%;overflow:visible}
+.lf-symbol-guide use{stroke-linecap:round;stroke-linejoin:round}
 .lf-2{position:absolute;display:block;inset:0;max-width:none;width:100%;height:100%}
 .lf-3{position:absolute;left:322px;width:40px;height:40px;top:312px}
 .lf-4{position:absolute;left:289px;width:40px;height:40px;top:409px}
@@ -21,10 +24,10 @@
 .lf-16{position:absolute;background-color:#fff;align-content:stretch;display:flex;align-items:center;justify-content:center;left:calc(50% + 32px);padding:10px;border-radius:5px;top:506px;transform:translate(-50%,0)}
 .lf-17{position:absolute;background-color:#fff;align-content:stretch;display:flex;align-items:center;justify-content:center;left:calc(50% + 169px);padding:10px;border-radius:5px;top:271px;transform:translate(-50%,0)}
 .lf-18{position:absolute;height:99px;left:309px;top:191px;width:0}
-.lf-19{background-color:#eff6ff;align-content:stretch;display:flex;flex-direction:column;gap:48px;align-items:flex-start;justify-content:center;padding-bottom:48px;padding-top:32px;padding-left:32px;padding-right:32px;position:relative;flex-shrink:0;width:555px}
+.lf-19{background-color:#eff6ff;align-content:stretch;display:flex;flex-direction:column;gap:16px;align-items:flex-start;justify-content:center;padding-bottom:48px;padding-top:32px;padding-left:32px;padding-right:32px;position:relative;flex-shrink:0;width:555px}
 .lf-20{border-width:1px;border-color:#1d4ed8;border-style:solid;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:16px;padding-right:16px;padding-top:12px;padding-bottom:12px;position:relative;border-radius:50px;flex-shrink:0}
 .lf-21{text-box-edge:cap alphabetic;text-box-trim:trim-both;word-break:break-word;font-family:"Lumis Brand Sora";font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#1d4ed8;font-size:14px;text-wrap:balance;white-space:nowrap}
-.lf-22{align-content:stretch;display:flex;flex-direction:column;gap:48px;align-items:flex-start;position:relative;flex-shrink:0;width:100%}
+.lf-22{align-content:stretch;display:flex;flex-direction:column;gap:16px;align-items:flex-start;position:relative;flex-shrink:0;width:100%}
 .lf-23{align-content:stretch;display:flex;gap:10px;align-items:center;justify-content:center;position:relative;flex-shrink:0;width:100%}
 .lf-24{word-break:break-word;flex:1 0 0;font-family:"Lumis Brand Sora";font-weight:400;font-weight:400;line-height:normal;min-width:1px;position:relative;color:#64748b;font-size:16px;letter-spacing:-0.16px}
 .lf-25{height:39px;position:relative;flex-shrink:0;width:280px}

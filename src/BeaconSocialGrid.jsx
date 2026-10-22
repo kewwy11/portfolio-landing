@@ -42,16 +42,16 @@ export default function BeaconSocialGrid() {
   }, []);
   return <div ref={ref} id="beacon-social-designs" className="beacon-design-grid" aria-label="Beacon Trust social media design applications">
     <Photo x={0} y={-50} width={264.8} height={331} community photo="mosaic-imgChatGptImageSep162026043837Am1.png" alt="Friends reaching together under a blue sky" />
-    <Card x={288} y={-40} width={263.159} height={328.949} className="beacon-grid-assets"><small className="beacon-grid-handle">@beacon_tc</small><div className="beacon-grid-pulled-copy" role="img" aria-label="Your assets should work as hard as you.">{[132,161,198].map((width,index) => <div key={index} className="beacon-grid-pulled-line" style={{'--slide-x': `${234.964-width}px`, '--line-order': index}}><img src={art('assets-text')} alt="" style={{top: -index * 35.6}} /></div>)}</div><Lockup word="imgGroup6" mark="imgGroup7" /></Card>
-    <LoanCard x={576} y={-80} />
-    <Card x={861} y={-52} width={265.6} height={332} className="beacon-grid-fast"><div className="beacon-grid-fast-heading"><img src={art('fast-text')} alt="Fast means fast" /><p>Time from valuation to cash</p></div><div className="beacon-grid-speed-bars"><div><p><span>Beacon Trust</span><span>4 hours</span></p><i /></div><div><p><span>Traditional lenders</span><span>3 weeks</span></p><i /></div></div><Footer mark="imgGroup8" /></Card>
-    <Approval x={0} y={305} />
-    <Photo x={288} y={313} width={263} height={328.75} photo="social-workspace.png" video="train-interior.mp4" alt="Sunlit train interior overlooking the mountains" word="imgGroup9" mark="imgGroup10" top />
-    <Card x={576} y={274.2} width={263.159} height={328.949} className="beacon-grid-amount"><small className="beacon-grid-handle">@beacon_tc</small><div className="beacon-grid-amount-copy"><div className="beacon-grid-amount-heading"><img src={art('amount-text')} alt="₦2.4B" /></div><p><span>unlocked for small</span><span>businesses this year.</span></p></div><Footer swap /></Card>
-    <Photo x={861} y={304} width={265.8} height={332.25} photo="mosaic-imgFrame89.png" alt="Stylist washing a customer's hair" word="imgGroup4" mark="imgGroup5" />
-    <Photo x={0} y={660} width={264.8} height={331} photo="mosaic-imgFrame89.png" alt="Stylist working in her salon" />
-    <LoanCard x={288} y={665.75} move mark="imgGroup12" />
-    <Approval x={576} y={627.15} />
-    <LoanCard x={861} y={660.25} width={266} height={332.5} mark="imgGroup11" />
+    <Card x={280.8} y={-40} width={263.159} height={328.949} className="beacon-grid-assets"><small className="beacon-grid-handle">@beacon_tc</small><div className="beacon-grid-pulled-copy" role="img" aria-label="Your assets should work as hard as you.">{[132,161,198].map((width,index) => <div key={index} className="beacon-grid-pulled-line" style={{'--slide-x': `${234.964-width}px`, '--line-order': index}}><img src={art('assets-text')} alt="" style={{top: -index * 35.6}} /></div>)}</div><Lockup word="imgGroup6" mark="imgGroup7" /></Card>
+    <LoanCard x={559.96} y={-80} />
+    <Card x={839.96} y={-52} width={265.6} height={332} className="beacon-grid-fast"><div className="beacon-grid-fast-heading"><img src={art('fast-text')} alt="Fast means fast" /><p>Time from valuation to cash</p></div><div className="beacon-grid-speed-bars"><div><p><span>Beacon Trust</span><span>4 hours</span></p><i /></div><div><p><span>Traditional lenders</span><span>3 weeks</span></p><i /></div></div><Footer mark="imgGroup8" /></Card>
+    <Approval x={0} y={297} />
+    <Photo x={279.1} y={304.95} width={263} height={328.75} photo="social-workspace.png" video="train-interior.mp4" alt="Sunlit train interior overlooking the mountains" word="imgGroup9" mark="imgGroup10" top />
+    <Card x={558.1} y={266} width={263.159} height={328.949} className="beacon-grid-amount"><small className="beacon-grid-handle">@beacon_tc</small><div className="beacon-grid-amount-copy"><div className="beacon-grid-amount-heading"><img src={art('amount-text')} alt="₦2.4B" /></div><p><span>unlocked for small</span><span>businesses this year.</span></p></div><Footer swap /></Card>
+    <Photo x={837.259} y={296} width={265.8} height={332.25} photo="mosaic-imgFrame89.png" alt="Stylist washing a customer's hair" word="imgGroup4" mark="imgGroup5" />
+    <Photo x={0} y={641.875} width={264.8} height={331} photo="mosaic-imgFrame89.png" alt="Stylist working in her salon" />
+    <LoanCard x={280.8} y={649.7} move mark="imgGroup12" />
+    <Approval x={560.8} y={609.9} />
+    <LoanCard x={839.9} y={644.25} width={266} height={332.5} mark="imgGroup11" />
   </div>;
 }

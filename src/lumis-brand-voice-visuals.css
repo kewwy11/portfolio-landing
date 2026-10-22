@@ -1,6 +1,6 @@
 .lv-pair { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
-.lv-gallery { display:flex; flex-direction:column; gap:20px; }
-.lv-portraits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); }
+.lv-gallery { display:flex; flex-direction:column; gap:16px; }
+.lv-portraits { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; }
 .lv-voice .lumis-brand-intro-copy, .lv-visuals .lumis-brand-intro-copy { font-size:16px; line-height:1.5; }
 .lf-art > div { width:100%; height:100%; }
 .lv-voice [data-node-id="314:112"] > div { background-image:linear-gradient(145deg,#c8e0fc 0%,#1d6bd8 54%,#5a73e9 100%) !important; }

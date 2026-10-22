@@ -4,7 +4,7 @@
 .bb-statement-frame{position:absolute;inset:0;visibility:hidden}.bb-statement-frame:first-child{visibility:visible}
 .bb-statement-line>div{overflow:hidden;will-change:transform}
 .bb-statement-line svg{display:block;overflow:hidden}.bb-statement-line text{font-family:'Beacon Canela',serif;font-size:64px;font-weight:400;fill:#fff;letter-spacing:0}
-@media(max-width:760px){.bb-logo-grid,.bb-type-grid{grid-template-columns:1fr}.bb-logo-left,.bb-type-left,.bb-logo-grid,.bb-type-grid,.bb-typography{gap:12px}}
+@media(max-width:760px){.bb-logo-grid,.bb-type-grid{grid-template-columns:1fr}.bb-logo-left,.bb-type-left,.bb-logo-grid,.bb-type-grid,.bb-typography{gap:16px}}
 @media(prefers-reduced-motion:reduce){.bb-logo-photo{will-change:auto}}
 .bb-sample-line{position:absolute;inset:0;display:block;overflow:hidden}
 .bb-sample-line img{position:absolute;left:0;top:0;width:500px;height:109px}

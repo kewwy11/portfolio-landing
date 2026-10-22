@@ -1,8 +1,8 @@
 @font-face { font-family: 'DM Mono'; src: url('/assets/lumis-brand/DMMono-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
 @font-face { font-family: 'DM Mono'; src: url('/assets/lumis-brand/DMMono-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
 
-.lb-section.li-identity { gap: 24px; }
-.li-identity > .lumis-brand-section-intro { margin-bottom: 24px; }
+.lb-section.li-identity { gap: 16px; }
+.li-identity > .lumis-brand-section-intro { margin-bottom: 0; }
 .li-identity .lumis-brand-intro-copy p + p { margin-top: 24px; }
 .li-identity .lumis-brand-intro-copy { font-size: 16px; line-height: 1.5; }
 .li-artboard { width: 100%; min-width: 0; position: relative; overflow: hidden; }
@@ -12,12 +12,15 @@
 .li-navy { background: #0f172a; }
 .li-amber { background: #f59e0b; }
 .li-pair { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
-.li-logo-pair { gap: 23px; }
+.li-logo-pair { gap: 16px; }
+.li-consultation-slides { position: absolute; inset: 0; overflow: hidden; }
+.li-consultation-slides img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; visibility: hidden; }
+.li-consultation-slides img.is-active { opacity: 1; visibility: visible; }
 .li-callout { position: absolute; height: 29px; display: grid; place-items: center; background: #fff; border-radius: 5px; font: 400 12px/1 'Lumis Brand Sora', sans-serif; color: #575757; white-space: nowrap; }
 .li-logo-placeholder { background: #fff8eb; color: #1d4ed8; }
 .li-logo-placeholder .li-canvas { display: grid; place-items: center; }
 .li-logo-placeholder p { font: 600 32px/1.2 'Lumis Brand Sora', sans-serif; }
-.li-palette { position: absolute; left: 76px; top: 50%; transform: translateY(-50%); display: flex; gap: 24px; }
+.li-palette { position: absolute; left: 76px; top: 50%; transform: translateY(-50%); display: flex; gap: 16px; }
 .li-swatch-card { width: 177px; padding: 5px; background: white; }
 .li-swatch { height: 166px; }
 .li-swatch-card dl { margin: 16px 5px 10px; color: #64748b; font: 400 12px/9px Poppins, sans-serif; }
@@ -31,11 +34,15 @@
 .li-type-labels { top: 32px; }
 .li-type-labels span { height: 36px; display: flex; align-items: center; padding: 0 16px; border: 1px solid currentColor; border-radius: 50px; font-size: 14px; line-height: 1; white-space: nowrap; }
 .li-type-caption { bottom: 32px; font-size: 14px; line-height: 1; text-transform: uppercase; white-space: nowrap; }
-.li-specimen { position: absolute; left: 32px; top: 50%; transform: translateY(-50%); width: 495px; text-align: center; font: 100 360px/1 'Lumis Brand Sora', sans-serif; letter-spacing: -14.4px; }
+.li-specimen { position: absolute; left: 32px; top: 50%; transform: translateY(-50%); width: 495px; display: flex; justify-content: center; align-items: center; text-align: center; font: 100 360px/1 'Lumis Brand Sora', sans-serif; letter-spacing: -14.4px; }
+.li-specimen span { display: block; }
 .li-type-mono .li-specimen { font-family: 'DM Mono', monospace; font-weight: 300; }
-.li-stories { display: flex; gap: 3.068%; padding: 5.06% 3.73%; background: #fff8eb; overflow-x: auto; scrollbar-width: none; }
-.li-stories::-webkit-scrollbar { display: none; }
-.li-stories > .li-artboard { flex: 0 0 35.87%; }
+.li-stories { padding: 5.06% 3.73%; background: #fff8eb; overflow: hidden; }
+.li-stories-track, .li-stories-group { display: flex; width: max-content; gap: 16px; }
+.li-stories-track { transform: translate3d(0,0,0); will-change: transform; }
+.li-stories.is-visible .li-stories-track { animation: li-story-marquee 54s linear infinite; }
+.li-stories-group > .li-artboard { flex: 0 0 374px; width: 374px; }
+@keyframes li-story-marquee { to { transform: translate3d(calc(-50% - 8px),0,0); } }
 .li-story { color: #fff; }
 .li-story-type { background: #1d4ed8; }
 .li-collage { position: absolute; inset: 0; display: grid; grid-template: 1fr 1fr / 1fr 1fr; }
@@ -74,15 +81,23 @@
 .li-post-footer { display: flex; align-items: center; gap: 10.288px; height: 49.384px; padding-inline: 10.288px; }
 .li-post-footer img { width: 20.577px; height: 20.577px; }
 .li-post-footer img:last-child { margin-left: auto; }
-.li-post-track { position: absolute; left: 40px; top: 97px; display: flex; gap: 24px; }
+.li-post-track { position: absolute; left: 40px; top: 97px; display: flex; gap: 16px; will-change: transform; }
 .li-post-light { width: 400px; flex: 0 0 400px; border-radius: 20px; overflow: hidden; background: white; }
 .li-post-light .li-post-header { height: 55px; color: #64748b; padding-inline: 10px; }
 .li-post-light .li-post-photo { border-radius: 0; }
 .li-post-light .li-post-footer { height: 52px; }
 @media (max-width: 760px) {
   .lb-section.li-identity { gap: 16px; }
-  .li-identity > .lumis-brand-section-intro { margin-bottom: 16px; }
+  .li-identity > .lumis-brand-section-intro { margin-bottom: 0; }
   .li-pair { grid-template-columns: 1fr; gap: 16px; }
-  .li-stories { gap: 16px; padding: 20px; scroll-snap-type: x mandatory; }
-  .li-stories > .li-artboard { flex-basis: 85%; scroll-snap-align: center; }
+  .li-stories { padding: 20px; }
+  .li-stories-group > .li-artboard { flex-basis: min(85vw, 374px); width: min(85vw, 374px); }
+  .li-specimen { left: 20px; width: calc(100% - 40px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .li-stories { overflow-x: auto; scrollbar-width: none; }
+  .li-stories::-webkit-scrollbar { display: none; }
+  .li-stories-track { animation: none !important; }
+  .li-stories-group[aria-hidden="true"] { display: none; }
 }

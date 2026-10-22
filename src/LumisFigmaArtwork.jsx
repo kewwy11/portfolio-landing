@@ -8,6 +8,11 @@ export function LogoAnatomyArtwork() { return <div className="lf-art"><div class
       <div className="lf-1" data-node-id="280:1564" data-name="Group">
         <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-280-1561-imgGroup.svg`} />
       </div>
+      <div className="lf-symbol-guide lf-drawing-vector" data-node-id="280:1566" aria-hidden="true">
+        <svg viewBox="0 0 232.162 199" preserveAspectRatio="none">
+          <use href={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-280-1561-imgGroup.svg#Vector_2`} fill="none" stroke="white" strokeWidth="1" strokeDasharray="1.6 2.4" />
+        </svg>
+      </div>
       <div className="lf-3" data-node-id="282:1713">
         <img alt="" className="lf-2" height="40" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-280-1561-imgEllipse2.png`} width="40" />
       </div>

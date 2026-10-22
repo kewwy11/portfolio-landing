@@ -11,7 +11,7 @@
 .lumis-sidebar nav .lumis-section-active { border-left: 2px solid var(--lumis-blue); color: var(--lumis-body); }
 .lumis-content { grid-column: 2; width: 100%; min-width: 0; max-width: 100%; }
 .lumis-content > *, .lumis-opportunity-body > *, .lumis-better-workflow > * { min-width: 0; max-width: 100%; }
-.lumis-intro { display: flex; flex-direction: column; gap: 24px; padding-bottom: 48px; scroll-margin-top: 24px; }
+.lumis-intro { display: flex; flex-direction: column; gap: 16px; padding-bottom: 48px; scroll-margin-top: 24px; }
 .lumis-heading { display: flex; flex-direction: column; gap: 7px; }
 .lumis-animated-heading { display: flex; flex-direction: column; gap: 7px; width: 100%; min-width: 0; }
 .lumis-animated-heading .lumis-slide-heading { display: block; }
@@ -27,19 +27,19 @@
 .lumis-hero-image { position: relative; width: 100%; aspect-ratio: 1127 / 626; overflow: hidden; }
 .lumis-hero-image img { width: 100%; height: 100%; object-fit: cover; }
 .lumis-hero-image::after { content: ''; position: absolute; inset: 0; background: rgb(0 0 0 / 20%); pointer-events: none; }
-.lumis-details { display: grid; grid-template-columns: 239px repeat(3, minmax(0, 1fr)) max-content; gap: 24px; margin: 0; }
+.lumis-details { display: grid; grid-template-columns: 239px repeat(3, minmax(0, 1fr)) max-content; gap: 16px; margin: 0; }
 .lumis-details > div { min-width: 0; }
 .lumis-details dt { font-family: 'DM Mono', monospace; font-size: 16px; line-height: 21px; text-transform: uppercase; color: var(--lumis-light); margin-bottom: 10px; }
 .lumis-details dd { margin: 0; font-size: 16px; line-height: 29px; }
 .lumis-details .lumis-timeline { font-size: 16px; line-height: normal; }
 
 .lumis-overview { padding-block: 48px; scroll-margin-top: 24px; }
-.lumis-overview-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 40px; }
+.lumis-overview-heading { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; }
 .lumis-overview-heading > div { flex: 1; min-width: 0; }
 .lumis-eyebrow { color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 16px; line-height: normal; text-transform: uppercase; }
 .lumis-overview h2 { width: min(587px, 100%); margin-top: 7px; color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 40px; font-weight: 600; line-height: 50px; letter-spacing: -.4px; text-transform: none; }
 .lumis-overview-summary { flex: 0 0 356px; font-size: 16px; line-height: normal; }
-.lumis-overview-pillars { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 24px; align-items: stretch; margin-top: 40px; }
+.lumis-overview-pillars { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr); gap: 16px; align-items: stretch; margin-top: 16px; }
 .lumis-overview-pillars article { min-width: 0; }
 .lumis-pillar-divider { width: 1px; height: 100%; }
 .lumis-overview-pillars h3 { margin: 0 0 10px; color: var(--lumis-heading); font-size: 22px; font-weight: 400; line-height: normal; }
@@ -52,9 +52,9 @@
 .lumis-problem-banner > div { position: relative; z-index: 1; width: min(641px, calc(100% - 40px)); }
 .lumis-problem-banner p { font-family: 'DM Mono', monospace; font-size: 16px; line-height: normal; text-transform: uppercase; }
 .lumis-problem-banner h2 { margin-top: 7px; color: inherit; font-family: Poppins, sans-serif; font-size: 40px; font-weight: 600; line-height: 45px; letter-spacing: -.8px; text-transform: none; }
-.lumis-problem-body { display: flex; flex-direction: column; gap: 32px; padding-top: 48px; }
+.lumis-problem-body { display: flex; flex-direction: column; gap: 16px; padding-top: 16px; }
 .lumis-problem-copy { width: min(800px, 100%); color: var(--lumis-body); font-size: 20px; line-height: 33px; letter-spacing: .2px; }
-.lumis-bias-figure { display: flex; flex-direction: column; align-items: center; gap: 24px; width: 100%; }
+.lumis-bias-figure { display: flex; flex-direction: column; align-items: center; gap: 16px; width: 100%; }
 .lumis-bias-diagram { position: relative; width: 878px; height: 264px; }
 .bias-card { position: absolute; display: flex; flex-direction: column; gap: 6px; padding: 18px 20px; border: 1px solid #d5d9e2; border-radius: 12px; background: var(--cream); overflow: hidden; }
 .bias-card strong { color: var(--lumis-heading); font-size: 16px; font-weight: 400; line-height: 22px; }
@@ -89,13 +89,13 @@
 .lumis-opportunity-banner > div { position: relative; z-index: 1; width: min(727px, calc(100% - 40px)); }
 .lumis-opportunity-banner p { font-family: 'DM Mono', monospace; font-size: 16px; line-height: normal; text-transform: uppercase; }
 .lumis-opportunity-banner h2 { margin-top: 7px; color: inherit; font-family: Poppins, sans-serif; font-size: 42px; font-weight: 600; line-height: 1.2; letter-spacing: -.84px; text-transform: none; }
-.lumis-opportunity-body { width: 100%; display: flex; flex-direction: column; gap: 32px; padding: 48px 0 0; }
+.lumis-opportunity-body { width: 100%; display: flex; flex-direction: column; gap: 16px; padding: 48px 0 0; }
 .lumis-opportunity-intro { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); align-items: center; gap: 16px; }
-.lumis-opportunity-intro > div { display: flex; flex-direction: column; gap: 14px; }
+.lumis-opportunity-intro > div { display: flex; flex-direction: column; gap: 16px; }
 .lumis-subeyebrow { color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 14px; line-height: 1.45; text-transform: uppercase; }
 .lumis-opportunity-intro h2 { color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 27px; font-weight: 600; line-height: 32px; text-transform: none; }
 .lumis-opportunity-intro > p { color: var(--lumis-body); font-size: 17px; line-height: normal; }
-.lumis-opportunity-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
+.lumis-opportunity-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; align-items: stretch; }
 .lumis-opportunity-cards .opportunity-card-slot { min-width: 0; display: flex; }
 .lumis-opportunity-cards article { width: 100%; min-height: 275px; padding: 16px; border-radius: 14px; background: #fff; display: flex; flex-direction: column; justify-content: space-between; }
 .lumis-opportunity-cards .review-reveal { opacity: 0; transform: translateY(16px) scale(.985); }
@@ -104,15 +104,15 @@
 @keyframes lumis-opportunity-unveil { from { opacity: 0; transform: translateY(16px) scale(.985); clip-path: inset(100% 0 0 0 round 14px); } to { opacity: 1; transform: translateY(0) scale(1); clip-path: inset(0 round 14px); } }
 .lumis-opportunity-cards .review-reveal.motion-disabled { clip-path: none; animation: none; }
 .lumis-opportunity-cards article > span { width: 44px; height: 36px; border-radius: 9px; display: grid; place-items: center; background: #eaf0ff; color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 16px; }
-.lumis-opportunity-cards article > div { display: flex; flex-direction: column; gap: 19px; margin-block: 19px auto; }
+.lumis-opportunity-cards article > div { display: flex; flex-direction: column; gap: 16px; margin-block: 16px auto; }
 .lumis-opportunity-cards h3 { margin: 0; color: var(--lumis-heading); font-size: 16px; font-weight: 600; line-height: 1.3; text-transform: uppercase; }
 .lumis-opportunity-cards p { color: var(--lumis-body); font-size: 15px; line-height: 1.55; }
 .lumis-opportunity-cards small { border-top: 1px solid #dce3eb; padding-top: 9px; color: var(--lumis-blue); font-family: 'DM Mono', monospace; font-size: 11px; line-height: 1.25; text-transform: uppercase; }
 
-.lumis-solution { display: flex; flex-direction: column; gap: 20px; padding-block: 48px; }
+.lumis-solution { display: flex; flex-direction: column; gap: 16px; padding-block: 48px; }
 .lumis-section-heading { display: flex; flex-direction: column; gap: 7px; width: 100%; }
 .lumis-section-heading h2 { width: min(811px, 100%); color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 40px; font-weight: 600; line-height: 50px; letter-spacing: -.8px; text-transform: none; }
-.lumis-better-workflow { width: 100%; display: flex; flex-direction: column; gap: 32px; align-items: stretch; }
+.lumis-better-workflow { width: 100%; display: flex; flex-direction: column; gap: 16px; align-items: stretch; }
 .lumis-workflow-intro { width: 100%; display: flex; flex-direction: column; gap: 7px; }
 .lumis-workflow-intro > p:last-child { width: min(661px, 100%); color: var(--lumis-body); font-size: 17px; line-height: 1.5; }
 .lumis-workflow-diagram { position: relative; width: 100%; height: 520px; overflow: visible; }
@@ -198,7 +198,7 @@
 }
 
 .lumis-core-flows { width: 100%; min-width: 0; max-width: 100%; margin: 0; padding: 48px 0; scroll-margin-top: 24px; }
-.lumis-flow-list { width: 100%; min-width: 0; margin-top: 32px; display: flex; flex-direction: column; gap: 48px; }
+.lumis-flow-list { width: 100%; min-width: 0; margin-top: 16px; display: flex; flex-direction: column; gap: 16px; }
 .lumis-flow-item { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
 .lumis-flow-media { width: 100%; max-width: 100%; aspect-ratio: 1127 / 728; overflow: hidden; background: #f6f5f8; }
 .lumis-scroll-scene { position: relative; width: 100%; aspect-ratio: 1127 / 1038; }
@@ -216,7 +216,7 @@
 .lumis-flow-copy h3 { margin: 0; color: var(--lumis-heading); font-family: Sora, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; }
 .lumis-flow-copy p { width: min(600px, 100%); color: var(--lumis-body); font-size: 20px; line-height: 27px; }
 
-.lumis-research { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 24px; }
+.lumis-research { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 24px; }
 .lumis-research .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 .lumis-research .lumis-section-heading h2 { width: min(640px, 100%); }
 .lumis-research-board { position: relative; width: 100%; margin: 0; overflow: hidden; border: 1px solid #eceef2; border-radius: 8px; background: #f9fafb; }
@@ -234,7 +234,7 @@
 @keyframes lumis-board-pop { from { opacity: 0; transform: scale(.72); } to { opacity: 1; transform: scale(1); } }
 @keyframes lumis-board-background { from { opacity: 0; } to { opacity: 1; } }
 @keyframes lumis-board-title-out { from { opacity: 1; } to { opacity: 0; } }
-.lumis-research-findings { display: flex; flex-direction: column; gap: 32px; min-width: 0; }
+.lumis-research-findings { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
 .lumis-research h3 { margin: 0 0 24px; color: var(--lumis-body); font-family: Poppins, sans-serif; font-size: 28px; font-weight: 500; line-height: 1.35; }
 .lumis-research-table-scroll, .lumis-tone-scroll { width: 100%; max-width: 100%; overflow-x: auto; overscroll-behavior-inline: contain; }
 .lumis-research-table { width: 914px; margin-inline: auto; border-collapse: separate; border-spacing: 0; table-layout: fixed; color: var(--lumis-body); font-family: Poppins, sans-serif; font-size: 15px; line-height: 21px; text-align: left; }
@@ -255,8 +255,8 @@
 .lumis-tone-scale p { margin: 0 0 16px; color: var(--lumis-body); font-size: 14px; line-height: 20px; }
 .lumis-monk-scale h4 { color: var(--lumis-blue); }
 .lumis-fitzpatrick-swatches, .lumis-monk-swatches { display: flex; align-items: flex-start; width: 914px; }
-.lumis-fitzpatrick-swatches { gap: 12px; }
-.lumis-monk-swatches { gap: 10px; }
+.lumis-fitzpatrick-swatches { gap: 16px; }
+.lumis-monk-swatches { gap: 16px; }
 .lumis-tone-swatch { position: relative; flex: none; display: flex; flex-direction: column; gap: 8px; }
 .lumis-fitzpatrick-swatches .lumis-tone-swatch { width: 100px; }
 .lumis-monk-swatches .lumis-tone-swatch { width: 82px; }
@@ -271,8 +271,8 @@
 .lumis-research-tones.can-sequence .lumis-tone-note { opacity: 0; transform: translateY(14px); }
 .lumis-research-tones.can-sequence.is-sequencing .lumis-tone-note { animation: lumis-description-rise 450ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: 1790ms; }
 @keyframes lumis-swatch-grow { from { opacity: 0; transform: scale(.6); } to { opacity: 1; transform: scale(1); } }
-.lumis-design-decisions { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 32px; scroll-margin-top: 24px; }
-.lumis-decision { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+.lumis-design-decisions { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 24px; }
+.lumis-decision { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
 .lumis-decision-heading { display: flex; flex-direction: column; gap: 5px; }
 .lumis-decision-heading p, .lumis-decision-outcome p:first-child { margin: 0; color: var(--lumis-light); font-family: Poppins, sans-serif; font-size: 16px; line-height: 20px; }
 .lumis-decision-heading h3 { width: fit-content; max-width: min(800px, 100%); margin: 0; color: var(--lumis-heading); font-family: Poppins, sans-serif; font-size: 28px; font-weight: 500; line-height: 1.35; letter-spacing: normal; }
@@ -293,10 +293,10 @@
 .lumis-quality-matrix .lumis-quality-caution { border-color: #f6dcae; background: #f8eedd; color: #a9660a; }
 .lumis-quality-matrix .lumis-quality-stop { border-color: var(--lumis-error-border); background: var(--lumis-error-bg); color: var(--lumis-error-heading); }
 .lumis-quality-matrix > p { max-width: 600px; margin: 10px auto 0; color: var(--lumis-body); font-family: 'DM Mono', monospace; font-size: 13px; line-height: 18px; text-align: center; }
-.lumis-product-considerations { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 24px; }
+.lumis-product-considerations { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 24px; }
 .lumis-product-considerations .lumis-section-heading h2 { width: min(800px, 100%); }
-.lumis-considerations-list { display: flex; flex-direction: column; gap: 24px; min-width: 0; }
-.lumis-consideration { display: grid; grid-template-columns: minmax(0, 612fr) minmax(0, 495fr); gap: 20px; align-items: end; min-width: 0; }
+.lumis-considerations-list { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+.lumis-consideration { display: grid; grid-template-columns: minmax(0, 612fr) minmax(0, 495fr); gap: 16px; align-items: end; min-width: 0; }
 .lumis-consideration.can-reveal figure, .lumis-consideration.can-reveal > div { opacity: 0; transform: translateY(28px); }
 .lumis-consideration.can-reveal.is-revealed figure, .lumis-consideration.can-reveal.is-revealed > div { animation: lumis-paired-rise 720ms cubic-bezier(.16, 1, .3, 1) both; }
 .lumis-consideration.can-reveal.is-revealed > div { animation-delay: 110ms; }
@@ -306,9 +306,9 @@
 .lumis-consideration > div { padding-bottom: 0; min-width: 0; }
 .lumis-consideration h3 { margin: 0 0 10px; color: var(--lumis-light); font-family: Poppins, sans-serif; font-size: 16px; font-weight: 400; line-height: 24px; }
 .lumis-consideration p { margin: 0; color: var(--lumis-body); font-family: Poppins, sans-serif; font-size: 18px; line-height: 27px; }
-.lumis-reflection { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 24px; scroll-margin-top: 24px; }
-.lumis-lessons { display: flex; flex-direction: column; gap: 24px; }
-.lumis-lesson-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.lumis-reflection { width: 100%; min-width: 0; padding-block: 48px; display: flex; flex-direction: column; gap: 16px; scroll-margin-top: 24px; }
+.lumis-lessons { display: flex; flex-direction: column; gap: 16px; }
+.lumis-lesson-row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
 .lumis-lesson-row.can-reveal .lumis-lesson { opacity: 0; transform: translateY(28px); }
 .lumis-lesson-row.can-reveal.is-revealed .lumis-lesson { animation: lumis-paired-rise 720ms cubic-bezier(.16, 1, .3, 1) both; animation-delay: calc(var(--lesson-row) * 180ms); }
 .lumis-lesson { min-width: 0; padding: 16px 24px; border: 1px solid #f6dcae; border-radius: 30px; background: #f8eedd; }
@@ -330,12 +330,12 @@
   .lumis-overview-summary { flex-basis: 32%; }
   .lumis-overview-pillars h3 { font-size: 19px; }
   .lumis-overview-pillars p { font-size: 14px; }
-  .lumis-bias-diagram { width: 100%; height: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+  .lumis-bias-diagram { width: 100%; height: auto; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
   .bias-card { position: static; width: auto; }
   .bias-label { grid-column: span 2; }
   .bias-arrow { display: none; }
   .lumis-opportunity-cards article { min-height: 300px; }
-  .lumis-workflow-diagram { height: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .lumis-workflow-diagram { height: auto; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .workflow-step, .workflow-upload, .workflow-quality, .workflow-analysis, .workflow-result { position: static; width: auto; height: auto; min-height: 96px; }
   .workflow-review-group, .workflow-unreadable-group, .workflow-monitor-group { position: static; width: auto; display: flex; }
   .workflow-review-group .workflow-step, .workflow-monitor-group .workflow-step { width: 100%; }
@@ -356,15 +356,15 @@
   .lumis-sidebar nav > * { flex: none; white-space: nowrap; }
   .lumis-heading p { font-size: 12px; line-height: 20px; }
   .lumis-heading h1 { font-size: clamp(26px, 7vw, 36px); line-height: 1.3; }
-  .lumis-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  .lumis-details { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
   .lumis-details dt { font-size: 14px; }
   .lumis-overview { padding-block: 48px; }
-  .lumis-overview-heading { align-items: flex-start; flex-direction: column; gap: 24px; }
+  .lumis-overview-heading { align-items: flex-start; flex-direction: column; gap: 16px; }
   .lumis-overview h2 { font-size: 30px; line-height: 1.25; }
   .lumis-overview-summary { flex: auto; }
-  .lumis-overview-pillars { grid-template-columns: 1fr; gap: 24px; margin-top: 32px; }
+  .lumis-overview-pillars { grid-template-columns: 1fr; gap: 16px; margin-top: 16px; }
   .lumis-overview-pillars article { padding: 0; }
-  .lumis-overview-pillars article:not(:first-child) { border-top: 1px solid #edeff3; padding-top: 24px; }
+  .lumis-overview-pillars article:not(:first-child) { border-top: 1px solid #edeff3; padding-top: 16px; }
   .lumis-pillar-divider { display: none; }
   .lumis-problem-banner { height: 280px; }
   .lumis-problem-banner h2 { font-size: 30px; line-height: 1.2; }
@@ -376,7 +376,7 @@
   .lumis-opportunity-banner h2 { font-size: 30px; }
   .lumis-opportunity-body { padding: 48px 0 0; }
   .lumis-solution { padding-block: 48px; }
-  .lumis-opportunity-intro { grid-template-columns: 1fr; gap: 24px; }
+  .lumis-opportunity-intro { grid-template-columns: 1fr; gap: 16px; }
   .lumis-opportunity-intro h2 { font-size: 24px; line-height: 1.3; }
   .lumis-opportunity-cards { grid-template-columns: 1fr; }
   .lumis-opportunity-cards article { min-height: 240px; }
@@ -384,12 +384,12 @@
   .lumis-workflow-diagram { grid-template-columns: 1fr; }
   .lumis-core-flows { padding-block: 48px; }
   .lumis-scroll-viewport { top: 12px; }
-  .lumis-flow-list { margin-top: 28px; gap: 40px; }
+  .lumis-flow-list { margin-top: 16px; gap: 16px; }
   .lumis-flow-copy p { font-size: 16px; line-height: 24px; }
   .lumis-research h3 { font-size: 23px; }
   .lumis-research-table { font-size: 14px; }
   .lumis-decision-heading h3 { font-size: 23px; line-height: 1.35; }
-  .lumis-decision-option { grid-template-columns: 1fr; gap: 12px; }
+  .lumis-decision-option { grid-template-columns: 1fr; gap: 16px; }
   .lumis-decision-option figcaption { padding-bottom: 0; font-size: 16px; }
   .lumis-decision-outcome p:last-child { font-size: 17px; }
   .lumis-quality-matrix { padding: 24px 12px; }

@@ -1,7 +1,7 @@
-.beacon-application{width:100%;display:flex;flex-direction:column;gap:48px;padding-block:48px;scroll-margin-top:24px}
+.beacon-application{width:100%;display:flex;flex-direction:column;gap:16px;padding-block:48px;scroll-margin-top:24px}
 .beacon-application-intro{padding-inline:0}
 .beacon-application-intro p{line-height:24px;text-box-trim:trim-both;text-box-edge:cap alphabetic}
-.beacon-application-gallery{display:flex;flex-direction:column;gap:24px}
+.beacon-application-gallery{display:flex;flex-direction:column;gap:16px}
 .beacon-application-pair{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
 .beacon-application-billboard,.beacon-application-tall,.beacon-application-cap{position:relative;overflow:hidden}
 .beacon-application-billboard{aspect-ratio:1127/684}
@@ -30,4 +30,4 @@
 .beacon-application-notification-copy strong{font-size:17.131px;letter-spacing:-.3426px;line-height:normal;text-box-trim:trim-both;text-box-edge:cap alphabetic}
 .beacon-application-notification-copy span{font-size:14.989px;color:#fafafc;line-height:normal;text-box-trim:trim-both;text-box-edge:cap alphabetic}
 .beacon-application-notification-copy p{margin:0;width:259.104px;font-size:13.919px;font-weight:400;line-height:normal;text-box-trim:trim-both;text-box-edge:cap alphabetic}
-@media(max-width:760px){.beacon-application{gap:28px;padding-block:36px}.beacon-application-pair{grid-template-columns:1fr}.beacon-application-gallery{gap:16px}}
+@media(max-width:760px){.beacon-application{gap:16px;padding-block:36px}.beacon-application-pair{grid-template-columns:1fr;gap:16px}.beacon-application-gallery{gap:16px}}
