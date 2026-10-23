@@ -129,52 +129,52 @@ export function VoiceTraitsArtwork() { return <div className="lf-art"><div class
 export function VoiceMessageArtwork() { return <div className="lf-art"><div className="lf-27" data-node-id="314:112">
           <div className="lf-28" style={{ backgroundImage: "linear-gradient(157.53932213170475deg, rgb(249, 252, 255) 12.766%, rgb(142, 192, 250) 19.517%, rgb(29, 107, 216) 50.934%, rgb(90, 115, 233) 101.84%)" }}>
             <div className="lf-29" data-node-id="435:2177">
-              <div className="lf-30" data-node-id="435:2169">
+              <div className="lf-30 lv-stack-card" data-node-id="435:2169">
                 <div className="lf-31" data-node-id="I435:2169;314:120">
                   <div className="lf-32" data-node-id="I435:2169;314:121" data-name="Vector">
                     <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgVector.svg`} />
                   </div>
                   <p className="lf-33" data-node-id="I435:2169;314:122">
-                    “Your skin is improving, here is what we are seeing”
+                    “Your skin tells a story. Let’s understand it together.”
                   </p>
                 </div>
                 <div className="lf-31" data-node-id="I435:2169;314:123">
                   <div className="lf-32" data-node-id="I435:2169;314:124" data-name="circle-xmark 1">
                     <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgCircleXmark1.svg`} />
                   </div>
-                  <p className="lf-34" data-node-id="I435:2169;314:126">{`"Scan processed successfully"`}</p>
+                  <p className="lf-34" data-node-id="I435:2169;314:126">“Skin pattern analysis complete.”</p>
                 </div>
               </div>
-              <div className="lf-35" data-node-id="435:2159">
+              <div className="lf-35 lv-stack-card" data-node-id="435:2159">
                 <div className="lf-36" data-node-id="I435:2159;314:120">
                   <div className="lf-37" data-node-id="I435:2159;314:121" data-name="Vector">
                     <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgVector1.svg`} />
                   </div>
                   <p className="lf-38" data-node-id="I435:2159;314:122">
-                    “Your skin is improving, here is what we are seeing”
+                    “Your care plan is ready whenever you are.”
                   </p>
                 </div>
                 <div className="lf-36" data-node-id="I435:2159;314:123">
                   <div className="lf-37" data-node-id="I435:2159;314:124" data-name="circle-xmark 1">
                     <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgCircleXmark2.svg`} />
                   </div>
-                  <p className="lf-39" data-node-id="I435:2159;314:126">{`"Scan processed successfully"`}</p>
+                  <p className="lf-39" data-node-id="I435:2159;314:126">“Treatment recommendation generated.”</p>
                 </div>
               </div>
-              <div className="lf-40" data-node-id="435:2151">
+              <div className="lf-40 lv-stack-card" data-node-id="435:2151">
                 <div className="lf-41" data-node-id="I435:2151;314:120">
                   <div className="lf-42" data-node-id="I435:2151;314:121" data-name="Vector">
                     <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgVector2.svg`} />
                   </div>
                   <p className="lf-43" data-node-id="I435:2151;314:122">
-                    “Your skin is improving, here is what we are seeing”
+                    “Your skin is improving. Here’s what we’re seeing.”
                   </p>
                 </div>
                 <div className="lf-41" data-node-id="I435:2151;314:123">
                   <div className="lf-42" data-node-id="I435:2151;314:124" data-name="circle-xmark 1">
                     <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgCircleXmark3.svg`} />
                   </div>
-                  <p className="lf-44" data-node-id="I435:2151;314:126">{`"Scan processed successfully"`}</p>
+                  <p className="lf-44" data-node-id="I435:2151;314:126">“Scan processed successfully.”</p>
                 </div>
               </div>
             </div>
@@ -185,7 +185,7 @@ export function PortraitOneArtwork() { return <div className="lf-art"><div class
             <div className="lf-46" data-node-id="312:3828" data-name="ChatGPT Image Jun 2, 2026, 06_01_17 AM 1">
               <img alt="" className="lf-47" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgChatGptImageJun22026060117Am1.png`} />
             </div>
-            <div className="lf-48" data-node-id="312:3831">
+            <div className="lf-48 lv-diagnostic-label" data-node-id="312:3831">
               <div className="lf-49" data-node-id="312:3829">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -193,7 +193,7 @@ export function PortraitOneArtwork() { return <div className="lf-art"><div class
                 Itchy skin
               </p>
             </div>
-            <div className="lf-51" data-node-id="312:3832">
+            <div className="lf-51 lv-diagnostic-label" data-node-id="312:3832">
               <div className="lf-49" data-node-id="312:3833">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -201,7 +201,7 @@ export function PortraitOneArtwork() { return <div className="lf-art"><div class
                 Vitiligo
               </p>
             </div>
-            <div className="lf-52" data-node-id="312:3835">
+            <div className="lf-52 lv-diagnostic-label" data-node-id="312:3835">
               <div className="lf-49" data-node-id="312:3836">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -223,7 +223,7 @@ export function PortraitTwoArtwork() { return <div className="lf-art"><div class
             <div className="lf-56" data-node-id="312:3850" data-name="ChatGPT Image Jun 2, 2026, 06_01_17 AM 1">
               <img alt="" className="lf-47" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgChatGptImageJun22026060117Am2.png`} />
             </div>
-            <div className="lf-48" data-node-id="312:3851">
+            <div className="lf-48 lv-diagnostic-label" data-node-id="312:3851">
               <div className="lf-49" data-node-id="312:3852">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -231,7 +231,7 @@ export function PortraitTwoArtwork() { return <div className="lf-art"><div class
                 Rosacea
               </p>
             </div>
-            <div className="lf-57" data-node-id="312:3854">
+            <div className="lf-57 lv-diagnostic-label" data-node-id="312:3854">
               <div className="lf-49" data-node-id="312:3855">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -239,7 +239,7 @@ export function PortraitTwoArtwork() { return <div className="lf-art"><div class
                 Acne Vulgaris
               </p>
             </div>
-            <div className="lf-58" data-node-id="312:3857">
+            <div className="lf-58 lv-diagnostic-label" data-node-id="312:3857">
               <div className="lf-49" data-node-id="312:3858">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -261,7 +261,7 @@ export function PortraitThreeArtwork() { return <div className="lf-art"><div cla
             <div className="lf-60" data-node-id="312:3871" data-name="ChatGPT Image Jun 2, 2026, 06_01_17 AM 1">
               <img alt="" className="lf-47" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgChatGptImageJun22026060117Am3.png`} />
             </div>
-            <div className="lf-61" data-node-id="312:3872">
+            <div className="lf-61 lv-diagnostic-label" data-node-id="312:3872">
               <div className="lf-49" data-node-id="312:3873">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -269,7 +269,7 @@ export function PortraitThreeArtwork() { return <div className="lf-art"><div cla
                 Hormonal Imbalance
               </p>
             </div>
-            <div className="lf-62" data-node-id="312:3875">
+            <div className="lf-62 lv-diagnostic-label" data-node-id="312:3875">
               <div className="lf-49" data-node-id="312:3876">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>
@@ -277,7 +277,7 @@ export function PortraitThreeArtwork() { return <div className="lf-art"><div cla
                 Acne Vulgaris
               </p>
             </div>
-            <div className="lf-63" data-node-id="312:3878">
+            <div className="lf-63 lv-diagnostic-label" data-node-id="312:3878">
               <div className="lf-49" data-node-id="312:3879">
                 <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgEllipse54.svg`} />
               </div>

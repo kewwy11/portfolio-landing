@@ -81,28 +81,53 @@ function logoConstruction(root) {
 }
 
 function typefaceCycle(root) {
-  const glyphs = [...root.querySelectorAll('.li-specimen-layer')];
-  const labels = [...root.querySelectorAll('.li-weight-label')];
+  const glyph = root.querySelector('.li-specimen-layer');
+  const label = root.querySelector('.li-weight-label');
   const mono = root.classList.contains('li-type-mono');
-  gsap.set(labels.slice(1), { visibility: 'hidden', yPercent: 100 });
-  if (mono) gsap.set(glyphs.slice(1), { autoAlpha: 0 });
-  const timeline = gsap.timeline({ repeat: -1 });
-  labels.forEach((current, index) => {
-    const next = (index + 1) % labels.length;
-    const at = index * 1.15;
-    timeline.set(labels[next], { visibility: 'visible', yPercent: 100 }, at)
-      .to(current, { yPercent: -100, duration: 0.58, ease: 'power2.inOut' }, at)
-      .to(labels[next], { yPercent: 0, duration: 0.58, ease: 'power2.inOut' }, at)
-      .set(current, { visibility: 'hidden', yPercent: 0 }, at + 0.58);
+  const variants = mono
+    ? [
+      { name: 'Light', stroke: 0, skew: 0 },
+      { name: 'Regular', stroke: 2.2, skew: 0 },
+      { name: 'Medium', stroke: 4.2, skew: 0 },
+      { name: 'Light Italic', stroke: 0, skew: -10 },
+      { name: 'Italic', stroke: 2.2, skew: -10 },
+      { name: 'Medium Italic', stroke: 4.2, skew: -10 },
+    ]
+    : [
+      { name: 'Thin', weight: 100 },
+      { name: 'Extra light', weight: 200 },
+      { name: 'Light', weight: 300 },
+      { name: 'Regular', weight: 400 },
+      { name: 'Semi-bold', weight: 600 },
+      { name: 'Bold', weight: 700 },
+      { name: 'Extra Bold', weight: 800 },
+    ];
+  // Reverse through the weights so the last frame flows into the first without a reset.
+  const route = [...variants.map((_, index) => index), ...variants.slice(1, -1).map((_, index) => variants.length - 2 - index)];
+  const state = { position: 0 };
+  let visibleLabel = 0;
+  const render = () => {
+    const segment = Math.floor(state.position) % route.length;
+    const from = route[segment];
+    const to = route[(segment + 1) % route.length];
+    const fraction = state.position - Math.floor(state.position);
+    const blend = (1 - Math.cos(Math.PI * fraction)) / 2;
+    const interpolate = key => variants[from][key] + (variants[to][key] - variants[from][key]) * blend;
     if (mono) {
-      timeline.to(glyphs[index], { autoAlpha: 0, duration: 1.15, ease: 'sine.inOut' }, at)
-        .fromTo(glyphs[next], { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.15, ease: 'sine.inOut', immediateRender: false }, at);
+      glyph.style.webkitTextStrokeWidth = `${interpolate('stroke')}px`;
+      glyph.style.transform = `skewX(${interpolate('skew')}deg)`;
     } else {
-      const weights = [100, 200, 300, 400, 600, 700, 800];
-      timeline.to(glyphs[0], { fontWeight: weights[next], duration: 1.15, ease: 'sine.inOut' }, at);
+      glyph.style.fontWeight = `${interpolate('weight')}`;
     }
-  });
-  return timeline;
+    const nextLabel = blend < 0.5 ? from : to;
+    if (nextLabel !== visibleLabel) {
+      visibleLabel = nextLabel;
+      label.textContent = variants[nextLabel].name;
+      gsap.fromTo(label, { y: 7 }, { y: 0, duration: 0.32, ease: 'power2.out', overwrite: true });
+    }
+  };
+  render();
+  return gsap.to(state, { position: route.length, duration: route.length * 1.3, ease: 'none', repeat: -1, onUpdate: render });
 }
 
 function pullPostRail(root) {
@@ -233,12 +258,9 @@ function Palette() {
 function Typeface({ mono = false }) {
   const ref = useRef(null);
   useVisibleLoop(ref, typefaceCycle);
-  const variants = mono
-    ? [['Light', 300, 'normal'], ['Regular', 400, 'normal'], ['Medium', 500, 'normal'], ['Light Italic', 300, 'italic'], ['Italic', 400, 'italic'], ['Medium Italic', 500, 'italic']]
-    : [['Thin', 100], ['Extra light', 200], ['Light', 300], ['Regular', 400], ['Semi-bold', 600], ['Bold', 700], ['Extra Bold', 800]];
   return <Artboard width={559} height={730} motionRef={ref} className={mono ? 'li-type li-type-mono' : 'li-type li-type-sora'}>
-    <div className="li-type-labels"><span className="li-weight-chip">{variants.map(([label]) => <i className="li-weight-label" key={label}>{label}</i>)}</span><span>{mono ? 'Supporting & Social media' : 'Headers & Body'}</span></div>
-    <div className="li-specimen">{(mono ? variants : variants.slice(0, 1)).map(([label, weight, style = 'normal']) => <span key={label} className="li-specimen-layer" style={{ fontWeight: weight, fontStyle: style }}>Aa</span>)}</div>
+    <div className="li-type-labels"><span className="li-weight-chip"><i className="li-weight-label">{mono ? 'Light' : 'Thin'}</i></span><span>{mono ? 'Supporting & Social media' : 'Headers & Body'}</span></div>
+    <div className="li-specimen"><span className="li-specimen-layer" style={{ fontWeight: mono ? 300 : 100 }}>Aa</span></div>
     <div className="li-type-caption"><span>{mono ? 'DM Mono - Monospace' : 'Sora sans serif'}</span><span>{mono ? 'Accent typeface' : 'Primary typeface'}</span></div>
   </Artboard>;
 }

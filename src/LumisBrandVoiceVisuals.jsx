@@ -15,10 +15,10 @@ function VoiceTraits() {
     const fills = [...root.querySelectorAll('.lv-trait-fill')];
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
     if (preference.matches) return undefined;
-    gsap.set(fills, { width: 0 });
+    gsap.set(fills, { scaleX: 0, transformOrigin: 'left center', force3D: true });
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
-      gsap.to(fills, { width: index => Number(fills[index].dataset.target), duration: 1.8, stagger: 0.07, ease: 'power2.in' });
+      gsap.to(fills, { scaleX: 1, duration: 1.65, ease: 'sine.inOut', force3D: true });
       observer.disconnect();
     }, { threshold: 0.28 });
     observer.observe(root);
@@ -31,25 +31,38 @@ function VoiceMessage() {
   const ref = useRef(null);
   useEffect(() => {
     const root = ref.current;
-    const cards = [...root.querySelectorAll('.lf-30, .lf-35, .lf-40')];
+    const cards = [...root.querySelectorAll('.lv-stack-card')];
+    const copy = cards.map(card => [...card.children]);
     const positions = [
-      { x: 34, y: 0, scale: 359 / 427, opacity: 0.5 },
-      { x: 17, y: 15, scale: 393 / 427, opacity: 0.7 },
-      { x: 0, y: 31, scale: 1, opacity: 1 },
+      { x: 34, y: 0, scale: 359 / 427, backgroundColor: 'rgba(255,255,255,.55)' },
+      { x: 17, y: 15, scale: 393 / 427, backgroundColor: 'rgba(255,255,255,.8)' },
+      { x: 0, y: 31, scale: 1, backgroundColor: '#fff' },
     ];
-    cards.forEach((card, index) => gsap.set(card, { ...positions[index], zIndex: index + 1 }));
+    cards.forEach((card, index) => {
+      gsap.set(card, { ...positions[index], zIndex: index + 1 });
+      gsap.set(copy[index], { autoAlpha: index === 2 ? 1 : 0 });
+    });
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const timeline = gsap.timeline({ repeat: -1, paused: true });
     for (let step = 0; step < 3; step += 1) {
-      const at = step * 2.85 + 1.9;
-      timeline.to(cards, {
-        x: index => positions[(index + step + 1) % 3].x,
-        y: index => positions[(index + step + 1) % 3].y,
-        scale: index => positions[(index + step + 1) % 3].scale,
-        opacity: index => positions[(index + step + 1) % 3].opacity,
-        duration: 0.95,
-        ease: 'power2.inOut',
-      }, at).set(cards, { zIndex: index => ((index + step + 1) % 3) + 1 }, at + 0.48);
+      const at = step * 3.2 + 2.1;
+      const outgoing = cards[(2 - step + 3) % 3];
+      const incoming = cards[(1 - step + 3) % 3];
+      const moving = cards.filter(card => card !== outgoing);
+      const target = index => positions[(cards.indexOf(moving[index]) + step + 1) % 3];
+      timeline.to(copy[(2 - step + 3) % 3], { autoAlpha: 0, duration: 0.2 }, at)
+        .to(outgoing, { x: 63, y: 11, scale: 0.91, duration: 0.52, ease: 'sine.inOut' }, at)
+        .to(moving, {
+          x: index => target(index).x,
+          y: index => target(index).y,
+          scale: index => target(index).scale,
+          backgroundColor: index => target(index).backgroundColor,
+          duration: 1.04,
+          ease: 'sine.inOut',
+        }, at)
+        .set(cards, { zIndex: index => ((index + step + 1) % 3) + 1 }, at + 0.52)
+        .to(outgoing, { ...positions[0], duration: 0.52, ease: 'sine.inOut' }, at + 0.52)
+        .to(copy[cards.indexOf(incoming)], { autoAlpha: 1, duration: 0.35, ease: 'sine.out' }, at + 0.58);
     }
     let visible = false;
     const sync = () => timeline.paused(!visible || document.hidden);
@@ -72,10 +85,24 @@ export function LumisVoice() {
 }
 
 export function LumisVisuals() {
+  const portraitsRef = useRef(null);
+  useEffect(() => {
+    const root = portraitsRef.current;
+    const labels = [...root.querySelectorAll('.lv-diagnostic-label')];
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
+    gsap.set(labels, { autoAlpha: 0, y: 12, clipPath: 'inset(100% 0 0 0)' });
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry.isIntersecting) return;
+      gsap.to(labels, { autoAlpha: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 0.7, stagger: 0.065, ease: 'sine.out' });
+      observer.disconnect();
+    }, { threshold: 0.22 });
+    observer.observe(root);
+    return () => { observer.disconnect(); gsap.killTweensOf(labels); };
+  }, []);
   return <section id="lumis-brand-visuals" className="lb-section lv-visuals" aria-labelledby="lumis-brand-visuals-title">
     <Intro id="lumis-brand-visuals-title" title="Lumis Visuals">We used imagery across different touch points to show Lumis as a part of everyday healthcare. This included doctor consultations, patients in their day-to-day lives, conditions shown across different parts of the body not just the face and diagnostic moments through imagery and information cards.</Intro>
     <div className="lv-gallery">
-      <div className="lv-portraits">
+      <div ref={portraitsRef} className="lv-portraits">
         <Artboard width={376.33} height={704}><PortraitOneArtwork /></Artboard>
         <Artboard width={376.33} height={704}><PortraitTwoArtwork /></Artboard>
         <Artboard width={375.33} height={704}><PortraitThreeArtwork /></Artboard>

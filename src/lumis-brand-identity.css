@@ -38,12 +38,11 @@
 .li-specimen span { display: block; }
 .li-specimen { display: grid; }
 .li-specimen-layer { grid-area: 1 / 1; white-space: nowrap; }
-.li-specimen-layer:not(:first-child) { opacity: 0; visibility: hidden; }
 .li-type-labels .li-weight-chip { display: grid; overflow: hidden; width: 132px; padding-inline: 12px; }
 .li-weight-label { grid-area: 1 / 1; display: grid; place-items: center; font-style: normal; text-align: center; }
-.li-weight-label:not(:first-child) { visibility: hidden; }
 .li-type-mono .li-weight-chip { width: 156px; }
 .li-type-mono .li-specimen { font-family: 'DM Mono', monospace; font-weight: 300; }
+.li-type-mono .li-specimen-layer { font-synthesis: none; -webkit-text-stroke: 0 currentColor; paint-order: stroke fill; transform-origin: center center; }
 .li-stories { padding: 5.06% 3.73%; background: #fff8eb; overflow: hidden; }
 .li-stories-track, .li-stories-group { display: flex; width: max-content; gap: 16px; }
 .li-stories-track { transform: translate3d(0,0,0); will-change: transform; }
