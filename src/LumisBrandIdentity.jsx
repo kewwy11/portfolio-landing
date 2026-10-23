@@ -20,7 +20,7 @@ export function Artboard({ width, height, className = '', children, motionRef })
     observer.observe(ref.current);
     return () => observer.disconnect();
   }, [width]);
-  return <div ref={assignRef} className={`li-artboard ${className}`} style={{ aspectRatio: `${width}/${height}` }}>
+  return <div ref={assignRef} className={`li-artboard ${className}`} style={{ aspectRatio: `${width}/${height}`, "--li-scale": scale }}>
     <div className="li-canvas" style={{ width, height, transform: `scale(${scale})` }}>{children}</div>
   </div>;
 }
@@ -51,95 +51,112 @@ function useVisibleLoop(ref, create) {
 }
 
 function logoConstruction(root) {
-  // Keep the drawing sequence in visual order. querySelectorAll returns DOM
-  // order, which puts the symbol guide before the connector lines.
-  const lines = ['.lf-6', '.lf-9', '.lf-11', '.lf-18', '.lf-symbol-guide']
+  const lines = ['.lf-6', '.lf-9', '.lf-11', '.lf-18']
     .map(selector => root.querySelector(selector))
     .filter(Boolean);
-  const masks = ['inset(0 100% 0 0)', 'inset(0 0 100% 0)', 'inset(0 0 100% 0)', 'inset(0 0 100% 0)', 'inset(0 100% 0 0)'];
+  const masks = ['inset(0 100% 0 0)', 'inset(0 0 100% 0)', 'inset(0 0 0 100%)', 'inset(100% 0 0 0)'];
   const points = [...root.querySelectorAll('.lf-3, .lf-4, .lf-5')];
   const labels = [...root.querySelectorAll('.lf-13, .lf-15, .lf-16, .lf-17')];
+  const directions = [1, -1, -1, 1];
   lines.forEach((line, index) => gsap.set(line, { clipPath: masks[index] }));
   gsap.set(points, { autoAlpha: 0, scale: 0.78, transformOrigin: '50% 50%' });
-  gsap.set(labels, { autoAlpha: 0, y: 9 });
+  labels.forEach((label, index) => {
+    gsap.set(label, { clipPath: directions[index] > 0 ? 'inset(100% 0 0 0)' : 'inset(0 0 100% 0)' });
+    gsap.set(label.querySelector('p'), { yPercent: directions[index] * 130 });
+  });
 
-  const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0.18 });
+  const timeline = gsap.timeline();
   lines.forEach((line, index) => timeline.to(line, {
     clipPath: 'inset(0% 0% 0% 0%)',
-    duration: 0.72,
+    duration: 0.78,
     ease: 'power2.inOut',
-  }, index * 0.075));
-  timeline.to(points, { autoAlpha: 1, scale: 1, duration: 0.3, stagger: 0.08, ease: 'back.out(1.7)' }, 1.02)
-    .to(labels, { autoAlpha: 1, y: 0, duration: 0.38, stagger: 0.09, ease: 'power3.out' }, 1.5)
-    .to({}, { duration: 1.05 })
-    .to(labels, { autoAlpha: 0, y: 8, duration: 0.26, stagger: 0.045, ease: 'power2.in' })
-    .to(points, { autoAlpha: 0, scale: 0.78, duration: 0.2, stagger: 0.04, ease: 'power1.in' }, '<');
-  [...lines].reverse().forEach((line, index) => timeline.to(line, {
-    clipPath: masks[lines.length - index - 1],
-    duration: 0.32,
-    ease: 'power1.inOut',
-  }, index === 0 ? '<' : '<+0.035'));
+  }, index * 0.08));
+  timeline.to(points, { autoAlpha: 1, scale: 1, duration: 0.28, stagger: 0.06, ease: 'power2.out' }, 0.88);
+  labels.forEach((label, index) => {
+    const at = 1.18 + index * 0.1;
+    timeline.to(label, { clipPath: 'inset(0 0 0 0)', duration: 0.52, ease: 'power3.out' }, at)
+      .to(label.querySelector('p'), { yPercent: 0, duration: 0.52, ease: 'power3.out' }, at);
+  });
   return timeline;
 }
 
-function typefaceEntrance(root) {
-  const labels = [...root.querySelectorAll('.li-type-labels span')];
-  const glyphs = [...root.querySelectorAll('.li-specimen span')];
-  const captions = [...root.querySelectorAll('.li-type-caption span')];
-  gsap.set(labels, { autoAlpha: 0, y: -10 });
-  gsap.set(glyphs, { autoAlpha: 0, y: 26, scale: 0.94, transformOrigin: '50% 75%' });
-  gsap.set(captions, { autoAlpha: 0, y: 10 });
-  return gsap.timeline()
-    .to(labels, { autoAlpha: 1, y: 0, duration: 0.44, stagger: 0.06, ease: 'power3.out' })
-    .to(glyphs, { autoAlpha: 1, y: 0, scale: 1, duration: 0.72, stagger: 0.1, ease: 'power3.out' }, '-=0.16')
-    .to(captions, { autoAlpha: 1, y: 0, duration: 0.42, stagger: 0.06, ease: 'power3.out' }, '-=0.2');
+function typefaceCycle(root) {
+  const glyphs = [...root.querySelectorAll('.li-specimen-layer')];
+  const labels = [...root.querySelectorAll('.li-weight-label')];
+  const mono = root.classList.contains('li-type-mono');
+  gsap.set(labels.slice(1), { visibility: 'hidden', yPercent: 100 });
+  if (mono) gsap.set(glyphs.slice(1), { autoAlpha: 0 });
+  const timeline = gsap.timeline({ repeat: -1 });
+  labels.forEach((current, index) => {
+    const next = (index + 1) % labels.length;
+    const at = index * 1.15;
+    timeline.set(labels[next], { visibility: 'visible', yPercent: 100 }, at)
+      .to(current, { yPercent: -100, duration: 0.58, ease: 'power2.inOut' }, at)
+      .to(labels[next], { yPercent: 0, duration: 0.58, ease: 'power2.inOut' }, at)
+      .set(current, { visibility: 'hidden', yPercent: 0 }, at + 0.58);
+    if (mono) {
+      timeline.to(glyphs[index], { autoAlpha: 0, duration: 1.15, ease: 'sine.inOut' }, at)
+        .fromTo(glyphs[next], { autoAlpha: 0 }, { autoAlpha: 1, duration: 1.15, ease: 'sine.inOut', immediateRender: false }, at);
+    } else {
+      const weights = [100, 200, 300, 400, 600, 700, 800];
+      timeline.to(glyphs[0], { fontWeight: weights[next], duration: 1.15, ease: 'sine.inOut' }, at);
+    }
+  });
+  return timeline;
 }
 
 function pullPostRail(root) {
   const track = root.querySelector('.li-post-track');
   const cards = [...track.children];
-  const step = 416;
-  const timeline = gsap.timeline({ repeat: -1, repeatDelay: 0.35 });
-  for (let index = 0; index < 2; index += 1) {
-    const current = cards[index];
-    const next = cards[index + 1];
-    const offset = -(index + 1) * step;
-    timeline.to(track, { x: offset - 14, duration: 0.58, ease: 'power2.inOut' })
-      .to(track, { x: offset, duration: 0.26, ease: 'power3.out' })
-      .to(current, { scale: 0.985, duration: 0.7, ease: 'power2.inOut' }, '<-0.58')
-      .to(next, { scale: 1, duration: 0.7, ease: 'power2.inOut' }, '<')
-      .to({}, { duration: 1.55 });
+  const count = Number(track.dataset.count);
+  const timeline = gsap.timeline({ repeat: -1 });
+  for (let index = 0; index < count; index += 1) {
+    timeline.to({}, { duration: 1.5 })
+      .to(track, {
+        x: () => -(index + 1) * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap)),
+        duration: 0.95,
+        ease: 'power3.inOut',
+      });
   }
-  timeline.set(track, { x: 0 }).set(cards, { scale: 1 }, '<');
+  // The next group is identical: resetting here preserves the exact visible frame.
+  timeline.set(track, { x: 0 });
   return timeline;
 }
 
-function useVisibleImageSequence(ref, count, interval = 20) {
-  const [active, setActive] = useState(0);
-  const [enabled, setEnabled] = useState(false);
+function useVisibleImageSequence(ref, interval = 1050) {
   useEffect(() => {
+    const root = ref.current;
+    const images = [...root.querySelectorAll('.li-consultation-slides img')];
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
     let visible = false;
-    const sync = () => setEnabled(visible && !document.hidden && !reducedMotion.matches);
-    const observer = new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
-      sync();
-    }, { threshold: 0.12 });
-    if (ref.current) observer.observe(ref.current);
+    let ready = false;
+    let disposed = false;
+    let timer = 0;
+    let active = 0;
+    const advance = () => {
+      const next = (active + 1) % images.length;
+      images[next].classList.add('is-active');
+      images[active].classList.remove('is-active');
+      active = next;
+    };
+    const sync = () => {
+      window.clearInterval(timer);
+      if (ready && visible && !document.hidden && !reducedMotion.matches && !disposed) timer = window.setInterval(advance, interval);
+    };
+    // Keep the first photo visible until every frame is decoded, including on slow connections.
+    Promise.all(images.map(image => image.decode())).then(() => { ready = true; sync(); }).catch(() => {});
+    const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold: 0.12 });
+    observer.observe(root);
     reducedMotion.addEventListener('change', sync);
     document.addEventListener('visibilitychange', sync);
     return () => {
+      disposed = true;
+      window.clearInterval(timer);
       observer.disconnect();
       reducedMotion.removeEventListener('change', sync);
       document.removeEventListener('visibilitychange', sync);
     };
-  }, [ref]);
-  useEffect(() => {
-    if (!enabled) return undefined;
-    const timer = window.setInterval(() => setActive(index => (index + 1) % count), interval);
-    return () => window.clearInterval(timer);
-  }, [enabled, count, interval]);
-  return active;
+  }, [ref, interval]);
 }
 
 function Image({ src, x, y, width, height, alt = '', className = '' }) {
@@ -179,10 +196,10 @@ function Consultation() {
     ['identity-consultation-frame-3.png', 'Patient receiving an in-clinic skincare treatment'],
     ['identity-consultation-frame-4.png', 'Dermatologist discussing skincare with a patient'],
   ];
-  const active = useVisibleImageSequence(ref, photos.length);
+  useVisibleImageSequence(ref);
   return <Artboard width={555} height={700} motionRef={ref} className="li-consultation-artboard">
     <div className="li-consultation-slides" aria-hidden="true">
-      {photos.map(([photo], index) => <img key={photo} className={active === index ? 'is-active' : ''} src={asset(photo)} alt="" loading="eager" />)}
+      {photos.map(([photo], index) => <img key={photo} className={index === 0 ? 'is-active' : ''} src={asset(photo)} alt="" loading="eager" />)}
     </div>
     {[
       ['imgGroup1', 224.93, 240, 105.15, 90.13],
@@ -215,20 +232,26 @@ function Palette() {
 
 function Typeface({ mono = false }) {
   const ref = useRef(null);
-  useVisibleLoop(ref, typefaceEntrance);
+  useVisibleLoop(ref, typefaceCycle);
+  const variants = mono
+    ? [['Light', 300, 'normal'], ['Regular', 400, 'normal'], ['Medium', 500, 'normal'], ['Light Italic', 300, 'italic'], ['Italic', 400, 'italic'], ['Medium Italic', 500, 'italic']]
+    : [['Thin', 100], ['Extra light', 200], ['Light', 300], ['Regular', 400], ['Semi-bold', 600], ['Bold', 700], ['Extra Bold', 800]];
   return <Artboard width={559} height={730} motionRef={ref} className={mono ? 'li-type li-type-mono' : 'li-type li-type-sora'}>
-    <div className="li-type-labels"><span>{mono ? 'Light' : 'Thin'}</span><span>{mono ? 'Supporting & Social media' : 'Headers & Body'}</span></div>
-    <div className="li-specimen"><span>A</span><span>a</span></div>
+    <div className="li-type-labels"><span className="li-weight-chip">{variants.map(([label]) => <i className="li-weight-label" key={label}>{label}</i>)}</span><span>{mono ? 'Supporting & Social media' : 'Headers & Body'}</span></div>
+    <div className="li-specimen">{(mono ? variants : variants.slice(0, 1)).map(([label, weight, style = 'normal']) => <span key={label} className="li-specimen-layer" style={{ fontWeight: weight, fontStyle: style }}>Aa</span>)}</div>
     <div className="li-type-caption"><span>{mono ? 'DM Mono - Monospace' : 'Sora sans serif'}</span><span>{mono ? 'Accent typeface' : 'Primary typeface'}</span></div>
   </Artboard>;
 }
 
-function Post({ light = false, second = false, duplicate = false }) {
+function Post({ light = false, index = 0, duplicate = false }) {
   const suffix = light ? '2' : '1';
+  const actions = light
+    ? ['post-ui-heart.svg', 'post-ui-comment.svg', 'post-ui-send.svg', 'post-ui-save.svg'].map(asset)
+    : [`imgHeart2${suffix}`, `imgBeacon1${suffix}`, `imgPaperPlane2${suffix}`, `imgBookmark${suffix}`].map(name => design('306-3135', name));
   return <div className={`li-post${light ? ' li-post-light' : ''}`} aria-hidden={duplicate || undefined}>
-    <div className="li-post-header"><span><img src={asset('hero-symbol.svg')} alt="" /></span><b>Lumis</b><img src={design('306-3135', light ? 'imgFrame1394' : 'imgFrame1393')} alt="" /></div>
-    <img className="li-post-photo" src={design('306-3135', second ? 'imgFrame1387' : 'imgFrame1386', 'png')} alt="Lumis skin education campaign" loading="lazy" />
-    <div className="li-post-footer">{[`imgHeart2${suffix}`, `imgBeacon1${suffix}`, `imgPaperPlane2${suffix}`, `imgBookmark${suffix}`].map(name => <img src={design('306-3135', name)} alt="" key={name} />)}</div>
+    <div className="li-post-header"><span><img src={light ? asset('post-ui-logo.svg') : asset('hero-symbol.svg')} alt="" /></span><b>Lumis</b><img src={light ? asset('post-ui-menu.svg') : design('306-3135', 'imgFrame1393')} alt="" /></div>
+    <img className="li-post-photo" src={light ? asset(`post-${index + 1}.webp`) : design('306-3135', 'imgFrame1386', 'png')} alt="Lumis skin education campaign" loading="eager" />
+    <div className="li-post-footer">{actions.map(src => <img src={src} alt="" key={src} />)}</div>
   </div>;
 }
 
@@ -256,11 +279,8 @@ function SocialRail() {
   const ref = useRef(null);
   useVisibleLoop(ref, pullPostRail);
   return <Artboard width={555} height={700} className="li-amber" motionRef={ref}>
-    <div className="li-post-track">
-      <Post light />
-      <Post light second />
-      <Post light duplicate />
-      <Post light second duplicate />
+    <div className="li-post-track" data-count="8">
+      {Array.from({ length: 16 }, (_, index) => <Post key={index} light index={index % 8} duplicate={index >= 8} />)}
     </div>
   </Artboard>;
 }

@@ -89,7 +89,7 @@ function portraitLoop(root) {
   const timeline = gsap.timeline({ repeat: -1 });
   // Preloaded, simultaneous cuts: no transforms, fades, or empty frames.
   frames.forEach((frame, i) => {
-    const at = (i + 1) * 1.25;
+    const at = (i + 1) * 1.05;
     timeline.set(frame, { visibility: 'hidden' }, at)
       .set(frames[(i + 1) % frames.length], { visibility: 'visible' }, at);
   });

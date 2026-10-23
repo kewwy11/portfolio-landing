@@ -4,14 +4,13 @@ import React from 'react';
 
 import './lumis-figma-artwork.css';
 
+function TraitSlider({ width }) {
+  return <span className="lv-trait-track"><span className="lv-trait-fill" data-target={width} style={{ width }} /></span>;
+}
+
 export function LogoAnatomyArtwork() { return <div className="lf-art"><div className="lf-0" data-node-id="280:1561">
       <div className="lf-1" data-node-id="280:1564" data-name="Group">
         <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-280-1561-imgGroup.svg`} />
-      </div>
-      <div className="lf-symbol-guide lf-drawing-vector" data-node-id="280:1566" aria-hidden="true">
-        <svg viewBox="0 0 232.162 199" preserveAspectRatio="none">
-          <use href={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-280-1561-imgGroup.svg#Vector_2`} fill="none" stroke="white" strokeWidth="1" strokeDasharray="1.6 2.4" />
-        </svg>
       </div>
       <div className="lf-3" data-node-id="282:1713">
         <img alt="" className="lf-2" height="40" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-280-1561-imgEllipse2.png`} width="40" />
@@ -74,7 +73,7 @@ export function VoiceTraitsArtwork() { return <div className="lf-art"><div class
             <div className="lf-23" data-node-id="312:4222">
               <p className="lf-24" data-node-id="312:4215">{`Mass `}</p>
               <div className="lf-25" data-node-id="312:4221">
-                <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgGroup41.svg`} />
+                <TraitSlider width={181} />
               </div>
               <p className="lf-26" data-node-id="312:4216">
                 Elite
@@ -85,7 +84,7 @@ export function VoiceTraitsArtwork() { return <div className="lf-art"><div class
                 Playful
               </p>
               <div className="lf-25" data-node-id="312:4308">
-                <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgGroup42.svg`} />
+                <TraitSlider width={156} />
               </div>
               <p className="lf-26" data-node-id="312:4312">
                 Serious
@@ -96,7 +95,7 @@ export function VoiceTraitsArtwork() { return <div className="lf-art"><div class
                 Authority
               </p>
               <div className="lf-25" data-node-id="312:4315">
-                <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgGroup43.svg`} />
+                <TraitSlider width={149} />
               </div>
               <p className="lf-26" data-node-id="312:4319">
                 Friend
@@ -107,7 +106,7 @@ export function VoiceTraitsArtwork() { return <div className="lf-art"><div class
                 Classic
               </p>
               <div className="lf-25" data-node-id="312:4322">
-                <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgGroup41.svg`} />
+                <TraitSlider width={181} />
               </div>
               <p className="lf-26" data-node-id="312:4326">
                 Innovative
@@ -118,7 +117,7 @@ export function VoiceTraitsArtwork() { return <div className="lf-art"><div class
                 Traditional
               </p>
               <div className="lf-25" data-node-id="312:4329">
-                <img alt="" className="lf-2" src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-873-409-imgGroup44.svg`} />
+                <TraitSlider width={197} />
               </div>
               <p className="lf-26" data-node-id="312:4333">
                 Rebel

@@ -14,7 +14,7 @@
 .lf-6{position:absolute;height:35.5px;left:362.5px;top:297px;width:83.5px}
 .lf-7{position:absolute;inset:0 -0.6% -1.41% 0}
 .lf-8{display:block;max-width:none;width:100%;height:100%}
-.lf-9{position:absolute;height:62.5px;left:309px;top:449.5px;width:0}
+.lf-9{position:absolute;height:62.5px;left:308.5px;top:449.5px;width:1px}
 .lf-10{position:absolute;inset:0 -0.5px}
 .lf-11{position:absolute;height:58.5px;left:140px;top:329.5px;width:49.5px}
 .lf-12{position:absolute;inset:-0.85% 0 0 -1.01%}
@@ -23,7 +23,9 @@
 .lf-15{position:absolute;background-color:#fff;align-content:stretch;display:flex;align-items:center;justify-content:center;left:calc(50% - 137px);padding:10px;border-radius:5px;top:380px;transform:translate(-50%,0)}
 .lf-16{position:absolute;background-color:#fff;align-content:stretch;display:flex;align-items:center;justify-content:center;left:calc(50% + 32px);padding:10px;border-radius:5px;top:506px;transform:translate(-50%,0)}
 .lf-17{position:absolute;background-color:#fff;align-content:stretch;display:flex;align-items:center;justify-content:center;left:calc(50% + 169px);padding:10px;border-radius:5px;top:271px;transform:translate(-50%,0)}
-.lf-18{position:absolute;height:99px;left:309px;top:191px;width:0}
+.lf-18{position:absolute;height:99px;left:309px;top:191px;width:1px}
+.lf-9 .lf-10,.lf-18 .lf-10{inset:0}
+.lf-13,.lf-15,.lf-16,.lf-17{overflow:hidden}
 .lf-19{background-color:#eff6ff;align-content:stretch;display:flex;flex-direction:column;gap:16px;align-items:flex-start;justify-content:center;padding-bottom:48px;padding-top:32px;padding-left:32px;padding-right:32px;position:relative;flex-shrink:0;width:555px}
 .lf-20{border-width:1px;border-color:#1d4ed8;border-style:solid;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:16px;padding-right:16px;padding-top:12px;padding-bottom:12px;position:relative;border-radius:50px;flex-shrink:0}
 .lf-21{text-box-edge:cap alphabetic;text-box-trim:trim-both;word-break:break-word;font-family:"Lumis Brand Sora";font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#1d4ed8;font-size:14px;text-wrap:balance;white-space:nowrap}
