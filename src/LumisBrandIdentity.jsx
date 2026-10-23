@@ -83,6 +83,7 @@ function logoConstruction(root) {
 function typefaceCycle(root) {
   const glyph = root.querySelector('.li-specimen-layer');
   const label = root.querySelector('.li-weight-label');
+  const chip = label.parentElement;
   const mono = root.classList.contains('li-type-mono');
   const variants = mono
     ? [
@@ -106,6 +107,9 @@ function typefaceCycle(root) {
   const route = [...variants.map((_, index) => index), ...variants.slice(1, -1).map((_, index) => variants.length - 2 - index)];
   const state = { position: 0 };
   let visibleLabel = 0;
+  const measure = document.createElement('canvas').getContext('2d');
+  const labelStyle = getComputedStyle(label);
+  measure.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
   const render = () => {
     const segment = Math.floor(state.position) % route.length;
     const from = route[segment];
@@ -123,6 +127,7 @@ function typefaceCycle(root) {
     if (nextLabel !== visibleLabel) {
       visibleLabel = nextLabel;
       label.textContent = variants[nextLabel].name;
+      gsap.to(chip, { width: Math.ceil(measure.measureText(label.textContent).width) + 34, duration: 0.32, ease: 'sine.inOut', overwrite: true });
       gsap.fromTo(label, { y: 7 }, { y: 0, duration: 0.32, ease: 'power2.out', overwrite: true });
     }
   };

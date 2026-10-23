@@ -51,7 +51,7 @@ function VoiceMessage() {
       const moving = cards.filter(card => card !== outgoing);
       const target = index => positions[(cards.indexOf(moving[index]) + step + 1) % 3];
       timeline.to(copy[(2 - step + 3) % 3], { autoAlpha: 0, duration: 0.2 }, at)
-        .to(outgoing, { x: 63, y: 11, scale: 0.91, duration: 0.52, ease: 'sine.inOut' }, at)
+        .to(outgoing, { x: 100, y: -5, scale: 0.87, duration: 0.52, ease: 'sine.inOut' }, at)
         .to(moving, {
           x: index => target(index).x,
           y: index => target(index).y,
@@ -93,7 +93,7 @@ export function LumisVisuals() {
     gsap.set(labels, { autoAlpha: 0, y: 12, clipPath: 'inset(100% 0 0 0)' });
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
-      gsap.to(labels, { autoAlpha: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 0.7, stagger: 0.065, ease: 'sine.out' });
+      gsap.to(labels, { autoAlpha: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 0.58, stagger: 0.03, ease: 'sine.out' });
       observer.disconnect();
     }, { threshold: 0.22 });
     observer.observe(root);

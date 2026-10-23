@@ -9,7 +9,7 @@
 .lv-voice [data-node-id="314:112"] > div { background-image:linear-gradient(145deg,#c8e0fc 0%,#1d6bd8 54%,#5a73e9 100%) !important; }
 .lv-voice [data-node-id$="314:126"] { font-style:italic; font-synthesis:style; }
 .lv-trait-track { position:absolute; left:0; top:2px; display:block; width:280px; height:35px; background:#eceef2; }
-.lv-trait-fill { position:absolute; left:0; top:0; bottom:0; display:block; background:#1d4ed8; }
+.lv-trait-fill { position:absolute; left:0; top:0; bottom:0; display:block; background:#1d4ed8; will-change:transform; }
 .lv-trait-fill::after { content:""; position:absolute; top:-1px; right:-1.5px; width:3px; height:37px; border-radius:3px; background:#1d4ed8; }
 .lv-message .lf-29 { display:block; width:427px; height:155px; }
 .lv-message .lf-30,.lv-message .lf-35,.lv-message .lf-40 { position:absolute; top:0; left:0; margin:0; width:427px; min-height:116px; padding:24px 16px; gap:16px; transform-origin:0 0; will-change:transform; }
