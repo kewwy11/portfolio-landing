@@ -89,6 +89,7 @@ function SkinSequence() {
   useVisibleImageSequence(ref);
   return <Artboard width={555.5} height={780} motionRef={ref}>
     <div className="li-consultation-slides">{Array.from({length:5}, (_, i) => <img key={i} className={i === 0 ? 'is-active' : ''} src={`${import.meta.env.BASE_URL}assets/lumis-brand/skin-sequence-${i}.png`} alt="Skin detail" />)}</div>
+    <img src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgBpattern2.svg`} alt="" style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none"}} />
   </Artboard>;
 }
 function AccuracyMotion() {
