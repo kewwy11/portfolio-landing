@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
-import { Artboard } from './LumisBrandIdentity';
+import { Artboard, useVisibleImageSequence } from './LumisBrandIdentity';
 import { VoiceTraitsArtwork, VoiceMessageArtwork, PortraitOneArtwork, PortraitTwoArtwork, PortraitThreeArtwork, CareMenuArtwork, ConsultationArtwork, SkinPatternArtwork, AccuracyArtwork } from './LumisFigmaArtwork';
 import './lumis-brand-voice-visuals.css';
 
@@ -51,7 +51,7 @@ function VoiceMessage() {
       const moving = cards.filter(card => card !== outgoing);
       const target = index => positions[(cards.indexOf(moving[index]) + step + 1) % 3];
       timeline.to(copy[(2 - step + 3) % 3], { autoAlpha: 0, duration: 0.2 }, at)
-        .to(outgoing, { x: 100, y: -5, scale: 0.87, duration: 0.52, ease: 'sine.inOut' }, at)
+        .to(outgoing, { x: 34, y: -120, scale: 0.87, duration: 0.52, ease: 'sine.inOut' }, at)
         .to(moving, {
           x: index => target(index).x,
           y: index => target(index).y,
@@ -84,16 +84,42 @@ export function LumisVoice() {
   </section>;
 }
 
+function SkinSequence() {
+  const ref = useRef(null);
+  useVisibleImageSequence(ref);
+  return <Artboard width={555.5} height={780} motionRef={ref}>
+    <div className="li-consultation-slides">{Array.from({length:5}, (_, i) => <img key={i} className={i === 0 ? 'is-active' : ''} src={`${import.meta.env.BASE_URL}assets/lumis-brand/skin-sequence-${i}.png`} alt="Skin detail" />)}</div>
+  </Artboard>;
+}
+function AccuracyMotion() {
+  const ref = useRef(null);
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const rows = [...ref.current.querySelectorAll('.lf-91')];
+    const active = rows.slice(0, -1).flatMap(row => [...row.querySelectorAll('img')]);
+    const inactive = rows.at(-1).querySelector('img').src;
+    active.forEach(img => { img.dataset.activeSrc = img.src; img.src = inactive; });
+    const timeline = gsap.timeline({paused:true});
+    rows.slice(0,-1).forEach((row,i) => timeline.call(() => {
+      row.querySelectorAll('img').forEach(img => { img.src = img.dataset.activeSrc; });
+    }, [], .3 + i * .35));
+    const observer = new IntersectionObserver(([entry]) => { if(entry.isIntersecting) { timeline.play(); observer.disconnect(); } }, {threshold:.25});
+    observer.observe(ref.current);
+    return () => { observer.disconnect(); timeline.kill(); active.forEach(img => { img.src = img.dataset.activeSrc; }); };
+  }, []);
+  return <Artboard width={555.5} height={780} motionRef={ref}><AccuracyArtwork /></Artboard>;
+}
+
 export function LumisVisuals() {
   const portraitsRef = useRef(null);
   useEffect(() => {
     const root = portraitsRef.current;
     const labels = [...root.querySelectorAll('.lv-diagnostic-label')];
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-    gsap.set(labels, { autoAlpha: 0, y: 12, clipPath: 'inset(100% 0 0 0)' });
+    gsap.set(labels, { autoAlpha: 0 });
     const observer = new IntersectionObserver(([entry]) => {
       if (!entry.isIntersecting) return;
-      gsap.to(labels, { autoAlpha: 1, y: 0, clipPath: 'inset(0% 0 0 0)', duration: 0.58, stagger: 0.03, ease: 'sine.out' });
+      gsap.to(labels, { autoAlpha: 1, duration: 0.58, stagger: 0.03, ease: 'sine.out' });
       observer.disconnect();
     }, { threshold: 0.22 });
     observer.observe(root);
@@ -112,8 +138,8 @@ export function LumisVisuals() {
         <Artboard width={555.5} height={780}><ConsultationArtwork /></Artboard>
       </div>
       <div className="lv-pair">
-        <Artboard width={555.5} height={780}><SkinPatternArtwork /></Artboard>
-        <Artboard width={555.5} height={780}><AccuracyArtwork /></Artboard>
+        <SkinSequence />
+        <AccuracyMotion />
       </div>
     </div>
   </section>;

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 import LumisBrandIdentity from './LumisBrandIdentity';
 import './lumis-brand-sections.css';
 import { LumisVoice, LumisVisuals } from './LumisBrandVoiceVisuals';
@@ -14,7 +15,20 @@ function Intro({ id, title, children }) {
 }
 
 function Application() {
-  return <section id="lumis-brand-application" className="lb-section lb-application" aria-labelledby="lumis-brand-application-title">
+  const ref = useRef(null);
+  useEffect(() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const words = ref.current.querySelectorAll('.lb-app-finale span');
+    const timeline = gsap.timeline({repeat:-1, paused:true});
+    timeline.to(words[0], {left:'66.28%', top:'73.85%', duration:1.4, ease:'power2.inOut'}, 2.6)
+      .to(words[1], {left:'20.59%', top:'20.77%', duration:1.4, ease:'power2.inOut'}, 2.6)
+      .to(words[0], {left:'20.59%', top:'20.77%', duration:1.4, ease:'power2.inOut'}, 6.6)
+      .to(words[1], {left:'66.28%', top:'73.85%', duration:1.4, ease:'power2.inOut'}, 6.6);
+    const observer = new IntersectionObserver(([entry]) => timeline.paused(!entry.isIntersecting), {threshold:.15});
+    observer.observe(ref.current.querySelector('.lb-app-finale'));
+    return () => { observer.disconnect(); timeline.kill(); };
+  }, []);
+  return <section ref={ref} id="lumis-brand-application" className="lb-section lb-application" aria-labelledby="lumis-brand-application-title">
     <Intro id="lumis-brand-application-title" title="Application"><p>We showed how Lumis could exist in the real world through different brand applications. From billboards that communicated how we wanted people to perceive the brand, to logos applied across merchandise, doctor uniforms, and business cards.</p></Intro>
     <div className="lb-application-gallery">
       <figure className="lb-app-wide"><img src={asset('application-billboard.png')} alt="Lumis billboard in a city setting" loading="lazy" /></figure>

@@ -67,9 +67,10 @@ function logoConstruction(root) {
 
   const timeline = gsap.timeline();
   lines.forEach((line, index) => timeline.to(line, {
-    clipPath: 'inset(0% 0% 0% 0%)',
+    clipPath: 'inset(-2px -2px -2px -2px)',
     duration: 0.78,
     ease: 'power2.inOut',
+    onComplete: () => gsap.set(line, { clearProps: 'clipPath' }),
   }, index * 0.08));
   timeline.to(points, { autoAlpha: 1, scale: 1, duration: 0.28, stagger: 0.06, ease: 'power2.out' }, 0.88);
   labels.forEach((label, index) => {
@@ -99,40 +100,31 @@ function typefaceCycle(root) {
       { name: 'Extra light', weight: 200 },
       { name: 'Light', weight: 300 },
       { name: 'Regular', weight: 400 },
+      { name: 'Medium', weight: 500 },
       { name: 'Semi-bold', weight: 600 },
       { name: 'Bold', weight: 700 },
       { name: 'Extra Bold', weight: 800 },
     ];
-  // Reverse through the weights so the last frame flows into the first without a reset.
-  const route = [...variants.map((_, index) => index), ...variants.slice(1, -1).map((_, index) => variants.length - 2 - index)];
-  const state = { position: 0 };
-  let visibleLabel = 0;
-  const measure = document.createElement('canvas').getContext('2d');
-  const labelStyle = getComputedStyle(label);
-  measure.font = `${labelStyle.fontWeight} ${labelStyle.fontSize} ${labelStyle.fontFamily}`;
-  const render = () => {
-    const segment = Math.floor(state.position) % route.length;
-    const from = route[segment];
-    const to = route[(segment + 1) % route.length];
-    const fraction = state.position - Math.floor(state.position);
-    const blend = (1 - Math.cos(Math.PI * fraction)) / 2;
-    const interpolate = key => variants[from][key] + (variants[to][key] - variants[from][key]) * blend;
-    if (mono) {
-      glyph.style.webkitTextStrokeWidth = `${interpolate('stroke')}px`;
-      glyph.style.transform = `skewX(${interpolate('skew')}deg)`;
-    } else {
-      glyph.style.fontWeight = `${interpolate('weight')}`;
-    }
-    const nextLabel = blend < 0.5 ? from : to;
-    if (nextLabel !== visibleLabel) {
-      visibleLabel = nextLabel;
-      label.textContent = variants[nextLabel].name;
-      gsap.to(chip, { width: Math.ceil(measure.measureText(label.textContent).width) + 34, duration: 0.32, ease: 'sine.inOut', overwrite: true });
-      gsap.fromTo(label, { y: 7 }, { y: 0, duration: 0.32, ease: 'power2.out', overwrite: true });
-    }
-  };
-  render();
-  return gsap.to(state, { position: route.length, duration: route.length * 1.3, ease: 'none', repeat: -1, onUpdate: render });
+  const nextLabel = label.cloneNode(true);
+  nextLabel.classList.add('li-weight-next');
+  nextLabel.setAttribute('aria-hidden', 'true');
+  chip.appendChild(nextLabel);
+  const timeline = gsap.timeline({ repeat: -1 });
+  variants.forEach((variant, index) => {
+    const next = variants[(index + 1) % variants.length];
+    const at = index * 1.8;
+    timeline.call(() => { label.textContent = variant.name; nextLabel.textContent = next.name; }, [], at)
+      .set(label, { yPercent: 0 }, at).set(nextLabel, { yPercent: 100 }, at);
+    const start = at + 0.65;
+    timeline.to(label, { yPercent: -100, duration: 1.15, ease: 'sine.inOut' }, start)
+      .to(nextLabel, { yPercent: 0, duration: 1.15, ease: 'sine.inOut' }, start)
+      .to(glyph, mono
+        ? { webkitTextStrokeWidth: next.stroke, skewX: next.skew, duration: 1.15, ease: 'sine.inOut' }
+        : { fontWeight: next.weight, duration: 1.15, ease: 'sine.inOut' }, start);
+  });
+  const originalKill = timeline.kill.bind(timeline);
+  timeline.kill = () => { nextLabel.remove(); originalKill(); };
+  return timeline;
 }
 
 function pullPostRail(root) {
@@ -153,7 +145,7 @@ function pullPostRail(root) {
   return timeline;
 }
 
-function useVisibleImageSequence(ref, interval = 1050) {
+export function useVisibleImageSequence(ref, interval = 1050) {
   useEffect(() => {
     const root = ref.current;
     const images = [...root.querySelectorAll('.li-consultation-slides img')];
@@ -264,7 +256,7 @@ function Typeface({ mono = false }) {
   const ref = useRef(null);
   useVisibleLoop(ref, typefaceCycle);
   return <Artboard width={559} height={730} motionRef={ref} className={mono ? 'li-type li-type-mono' : 'li-type li-type-sora'}>
-    <div className="li-type-labels"><span className="li-weight-chip"><i className="li-weight-label">{mono ? 'Light' : 'Thin'}</i></span><span>{mono ? 'Supporting & Social media' : 'Headers & Body'}</span></div>
+    <div className="li-type-labels"><span className="li-weight-chip"><span className="li-weight-window"><i className="li-weight-label">{mono ? 'Light' : 'Thin'}</i></span></span><span>{mono ? 'Supporting & Social media' : 'Headers & Body'}</span></div>
     <div className="li-specimen"><span className="li-specimen-layer" style={{ fontWeight: mono ? 300 : 100 }}>Aa</span></div>
     <div className="li-type-caption"><span>{mono ? 'DM Mono - Monospace' : 'Sora sans serif'}</span><span>{mono ? 'Accent typeface' : 'Primary typeface'}</span></div>
   </Artboard>;
