@@ -58,7 +58,9 @@ function logoConstruction(root) {
   const points = [...root.querySelectorAll('.lf-3, .lf-4, .lf-5')];
   const labels = [...root.querySelectorAll('.lf-13, .lf-15, .lf-16, .lf-17')];
   const directions = [1, -1, -1, 1];
-  lines.forEach((line, index) => gsap.set(line, { clipPath: masks[index] }));
+  lines.forEach((line, index) => gsap.set(line, index === 1 || index === 3
+    ? { scaleY: 0, transformOrigin: index === 1 ? 'top center' : 'bottom center' }
+    : { clipPath: masks[index] }));
   gsap.set(points, { autoAlpha: 0, scale: 0.78, transformOrigin: '50% 50%' });
   labels.forEach((label, index) => {
     gsap.set(label, { clipPath: directions[index] > 0 ? 'inset(100% 0 0 0)' : 'inset(0 0 100% 0)' });
@@ -67,7 +69,7 @@ function logoConstruction(root) {
 
   const timeline = gsap.timeline();
   lines.forEach((line, index) => timeline.to(line, {
-    clipPath: 'inset(-2px -2px -2px -2px)',
+    ...(index === 1 || index === 3 ? { scaleY: 1 } : { clipPath: 'inset(-2px -2px -2px -2px)' }),
     duration: 0.78,
     ease: 'power2.inOut',
     onComplete: () => gsap.set(line, { clearProps: 'clipPath' }),
