@@ -64,7 +64,7 @@ function logoConstruction(root) {
   gsap.set(points, { autoAlpha: 0, scale: 0.78, transformOrigin: '50% 50%' });
   labels.forEach((label, index) => {
     gsap.set(label, { clipPath: directions[index] > 0 ? 'inset(100% 0 0 0)' : 'inset(0 0 100% 0)' });
-    gsap.set(label.querySelector('p'), { yPercent: directions[index] * 130 });
+    gsap.set(label, { y: directions[index] * 18, autoAlpha: 0 });
   });
 
   const timeline = gsap.timeline();
@@ -78,7 +78,7 @@ function logoConstruction(root) {
   labels.forEach((label, index) => {
     const at = 1.18 + index * 0.1;
     timeline.to(label, { clipPath: 'inset(0 0 0 0)', duration: 0.52, ease: 'power3.out' }, at)
-      .to(label.querySelector('p'), { yPercent: 0, duration: 0.52, ease: 'power3.out' }, at);
+      .to(label, { y: 0, autoAlpha: 1, duration: 0.65, ease: 'power2.out' }, at);
   });
   return timeline;
 }
@@ -94,7 +94,7 @@ function typefaceCycle(root) {
       { name: 'Regular', stroke: 2.2, skew: 0 },
       { name: 'Medium', stroke: 4.2, skew: 0 },
       { name: 'Light Italic', stroke: 0, skew: -10 },
-      { name: 'Italic', stroke: 2.2, skew: -10 },
+      { name: 'Regular Italic', stroke: 2.2, skew: -10 },
       { name: 'Medium Italic', stroke: 4.2, skew: -10 },
     ]
     : [
@@ -114,15 +114,15 @@ function typefaceCycle(root) {
   const timeline = gsap.timeline({ repeat: -1 });
   variants.forEach((variant, index) => {
     const next = variants[(index + 1) % variants.length];
-    const at = index * 1.8;
+    const at = index * 1.45;
     timeline.call(() => { label.textContent = variant.name; nextLabel.textContent = next.name; }, [], at)
       .set(label, { yPercent: 0 }, at).set(nextLabel, { yPercent: 100 }, at);
-    const start = at + 0.65;
-    timeline.to(label, { yPercent: -100, duration: 1.15, ease: 'sine.inOut' }, start)
-      .to(nextLabel, { yPercent: 0, duration: 1.15, ease: 'sine.inOut' }, start)
+    const start = at + 0.5;
+    timeline.to(label, { yPercent: -100, duration: 0.95, ease: 'sine.inOut' }, start)
+      .to(nextLabel, { yPercent: 0, duration: 0.95, ease: 'sine.inOut' }, start)
       .to(glyph, mono
-        ? { webkitTextStrokeWidth: next.stroke, skewX: next.skew, duration: 1.15, ease: 'sine.inOut' }
-        : { fontWeight: next.weight, duration: 1.15, ease: 'sine.inOut' }, start);
+        ? { webkitTextStrokeWidth: next.stroke, skewX: next.skew, duration: 0.95, ease: 'sine.inOut' }
+        : { fontWeight: next.weight, duration: 0.95, ease: 'sine.inOut' }, start);
   });
   const originalKill = timeline.kill.bind(timeline);
   timeline.kill = () => { nextLabel.remove(); originalKill(); };
@@ -208,7 +208,22 @@ function LogoStage() {
 
 function Anatomy() {
   const ref = useRef(null);
-  useVisibleLoop(ref, logoConstruction);
+  useEffect(() => {
+    const root = ref.current;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const context = gsap.context(() => {}, root);
+    let timeline;
+    context.add(() => { timeline = logoConstruction(root).pause(0); });
+    let entered = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry.intersectionRatio >= .45 && !entered) {
+        entered = true;
+        timeline.restart();
+      } else if (!entry.isIntersecting) { entered = false; }
+    }, {threshold:[0,.45]});
+    observer.observe(root);
+    return () => { observer.disconnect(); context.revert(); };
+  }, []);
   return <Artboard width={555} height={700} motionRef={ref}><LogoAnatomyArtwork /></Artboard>;
 }
 

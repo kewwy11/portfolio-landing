@@ -229,3 +229,7 @@
 .lf-219{position:absolute;border-width:0.346px;border-style:solid;border-color:#fff;align-content:stretch;display:flex;gap:16.626px;height:65.813px;align-items:center;left:-68.58px;padding-left:86.596px;padding-right:16.626px;padding-top:16.626px;padding-bottom:16.626px;border-radius:34.638px;top:508.14px;width:324.214px}
 .lf-220{position:absolute;left:293.04px;width:5.542px;height:5.542px;top:62.7px}
 .lf-221{word-break:break-word;position:absolute;font-family:"Lumis Brand Sora";font-weight:400;font-weight:400;line-height:normal;left:66.85px;font-size:8.313px;color:#fff;top:486.32px;text-transform:uppercase;white-space:nowrap}
+
+/* Give the narrow dashed connectors a full pixel at scaled browser sizes. */
+.lf-9,.lf-18 { width:2px; background:repeating-linear-gradient(to bottom,white 0 2px,transparent 2px 6px); }
+.lf-9 > .lf-10,.lf-18 > .lf-10 { visibility:hidden; }

@@ -40,7 +40,7 @@ function VoiceMessage() {
     ];
     cards.forEach((card, index) => {
       gsap.set(card, { ...positions[index], zIndex: index + 1 });
-      gsap.set(copy[index], { autoAlpha: index === 2 ? 1 : 0 });
+      gsap.set(copy[index], { autoAlpha: 1 });
     });
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     const timeline = gsap.timeline({ repeat: -1, paused: true });
@@ -50,8 +50,7 @@ function VoiceMessage() {
       const incoming = cards[(1 - step + 3) % 3];
       const moving = cards.filter(card => card !== outgoing);
       const target = index => positions[(cards.indexOf(moving[index]) + step + 1) % 3];
-      timeline.to(copy[(2 - step + 3) % 3], { autoAlpha: 0, duration: 0.2 }, at)
-        .to(outgoing, { x: 34, y: -120, scale: 0.87, duration: 0.52, ease: 'sine.inOut' }, at)
+      timeline.to(outgoing, { x: 34, y: -120, scale: 0.87, duration: 0.52, ease: 'sine.inOut' }, at)
         .to(moving, {
           x: index => target(index).x,
           y: index => target(index).y,
@@ -61,8 +60,7 @@ function VoiceMessage() {
           ease: 'sine.inOut',
         }, at)
         .set(cards, { zIndex: index => ((index + step + 1) % 3) + 1 }, at + 0.52)
-        .to(outgoing, { ...positions[0], duration: 0.52, ease: 'sine.inOut' }, at + 0.52)
-        .to(copy[cards.indexOf(incoming)], { autoAlpha: 1, duration: 0.35, ease: 'sine.out' }, at + 0.58);
+        .to(outgoing, { ...positions[0], duration: 0.52, ease: 'sine.inOut' }, at + 0.52);
     }
     let visible = false;
     const sync = () => timeline.paused(!visible || document.hidden);
@@ -88,8 +86,8 @@ function SkinSequence() {
   const ref = useRef(null);
   useVisibleImageSequence(ref);
   return <Artboard width={555.5} height={780} motionRef={ref}>
-    <div className="li-consultation-slides">{Array.from({length:5}, (_, i) => <img key={i} className={i === 0 ? 'is-active' : ''} src={`${import.meta.env.BASE_URL}assets/lumis-brand/skin-sequence-${i}.png`} alt="Skin detail" />)}</div>
-    <img src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgBpattern2.svg`} alt="" style={{position:"absolute",inset:0,width:"100%",height:"100%",pointerEvents:"none"}} />
+    <div className="li-consultation-slides">{Array.from({length:5}, (_, i) => <img key={i} className={i === 0 ? 'is-active' : ''} src={`${import.meta.env.BASE_URL}assets/lumis-brand/skin-sequence-${i}.png`} alt="Skin detail" style={{inset:"auto",left:"50%",top:`calc(50% + ${[-9,-9,.5,29.5,-9][i]}px)`,width:[915,915,781,838,915][i],height:[914,914,781,839,914][i],maxWidth:"none",transform:"translate(-50%,-50%)"}} />)}</div>
+    <img src={`${import.meta.env.BASE_URL}assets/lumis-brand/revised-874-413-imgBpattern2.svg`} alt="" style={{position:"absolute",left:-342,top:-202,width:1348,height:1348,maxWidth:"none",pointerEvents:"none"}} />
   </Artboard>;
 }
 function AccuracyMotion() {
@@ -101,11 +99,9 @@ function AccuracyMotion() {
     const inactive = rows.at(-1).querySelector('img').src;
     active.forEach(img => { img.dataset.activeSrc = img.src; img.src = inactive; });
     const timeline = gsap.timeline({paused:true});
-    rows.slice(0,-1).forEach((row,i) => timeline.call(() => {
-      row.querySelectorAll('img').forEach(img => { img.src = img.dataset.activeSrc; });
-    }, [], .3 + i * .35));
-    const observer = new IntersectionObserver(([entry]) => { if(entry.isIntersecting) { timeline.play(); observer.disconnect(); } }, {threshold:.25});
-    observer.observe(ref.current);
+    active.forEach((img,i) => timeline.call(() => { img.src = img.dataset.activeSrc; }, [], .15 + i * .065));
+    const observer = new IntersectionObserver(([entry]) => { if(entry.intersectionRatio >= .6) { timeline.play(); observer.disconnect(); } }, {threshold:[0,.6]});
+    observer.observe(ref.current.querySelector('.lf-90'));
     return () => { observer.disconnect(); timeline.kill(); active.forEach(img => { img.src = img.dataset.activeSrc; }); };
   }, []);
   return <Artboard width={555.5} height={780} motionRef={ref}><AccuracyArtwork /></Artboard>;
@@ -118,12 +114,16 @@ export function LumisVisuals() {
     const labels = [...root.querySelectorAll('.lv-diagnostic-label')];
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
     gsap.set(labels, { autoAlpha: 0 });
-    const observer = new IntersectionObserver(([entry]) => {
-      if (!entry.isIntersecting) return;
-      gsap.to(labels, { autoAlpha: 1, duration: 0.58, stagger: 0.03, ease: 'sine.out' });
-      observer.disconnect();
-    }, { threshold: 0.22 });
-    observer.observe(root);
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.intersectionRatio >= .8) {
+          gsap.to(entry.target, { autoAlpha:1, duration:.7, ease:'sine.out', overwrite:true });
+        } else if (!entry.isIntersecting) {
+          gsap.set(entry.target, { autoAlpha:0 });
+        }
+      });
+    }, {threshold:[0,.8], rootMargin:'0px 0px -8% 0px'});
+    labels.forEach(label => observer.observe(label));
     return () => { observer.disconnect(); gsap.killTweensOf(labels); };
   }, []);
   return <section id="lumis-brand-visuals" className="lb-section lv-visuals" aria-labelledby="lumis-brand-visuals-title">
