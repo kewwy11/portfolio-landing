@@ -148,7 +148,7 @@
 .lb-visual-stat small { display: flex; justify-content: space-between; gap: 12px; margin-top: 20px; font-size: 10px; }
 .lb-application-gallery { display: flex; flex-direction: column; gap: 16px; }
 .lb-application-gallery figure { margin: 0; }
-.lb-app-wide { width: 100%; aspect-ratio: 1127 / 780; overflow: hidden; }
+.lb-app-wide { position:relative; width: 100%; aspect-ratio: 1127 / 780; overflow: hidden; }
 .lb-app-wide img, .lb-app-pair figure > img:first-child { width: 100%; height: 100%; object-fit: cover; }
 .lb-app-pair > * { min-width: 0; height: min(69.2vw, 780px); }
 .lb-app-stack { display: grid; grid-template-rows: repeat(2, 1fr); gap: 16px; }
@@ -159,14 +159,22 @@
 .lb-app-cards .lb-card-front, .lb-app-cards .lb-card-back { position: absolute; width: 63%; height: auto; object-fit: contain; box-shadow: 0 6px 22px rgb(0 0 0 / 16%); }
 .lb-app-cards .lb-card-front { left: 13%; top: 16%; }
 .lb-app-cards .lb-card-back { right: 10%; bottom: 15%; }
-.lb-app-finale { width: 100%; }
-.lb-app-finale > div { position: relative; display: flex; align-items: center; justify-content: center; height: min(34.6vw, 390px); overflow: hidden; }
-.lb-app-finale > div:first-child { gap: 9%; background: #fff8eb; color: #1d4ed8; }
-.lb-app-finale > div:first-child > img { width: 25%; height: 64%; object-fit: cover; }
-.lb-app-finale span { font: italic clamp(14px, 2.5vw, 28px) 'DM Mono', monospace; }
-.lb-app-finale > div:last-child { background: white; }
-.lb-app-finale > div:last-child > img { width: 100%; height: 100%; object-fit: cover; object-position: center 38%; }
-.lb-app-finale > div:last-child > p { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); padding: 20px 24px; background: #fff8eb; color: #1d4ed8; font: 600 clamp(15px, 2.5vw, 28px)/1.3 'Lumis Brand Sora', sans-serif; }
+.lb-app-top, .lb-app-bottom { position:absolute; left:0; width:1127px; height:390px; overflow:hidden; }
+.lb-app-top { top:0; background:#fff8eb; color:#1d4ed8; isolation:isolate; }
+.lb-app-label { position:absolute; z-index:1; white-space:nowrap; font:italic 28px/normal 'DM Mono',monospace; letter-spacing:-.56px; text-box-trim:trim-both; text-box-edge:cap alphabetic; will-change:transform; }
+.lb-app-label:first-child { left:232px; top:81px; }
+.lb-app-label:last-child { left:747px; top:288px; }
+.lb-app-portrait { position:absolute; z-index:2; left:429px; top:71px; width:268px; height:249px; overflow:hidden; background:#fff8eb; }
+.lb-app-portrait img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; }
+.lb-app-bottom { top:390px; }
+.lb-app-closeup { position:absolute; inset:0; overflow:hidden; }
+.lb-app-closeup img { position:absolute; max-width:none; object-fit:cover; }
+.lb-app-closeup .lb-app-crop-0 { left:0; top:-628px; width:1128px; height:1373px; }
+.lb-app-closeup .lb-app-crop-1 { left:0; top:-411px; width:1127px; height:1373px; }
+.lb-app-closeup .lb-app-crop-2 { left:-14px; top:-508px; width:1156px; height:1407px; }
+.lb-app-copy { box-sizing:border-box; position:absolute; left:429px; top:71px; width:268px; height:249px; padding:24px; display:flex; flex-direction:column; justify-content:center; background:#fff8eb; color:#1d4ed8; font:600 28px/37px 'Lumis Brand Sora',sans-serif; letter-spacing:-.56px; }
+.lb-app-copy > div { width:220px; }
+.lb-app-copy span { display:inline-block; white-space:nowrap; will-change:transform; }
 
 @media (max-width: 760px) {
   .lb-section { gap: 16px; padding-top: 40px; }
@@ -195,12 +203,4 @@
   .lb-app-pair > *, .lb-app-cards > * { height: auto; aspect-ratio: 1 / 1.1; }
   .lb-app-stack { aspect-ratio: auto; height: auto; }
   .lb-app-stack img { aspect-ratio: 1 / .7; }
-  .lb-app-finale > div { height: 200px; }
 }
-
-.lb-app-finale > div { height:auto; aspect-ratio:1127 / 390; container-type:inline-size; }
-.lb-app-finale > div:first-child > img { position:absolute; left:38.1%; top:18.08%; width:23.78%; height:63.85%; }
-.lb-app-finale span { position:absolute; font-size:2.484cqw; letter-spacing:-.0497cqw; }
-.lb-app-finale span:first-child { left:20.59%; top:20.77%; }
-.lb-app-finale span:last-child { left:66.28%; top:73.85%; }
-.lb-app-finale > div:last-child > p { box-sizing:border-box; width:23.78%; height:63.85%; padding:2.13cqw; font-size:2.484cqw; line-height:1.3214; display:flex; align-items:center; }

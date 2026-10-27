@@ -135,12 +135,12 @@ function pullPostRail(root) {
   const count = Number(track.dataset.count);
   const timeline = gsap.timeline({ repeat: -1 });
   for (let index = 0; index < count; index += 1) {
-    timeline.to({}, { duration: 1.5 })
-      .to(track, {
-        x: () => -(index + 1) * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap)),
-        duration: 0.95,
-        ease: 'power3.inOut',
-      });
+    timeline.to(track, {
+      x: () => -(index + 1) * (cards[0].offsetWidth + parseFloat(getComputedStyle(track).gap)),
+      duration: 2.6,
+      // Accelerate into each pull without ever stopping between cards.
+      ease: progress => progress - .14 * Math.sin(2 * Math.PI * progress),
+    });
   }
   // The next group is identical: resetting here preserves the exact visible frame.
   timeline.set(track, { x: 0 });
@@ -286,7 +286,7 @@ function Post({ light = false, index = 0, duplicate = false }) {
     : [`imgHeart2${suffix}`, `imgBeacon1${suffix}`, `imgPaperPlane2${suffix}`, `imgBookmark${suffix}`].map(name => design('306-3135', name));
   return <div className={`li-post${light ? ' li-post-light' : ''}`} aria-hidden={duplicate || undefined}>
     <div className="li-post-header"><span><img src={light ? asset('post-ui-logo.svg') : asset('hero-symbol.svg')} alt="" /></span><b>Lumis</b><img src={light ? asset('post-ui-menu.svg') : design('306-3135', 'imgFrame1393')} alt="" /></div>
-    <img className="li-post-photo" src={light ? asset(`post-${index + 1}.webp`) : design('306-3135', 'imgFrame1386', 'png')} alt="Lumis skin education campaign" loading="eager" />
+    <img className="li-post-photo" src={light ? asset(`post-${index + 1}.webp`) : asset('post-treatment.png')} alt={light ? 'Lumis skin education campaign' : 'Skincare treatment with protective eye shields'} loading="eager" />
     <div className="li-post-footer">{actions.map(src => <img src={src} alt="" key={src} />)}</div>
   </div>;
 }

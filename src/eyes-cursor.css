@@ -1,0 +1,11 @@
+.eyes-cursor { position:fixed; left:0; top:0; width:56px; height:39px; z-index:2147483647; pointer-events:none; visibility:hidden; }
+.eyes-cursor.is-visible { visibility:visible; }
+.eyes-cursor-pair { position:absolute; inset:0; display:flex; justify-content:space-between; opacity:0; transition:opacity 180ms ease-in-out; }
+.eyes-cursor-pair.is-active { opacity:1; }
+.eyes-cursor-pair img { width:27px; height:39px; flex:none; user-select:none; }
+@media (hover:hover) and (pointer:fine) {
+  html.has-eyes-cursor, html.has-eyes-cursor * { cursor:none !important; }
+}
+@media (prefers-reduced-motion:reduce) {
+  .eyes-cursor-pair { transition:none; }
+}
