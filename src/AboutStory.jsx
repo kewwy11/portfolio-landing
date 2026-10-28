@@ -57,6 +57,7 @@ function StoryCopy({ item, innerRef }) {
 }
 
 export default function AboutStory({ ready = true }) {
+  const [mobile, setMobile] = useState(() => matchMedia('(max-width: 760px)').matches);
   const sectionRef = useRef(null);
   const frameRef = useRef(null);
   const trackRef = useRef(null);
@@ -65,6 +66,13 @@ export default function AboutStory({ ready = true }) {
   const [reducedMotion, setReducedMotion] = useState(() => window.matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [layout, setLayout] = useState(() => ({ frameHeight: Math.min(668, window.innerHeight),
     range: 2 * Math.max(window.innerHeight, 500), top: 0, copyHeight: 360, imageHeight: null }));
+
+  useEffect(() => {
+    const query = matchMedia('(max-width: 760px)');
+    const update = () => setMobile(query.matches);
+    query.addEventListener('change', update);
+    return () => query.removeEventListener('change', update);
+  }, []);
 
   useEffect(() => {
     const preference = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -103,11 +111,11 @@ export default function AboutStory({ ready = true }) {
     window.addEventListener('resize', measure);
     document.fonts.ready.then(measure);
     return () => { mounted = false; observer?.disconnect(); window.removeEventListener('resize', measure); };
-  }, [ready]);
+  }, [ready, mobile]);
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section) return;
+    if (!section || mobile) return;
     const nativeAnimation = !reducedMotion && typeof Element.prototype.animate === 'function';
     const timing = { duration: 1000, fill: 'both', easing: 'linear' };
     const textAnimation = nativeAnimation ? trackRef.current.animate([
@@ -238,7 +246,16 @@ export default function AboutStory({ ready = true }) {
       trackRef.current?.style.removeProperty('transform');
       imageRefs.current.slice(1).forEach(image => image?.style.removeProperty('clip-path'));
     };
-  }, [layout, reducedMotion]);
+  }, [layout, reducedMotion, mobile]);
+
+  if (mobile) return <section ref={sectionRef} id="about-story" className="about-story is-mobile" aria-label="My approach to design" data-mode="flow">
+    <div className="story-flow">
+      {story.map(item => <article className="story-flow-stage" key={item.image}>
+        <StoryCopy item={item} />
+        <img src={asset(item.image)} alt={item.alt} width="670" height="588" loading="lazy" />
+      </article>)}
+    </div>
+  </section>;
 
   return <section ref={sectionRef} id="about-story" className="about-story is-pinned"
     aria-label="My approach to design" data-mode="pinned" data-stage="1" data-progress="0" data-transitioning="false"

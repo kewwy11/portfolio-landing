@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import './lumis-brand-identity.css';
+import Media from './Media.jsx';
 import { LogoAnatomyArtwork, StoryArtwork1, StoryArtwork2, StoryArtwork3, StoryArtwork4, StoryArtwork5, StoryArtwork6 } from './LumisFigmaArtwork';
 
 const asset = name => `${import.meta.env.BASE_URL}assets/lumis-brand/${name}`;
@@ -286,7 +287,7 @@ function Post({ light = false, index = 0, duplicate = false }) {
     : [`imgHeart2${suffix}`, `imgBeacon1${suffix}`, `imgPaperPlane2${suffix}`, `imgBookmark${suffix}`].map(name => design('306-3135', name));
   return <div className={`li-post${light ? ' li-post-light' : ''}`} aria-hidden={duplicate || undefined}>
     <div className="li-post-header"><span><img src={light ? asset('post-ui-logo.svg') : asset('hero-symbol.svg')} alt="" /></span><b>Lumis</b><img src={light ? asset('post-ui-menu.svg') : design('306-3135', 'imgFrame1393')} alt="" /></div>
-    <img className="li-post-photo" src={light ? asset(`post-${index + 1}.webp`) : asset('post-treatment.png')} alt={light ? 'Lumis skin education campaign' : 'Skincare treatment with protective eye shields'} loading="eager" />
+    {light ? <img className="li-post-photo" src={asset(`post-${index + 1}.webp`)} alt="Lumis skin education campaign" loading="eager" /> : <Media className="li-post-photo" image="lumis-brand/post-treatment.png" video="lumis-brand/post-treatment.mp4" alt="Skincare treatment with protective eye shields" />}
     <div className="li-post-footer">{actions.map(src => <img src={src} alt="" key={src} />)}</div>
   </div>;
 }

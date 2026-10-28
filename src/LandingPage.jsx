@@ -75,7 +75,7 @@ function Projects() {
 }
 
 function TestimonialCard({ item, index }) {
-  const { ref, revealed } = useRevealOnScroll();
+  const { ref, revealed } = useRevealOnScroll({ repeat:true });
   const avatar = useRef(null);
   const [imageReady, setImageReady] = useState(false);
   useEffect(() => {

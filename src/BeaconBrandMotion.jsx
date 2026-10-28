@@ -40,7 +40,7 @@ export function BeaconLogoShowcase() {
     const circumference = 2 * Math.PI * 9;
     const panel = root.querySelector('.bb-colour-panel');
     const tile = root.querySelector('.bb-logo-tile');
-    const backgrounds = ['#17173d', '#e8e9ff', '#6b6bf7'];
+    const backgrounds = ['#17173d', '#e8e9ff', '#ffaf1d'];
     const tiles = ['#fafafc', '#0b0bd6', '#17173d'];
     const tl = gsap.timeline({ repeat: -1, paused: true });
     tl.set(photos, { opacity: i => i === 0 ? 1 : 0, scale: 1 }, 0)

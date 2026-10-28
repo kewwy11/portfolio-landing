@@ -6,6 +6,11 @@ import { LumisVoice, LumisVisuals } from './LumisBrandVoiceVisuals';
 
 const root = `${import.meta.env.BASE_URL}assets/lumis-brand/`;
 const asset = name => `${root}${name}`;
+const skinMessages = [
+  { top:['For every','skin type'], lines:['Every','skin tone,','every skin','condition','is included.'] },
+  { top:['Care that','sees you'], lines:['Your skin,','your story,','guided by','people who','understand.'] },
+  { top:['Clarity for','every skin'], lines:['Expert care,','clear answers,','and support','for every','skin journey.'] },
+];
 
 function Intro({ id, title, children }) {
   return <div className="lumis-brand-section-intro">
@@ -36,6 +41,7 @@ function ApplicationFinale() {
       const lines = [...root.querySelectorAll('.lb-app-copy span')];
       const portraits = [...root.querySelectorAll('.lb-app-portrait img')];
       const closeups = [...root.querySelectorAll('.lb-app-closeup img')];
+      const messages = [...root.querySelectorAll('[data-skin-message]')];
       const timeline = gsap.timeline({ repeat: -1, paused: true });
       // Three photographs and two horizontal positions meet again after six steps.
       for (let step = 0; step < 6; step++) {
@@ -47,8 +53,8 @@ function ApplicationFinale() {
           .to(lines, { x: (_, line) => right ? 220 - line.offsetWidth : 0, ...timing }, at);
         // Advance exactly one photograph during each complete slide.
         const index = (step + 1) % 3;
-        timeline.set([...portraits, ...closeups], { autoAlpha: 0 }, at + .8)
-          .set([portraits[index], closeups[index]], { autoAlpha: 1 }, at + .8);
+        timeline.set([...portraits, ...closeups, ...messages], { autoAlpha:0 }, at + .8)
+          .set([portraits[index], closeups[index], ...messages.filter(node => Number(node.dataset.skinMessage) === index)], { autoAlpha:1 }, at + .8);
       }
       let visible = false;
       const sync = () => timeline.paused(!ready || !visible || document.hidden);
@@ -65,13 +71,13 @@ function ApplicationFinale() {
   const photos = [0, 1, 2].map(i => asset(`application-skin-${i}.png`));
   return <Artboard width={1127} height={780} motionRef={ref} className="lb-app-finale">
     <div className="lb-app-top">
-      <span className="lb-app-label">For every</span>
+      <span className="lb-app-label">{skinMessages.map((message,i) => <span key={i} className="lb-app-label-variant" data-skin-message={i} style={{opacity:i ? 0 : 1,visibility:i ? 'hidden' : 'visible'}}>{message.top[0]}</span>)}</span>
       <div className="lb-app-portrait">{photos.map((src, i) => <img key={src} src={src} alt="Skin portrait" style={{ visibility: i ? 'hidden' : 'visible', opacity: i ? 0 : 1 }} />)}</div>
-      <span className="lb-app-label">skin type</span>
+      <span className="lb-app-label">{skinMessages.map((message,i) => <span key={i} className="lb-app-label-variant" data-skin-message={i} style={{opacity:i ? 0 : 1,visibility:i ? 'hidden' : 'visible'}}>{message.top[1]}</span>)}</span>
     </div>
     <div className="lb-app-bottom">
       <div className="lb-app-closeup">{photos.map((src, i) => <img key={src} className={`lb-app-crop-${i}`} src={src} alt="Skin texture" style={{ visibility: i ? 'hidden' : 'visible', opacity: i ? 0 : 1 }} />)}</div>
-      <div className="lb-app-copy">{['Every', 'skin tone,', 'every skin', 'condition', 'is included.'].map(line => <div key={line}><span>{line}</span></div>)}</div>
+      <div className="lb-app-copy">{skinMessages.map((message,i) => <div className="lb-app-copy-variant" data-skin-message={i} key={i} style={{opacity:i ? 0 : 1,visibility:i ? 'hidden' : 'visible'}}>{message.lines.map(line => <div key={line}><span>{line}</span></div>)}</div>)}</div>
     </div>
   </Artboard>;
 }

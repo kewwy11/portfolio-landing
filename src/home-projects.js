@@ -15,9 +15,9 @@ export const homeProjects = [
   },
   {
     id: 'piggyvest', name: 'Piggyvest', category: 'UI/UX',
-    image: 'home/project-piggyvest.jpg', hoverImage: 'home/project-piggyvest-hover.jpg', height: 373,
+    image: 'home/project-piggyvest.jpg', hoverImage: 'home/project-piggyvest-hover-updated.webp', height: 421,
     alt: 'Piggyvest mobile finance interface displayed on a phone',
-    hoverAlt: 'Wellness mobile app screens arranged on a light background',
+    hoverAlt: 'Piggyvest app screens on two phones against a dark textured surface',
     tags: ['App', 'Mobile', 'Dashboard'],
   },
   {

@@ -1,0 +1,4 @@
+.tp-scene { position:absolute; inset:0; background:#f8eedd; }
+.tp-frame { position:absolute; left:112px; top:50%; transform:translateY(-50%); }
+.tp-frame:nth-child(2) { visibility:hidden; opacity:0; }
+.lumis-consideration .tp-switch { position:absolute; left:499px; top:189px; width:5.5px; height:65px; }

@@ -128,7 +128,7 @@ export function LumisStrategyMotion({ items }) {
   }, []);
   useEffect(() => {
     if (!visible || !pageVisible || reduced) return;
-    const timer = setTimeout(() => setActive(i => (i + 1) % items.length), 6500);
+    const timer = setTimeout(() => setActive(i => (i + 1) % items.length), 5200);
     return () => clearTimeout(timer);
   }, [active, visible, pageVisible, reduced, items.length]);
   return <div ref={ref} className={`lm-strategy lm-strategy-${active}${reduced ? ' is-reduced' : ''}`} aria-label="Lumis brand strategy">

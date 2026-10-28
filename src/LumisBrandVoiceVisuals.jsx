@@ -15,14 +15,17 @@ function VoiceTraits() {
     const fills = [...root.querySelectorAll('.lv-trait-fill')];
     const media = gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)', () => {
-      gsap.set(fills, { scaleX: 0, transformOrigin: 'left center', force3D: true });
-      const observer = new IntersectionObserver(([entry]) => {
-        if (!entry.isIntersecting) return;
-        gsap.to(fills, { scaleX: 1, duration: 1.65, ease: 'sine.inOut', force3D: true });
-        observer.disconnect();
-      }, { threshold: 0.28 });
+      const timeline = gsap.timeline({ paused:true, repeat:-1 })
+        .fromTo(fills, { scaleX:0, transformOrigin:'left center', force3D:true }, { scaleX:1, duration:1.45, ease:'sine.inOut' })
+        .to({}, { duration:1.6 })
+        .to(fills, { scaleX:0, duration:.85, ease:'sine.inOut' })
+        .to({}, { duration:.2 });
+      let visible = false;
+      const sync = () => timeline.paused(!visible || document.hidden);
+      const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, { threshold:.08 });
       observer.observe(root);
-      return () => { observer.disconnect(); gsap.killTweensOf(fills); };
+      document.addEventListener('visibilitychange', sync);
+      return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync); timeline.kill(); };
     });
     return () => media.revert();
   }, []);
@@ -103,15 +106,19 @@ function AccuracyMotion() {
     const sources = active.map(img => img.src);
     const media = gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)', () => {
-      const reset = () => active.forEach(img => { img.src = inactive; });
+      const reset = () => active.forEach((img,i) => { img.src = i === 0 ? sources[0] : inactive; });
       reset();
       const timeline = gsap.timeline({ paused:true, repeat:-1, repeatDelay:1.6 });
       timeline.call(reset, [], 0);
-      active.forEach((img,i) => timeline.call(() => { img.src = sources[i]; }, [], .15 + i * .065));
+      active.slice(1).forEach((img,i) => timeline.call(() => { img.src = sources[i + 1]; }, [], .03 + (i + 1) * .045));
       let visible = false;
       const sync = () => timeline.paused(!visible || document.hidden);
-      const observer = new IntersectionObserver(([entry]) => { visible = entry.intersectionRatio >= .6; sync(); }, {threshold:[0,.6]});
-      observer.observe(ref.current.querySelector('.lf-90'));
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting && !visible) timeline.restart();
+        visible = entry.isIntersecting;
+        sync();
+      }, {threshold:.05, rootMargin:'0px 0px 40px 0px'});
+      observer.observe(ref.current);
       document.addEventListener('visibilitychange', sync);
       return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync); timeline.kill(); active.forEach((img,i) => { img.src = sources[i]; }); };
     });

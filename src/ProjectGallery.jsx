@@ -33,6 +33,13 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
       <RevealHeading as={page ? 'h1' : 'h2'} id={headingId} ready={ready}>
         {page ? 'My projects' : 'Projects'}
       </RevealHeading>
+      <label className="mobile-project-filter">
+        <span className="visually-hidden">Filter projects</span>
+        <select value={category} onChange={event => selectCategory(event.target.value)} aria-controls={gridId}>
+          {projectCategories.map(label => <option key={label} value={label}>{label}</option>)}
+        </select>
+        <img src={`${import.meta.env.BASE_URL}assets/home/filter-chevron.svg`} alt="" />
+      </label>
       <div className="filters" role="group" aria-label="Filter projects" data-category={category} data-touched={touched}>
         <span className="filter-indicator" aria-hidden="true" />
         {projectCategories.map(label => <button key={label} type="button"

@@ -7,9 +7,10 @@ import BeaconSocialGrid from './BeaconSocialGrid';
 import BeaconApplication from './BeaconApplication';
 import BeaconAboutMotion from './BeaconAboutMotion';
 import { BeaconLogoShowcase, BeaconTypography } from './BeaconBrandMotion';
+import ResponsiveComposition from './ResponsiveComposition.jsx';
 
 const base = import.meta.env.BASE_URL;
-const sections = ['Hero', 'About', 'The Logo', 'The Visual System', 'The Application', 'Reflection'];
+const sections = ['Hero', 'About', 'The Logo', 'The Visual System', 'The Application'];
 
 function BeaconStoryHeader({ index }) {
   return <>
@@ -103,7 +104,7 @@ export default function BeaconCaseStudy() {
           <h2 id="beacon-about-title">About Beacon Trust</h2>
           <p>Beacon Trust is a modern financial company that helps individuals and small businesses move forward. We make loans easy to access, clear from start to finish, and shaped by the communities we serve. No hidden terms, no confusing steps, just honest support when you need it.</p>
         </div>
-        <BeaconAboutMotion />
+        <ResponsiveComposition width={1127} height={811} className="beacon-about-composition"><BeaconAboutMotion /></ResponsiveComposition>
       </section>
       <section id="beacon-the-logo" className="beacon-logo-section" aria-labelledby="beacon-logo-title">
         <div className="beacon-section-intro">
@@ -120,9 +121,9 @@ export default function BeaconCaseStudy() {
         </div>
         <div className="beacon-visual-display">
         <BeaconTypography />
-        <div className="beacon-story-strip" aria-label="Beacon Trust social media story designs">
+        <ResponsiveComposition width={1127} height={780} className="beacon-stories-composition"><div className="beacon-story-strip" aria-label="Beacon Trust social media story designs">
           <div className="beacon-story-track"><BeaconStorySet /><BeaconStorySet duplicate /></div>
-        </div>
+        </div></ResponsiveComposition>
         <BeaconColorSystem />
         <BeaconSocialGrid />
         </div>

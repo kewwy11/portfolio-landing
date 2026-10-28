@@ -1,0 +1,89 @@
+.tp-artwork { font-family:'Lumis Brand Sora',sans-serif; }
+.tp-artwork * { box-sizing:border-box; }
+.tp-artwork p { margin:0; font:inherit; }
+.tp-card { display:flex; flex-direction:column; align-items:flex-start; gap:10.343px; width:371.06px; padding:10.343px 8.275px; border:.517px solid #edeff3; border-radius:15.515px; background:#fff; }
+.tp-card[data-variant="Frame 759"] { align-items:center; overflow:clip; }
+.tp-artwork .tp-0 { align-content:stretch;display:flex;align-items:center;justify-content:space-between;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-1 { word-break:break-word;flex:1 0 0;font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;line-height:normal;min-width:1px;position:relative;color:#0f172a;font-size:10.343px; }
+.tp-artwork .tp-2 { align-content:stretch;display:flex;gap:4.137px;align-items:center;position:relative;flex-shrink:0; }
+.tp-artwork .tp-3 { background:#fff;border-color:#edeff3;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;align-items:center;justify-content:center;padding:5.172px;position:relative;border-radius:25.858px;flex-shrink:0;width:24.824px;height:24.824px; }
+.tp-artwork .tp-4 { position:relative;flex-shrink:0;width:12.412px;height:12.412px; }
+.tp-artwork .tp-5 { position:absolute;display:block;inset:0;max-width:none;width:100%;height:100%; }
+.tp-artwork .tp-6 { position:relative;flex-shrink:0;width:10.343px;height:10.343px; }
+.tp-artwork .tp-7 { align-content:stretch;display:flex;flex-direction:column;gap:8.275px;align-items:center;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-8 { align-content:stretch;display:flex;flex-direction:column;gap:6.206px;align-items:center;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-9 { background:#fff;align-content:stretch;display:flex;flex-direction:column;gap:8.275px;align-items:flex-start;padding:8.275px;position:relative;border-radius:7.757px;flex-shrink:0;width:100%; }
+.tp-artwork .tp-10 { align-content:stretch;display:flex;gap:5.172px;align-items:center;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-11 { word-break:break-word;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:4.137px;align-items:flex-start;line-height:normal;min-width:1px;position:relative; }
+.tp-artwork .tp-12 { font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;position:relative;flex-shrink:0;color:#0f172a;font-size:7.24px;width:100%; }
+.tp-artwork .tp-13 { font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;position:relative;flex-shrink:0;color:#64748b;font-size:6.206px;width:100%; }
+.tp-artwork .tp-14 { align-content:stretch;display:flex;gap:3.62px;align-items:center;position:relative;flex-shrink:0; }
+.tp-artwork .tp-15 { background:#d1faec;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0; }
+.tp-artwork .tp-16 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#047852;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-17 { background:#ffe4e9;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0; }
+.tp-artwork .tp-18 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#e11d3f;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-19 { align-content:stretch;display:flex;gap:8.275px;align-items:flex-start;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-20 { background:#f6f7f9;border-color:#eceef2;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;align-items:flex-start;min-width:1px;padding:5.172px;position:relative;border-radius:7.757px; }
+.tp-artwork .tp-21 { word-break:break-word;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:5.172px;align-items:flex-start;min-width:1px;position:relative;color:#526077; }
+.tp-artwork .tp-22 { font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;line-height:normal;position:relative;flex-shrink:0;font-size:6.206px;width:100%; }
+.tp-artwork .tp-23 { font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:10.343px;position:relative;flex-shrink:0;font-size:7.24px;width:100%; }
+.tp-artwork .tp-24 { word-break:break-word;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:5.172px;align-items:flex-start;min-width:1px;position:relative; }
+.tp-artwork .tp-25 { font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;line-height:normal;position:relative;flex-shrink:0;color:#434e61;font-size:6.206px;width:100%; }
+.tp-artwork .tp-26 { font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:10.343px;position:relative;flex-shrink:0;color:#64748b;font-size:7.24px;width:100%; }
+.tp-artwork .tp-27 { align-content:stretch;display:flex;flex-direction:column;gap:5.172px;align-items:flex-start;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-28 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;line-height:normal;min-width:100%;position:relative;flex-shrink:0;color:#64748b;font-size:7.24px;width:min-content; }
+.tp-artwork .tp-29 { align-content:stretch;display:flex;flex-direction:column;gap:5.172px;align-items:flex-start;position:relative;flex-shrink:0; }
+.tp-artwork .tp-30 { align-content:stretch;display:flex;gap:5.172px;align-items:flex-start;position:relative;flex-shrink:0; }
+.tp-artwork .tp-31 { border-color:#bfd0fe;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0;width:92.571px; }
+.tp-artwork .tp-32 { word-break:break-word;flex:1 0 0;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;min-width:1px;position:relative;color:#1d4ed8;font-size:7.24px;text-align:center; }
+.tp-artwork .tp-33 { align-content:stretch;display:flex;gap:5.172px;align-items:flex-start;position:relative;flex-shrink:0;width:212.552px; }
+.tp-artwork .tp-34 { border-color:#bfd0fe;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0;width:126.704px; }
+.tp-artwork .tp-35 { border-color:#bfd0fe;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0;width:80.677px; }
+.tp-artwork .tp-36 { height:0;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-37 { position:absolute;inset:-0.52px 0 0 0; }
+.tp-artwork .tp-38 { display:block;max-width:none;width:100%;height:100%; }
+.tp-artwork .tp-39 { background:#fff;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding:8.275px;position:relative;border-radius:7.757px;flex-shrink:0;width:100%; }
+.tp-artwork .tp-40 { background:#feeac7;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0; }
+.tp-artwork .tp-41 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#b47409;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-42 { background:#dbe4fe;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0; }
+.tp-artwork .tp-43 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#2559eb;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-44 { background:#eceef2;align-content:stretch;display:flex;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0; }
+.tp-artwork .tp-45 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#434e61;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-46 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#059666;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-47 { background:#2563eb;position:relative;border-radius:25.858px;flex-shrink:0;width:5.172px;height:5.172px; }
+.tp-artwork .tp-48 { background:#d5d9e2;position:relative;border-radius:25.858px;flex-shrink:0;width:5.172px;height:5.172px; }
+.tp-artwork .tp-49 { background:#f9fafb;align-content:stretch;display:flex;flex-direction:column;gap:10.343px;align-items:flex-start;justify-content:center;padding:8.275px;position:relative;border-radius:15px;flex-shrink:0;width:358.907px; }
+.tp-artwork .tp-50 { align-content:stretch;display:flex;flex-direction:column;gap:8.275px;align-items:flex-start;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-51 { word-break:break-word;align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:3.103px;align-items:flex-start;line-height:normal;min-width:1px;position:relative; }
+.tp-artwork .tp-52 { font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;position:relative;flex-shrink:0;color:#64748b;font-size:6.21px;width:100%; }
+.tp-artwork .tp-53 { align-content:stretch;display:flex;gap:2.586px;align-items:center;position:relative;flex-shrink:0; }
+.tp-artwork .tp-54 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#1d4ed8;font-size:6.21px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-55 { background:#fff;border-color:#edeff3;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;padding:5.172px;position:relative;border-radius:15px;flex-shrink:0;width:100%; }
+.tp-artwork .tp-56 { word-break:break-word;align-content:stretch;display:flex;flex-direction:column;gap:5.172px;align-items:flex-start;line-height:normal;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-57 { font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;position:relative;flex-shrink:0;color:#0f172a;font-size:6.21px;width:100%; }
+.tp-artwork .tp-58 { font-family:'Lumis Brand Sora',sans-serif;font-weight:300;font-weight:300;position:relative;flex-shrink:0;color:#8695aa;font-size:7.24px;width:100%; }
+.tp-artwork .tp-59 { word-break:break-word;align-content:stretch;display:flex;gap:5.172px;align-items:center;line-height:normal;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-60 { align-content:stretch;display:flex;flex:1 0 0;flex-direction:column;gap:3.103px;align-items:flex-start;min-width:1px;position:relative; }
+.tp-artwork .tp-61 { font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;position:relative;flex-shrink:0;color:#10b981;font-size:7.24px;width:100%; }
+.tp-artwork .tp-62 { font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;position:relative;flex-shrink:0;color:#e11d3f;font-size:7.24px;width:100%; }
+.tp-artwork .tp-63 { align-content:stretch;display:flex;gap:8.275px;align-items:flex-end;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-64 { word-break:break-word;flex:1 0 0;font-family:'Lumis Brand Sora',sans-serif;font-weight:600;font-weight:600;line-height:0;min-width:1px;position:relative;color:#64748b;font-size:7.24px;white-space:pre-wrap; }
+.tp-artwork .tp-65 { line-height:10.343px;margin-bottom:0; }
+.tp-artwork .tp-66 { font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400; }
+.tp-artwork .tp-67 { line-height:10.343px; }
+.tp-artwork .tp-68 { line-height:10.343px;color:#2563eb; }
+.tp-artwork .tp-69 { align-content:stretch;display:flex;flex-direction:column;align-items:flex-end;position:relative;flex-shrink:0; }
+.tp-artwork .tp-70 { background:#dbe6fe;align-content:stretch;display:flex;gap:5.172px;align-items:center;justify-content:center;padding-left:5.172px;padding-right:5.172px;padding-top:4.137px;padding-bottom:4.137px;position:relative;border-radius:50px;flex-shrink:0;width:128.772px; }
+.tp-artwork .tp-71 { position:relative;flex-shrink:0;width:8.275px;height:8.275px; }
+.tp-artwork .tp-72 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#1d4ed8;font-size:7.24px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-73 { background:#2563eb;align-content:stretch;display:flex;flex:1 0 0;gap:2.586px;height:25.858px;align-items:center;justify-content:center;min-width:1px;padding-left:8.275px;padding-right:8.275px;padding-top:5.172px;padding-bottom:5.172px;position:relative;border-radius:30px; }
+.tp-artwork .tp-74 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;font-size:6.21px;text-align:center;color:#fff;white-space:nowrap; }
+.tp-artwork .tp-75 { border-color:#edeff3;border-width:0.517px;border-style:solid;align-content:stretch;display:flex;flex:1 0 0;gap:2.586px;height:25.858px;align-items:center;justify-content:center;min-width:1px;padding-left:8.275px;padding-right:8.275px;padding-top:5.172px;padding-bottom:5.172px;position:relative;border-radius:30px; }
+.tp-artwork .tp-76 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#64748b;font-size:6.21px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-77 { background:#f9fafb;align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;padding:8.275px;position:relative;border-radius:15px;flex-shrink:0;width:358.907px; }
+.tp-artwork .tp-78 { align-content:stretch;display:flex;flex-direction:column;align-items:flex-start;position:relative;flex-shrink:0;width:100%; }
+.tp-artwork .tp-79 { display:flex;align-items:center;justify-content:center;position:relative;flex-shrink:0; }
+.tp-artwork .tp-80 { flex:none;transform:rotate(180deg); }
+.tp-artwork .tp-81 { position:relative;width:10.343px;height:10.343px; }
+.tp-artwork .tp-82 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#434e61;font-size:6.21px;text-align:center;white-space:nowrap; }
+.tp-artwork .tp-83 { word-break:break-word;font-family:'Lumis Brand Sora',sans-serif;font-weight:400;font-weight:400;line-height:normal;position:relative;flex-shrink:0;color:#e11d3f;font-size:6.21px;text-align:center;white-space:nowrap; }

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import LumisAnimatedHeading from './LumisAnimatedHeading.jsx';
 import useRevealOnScroll from './useRevealOnScroll.js';
 import './lumis-case-study.css';
+import LumisTreatmentMotion from './LumisTreatmentMotion.jsx';
 
 const base = import.meta.env.BASE_URL;
 const sections = [
@@ -60,7 +61,7 @@ function ConsiderationCard({ visual, title, description }) {
   const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.2, rootMargin: '0px 0px -14% 0px' });
   const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
   return <article ref={ref} className={`lumis-consideration${!immediate ? ' can-reveal' : ''}${revealed ? ' is-revealed' : ''}`}>
-    <figure><img src={`${base}assets/lumis/${visual}`} alt={`${title} interface concept`} loading="lazy" /></figure>
+    <figure>{visual === 'consideration-treatment.png' ? <LumisTreatmentMotion /> : <img src={`${base}assets/lumis/${visual}`} alt={`${title} interface concept`} width={visual === 'consideration-environment.png' ? 613 : 612} height={443} loading="lazy" />}</figure>
     <div><h3>{title}</h3><p>{description}</p></div>
   </article>;
 }

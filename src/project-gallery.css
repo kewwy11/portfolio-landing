@@ -12,11 +12,13 @@
 .project-image { display: block; position: relative; width: 100%; height: auto; aspect-ratio: var(--project-aspect); overflow: hidden; }
 .project-image :is(img, video) { width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform 400ms ease; }
 .project:hover .project-image :is(img, video) { transform: scale(1.025); }
-.project-image-swap :is(img, video) { position: absolute; inset: 0; transition: opacity 550ms cubic-bezier(.22, 1, .36, 1); }
-.project-hover-image { opacity: 0; pointer-events: none; will-change: opacity; }
-.project-image-swap:focus-visible .project-hover-image { opacity: 1; }
-@media (hover: hover) { .project:hover .project-hover-image { opacity: 1; } }
-.project:hover .project-image-swap :is(img, video) { transform: none; }
+.project-image-swap :is(img, video) { position:absolute; inset:0; transition:opacity 340ms cubic-bezier(.22,1,.36,1),transform 420ms cubic-bezier(.22,1,.36,1); }
+.project-hover-image { opacity:0; transform:scale(1); pointer-events:none; will-change:opacity,transform; }
+.project-image-swap:focus-visible .project-hover-image { opacity:1; transform:scale(1.06); }
+@media (hover:hover) {
+  .project:hover .project-image-swap .project-hover-image { opacity:1; transform:scale(1.06); }
+  .project:hover .project-image-swap > :first-child { transform:scale(1.06); }
+}
 .project-image-swap:focus-visible { outline: 2px solid var(--pink); outline-offset: 4px; }
 .project-placeholder { background: var(--lime); }
 .project-caption { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; justify-content: space-between; margin-top: 16px; }

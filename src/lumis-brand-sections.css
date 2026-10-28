@@ -175,6 +175,9 @@
 .lb-app-copy { box-sizing:border-box; position:absolute; left:429px; top:71px; width:268px; height:249px; padding:24px; display:flex; flex-direction:column; justify-content:center; background:#fff8eb; color:#1d4ed8; font:600 28px/37px 'Lumis Brand Sora',sans-serif; letter-spacing:-.56px; }
 .lb-app-copy > div { width:220px; }
 .lb-app-copy span { display:inline-block; white-space:nowrap; will-change:transform; }
+.lb-app-label-variant { position:absolute; left:0; top:0; white-space:nowrap; }
+.lb-app-copy .lb-app-copy-variant { position:absolute; left:24px; top:24px; width:220px; height:201px; display:flex; flex-direction:column; justify-content:center; }
+.lb-app-copy-variant > div { width:220px; }
 
 @media (max-width: 760px) {
   .lb-section { gap: 16px; padding-top: 40px; }
