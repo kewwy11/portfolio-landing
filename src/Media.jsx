@@ -30,7 +30,7 @@ export default function Media({ image, video, alt = '', className, width, height
       } else if (!element.ended) element.play().catch(() => {});
     };
     const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(([entry]) => {
-      visible = entry.isIntersecting;
+      visible = entry.isIntersecting && entry.intersectionRatio > 0;
       update();
     }, { threshold: 0.01 });
     if (observer) observer.observe(element);

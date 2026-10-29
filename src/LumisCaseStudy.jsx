@@ -370,7 +370,7 @@ export default function LumisCaseStudy() {
           <article className="lumis-decision" key={question[0]}>
             <div className="lumis-decision-heading">
               <p>{number}</p>
-              <h3>{question.map((line, index) => <React.Fragment key={line}>{index > 0 && <br />}{line}</React.Fragment>)}</h3>
+              <h3>{question.map((line, index) => <React.Fragment key={line}>{index > 0 && <><br />{' '}</>}{line}</React.Fragment>)}</h3>
             </div>
             <div className="lumis-decision-options">
               {options.map(([image, label]) => (

@@ -89,8 +89,8 @@ export default function AboutStory({ ready = true }) {
       if (!mounted) return;
       const viewportHeight = window.innerHeight;
       const mobile = window.innerWidth <= 760;
-      const copyHeight = Math.ceil(Math.max(!mobile && viewportHeight >= 668 ? 360 : 0,
-        ...textRefs.current.map(node => node?.getBoundingClientRect().height || 0)));
+      const copyHeights = textRefs.current.map(node => Math.ceil(node?.getBoundingClientRect().height || 0));
+      const copyHeight = Math.max(!mobile && viewportHeight >= 668 ? 360 : 0, ...copyHeights);
       const style = getComputedStyle(frame);
       const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
       const gap = parseFloat(style.rowGap);
@@ -99,14 +99,15 @@ export default function AboutStory({ ready = true }) {
         viewportHeight - padding - (mobile ? copyHeight + gap : 0)));
       frame.style.setProperty('--story-copy-height', `${copyHeight}px`);
       frame.style.setProperty('--story-image-height', `${imageHeight}px`);
-      const frameHeight = Math.ceil(frame.getBoundingClientRect().height);
-      const next = { frameHeight, copyHeight, imageHeight, range: 2 * Math.max(viewportHeight, 500),
-        top: Math.max(0, Math.floor((viewportHeight - frameHeight) / 2)) };
-      setLayout(current => Object.keys(next).every(key => next[key] === current[key]) ? current : next);
+      const frameHeight = mobile ? Math.ceil(copyHeight + gap + padding + imageHeight) : Math.ceil(frame.getBoundingClientRect().height);
+      const next = { frameHeight, copyHeight, copyHeights, imageHeight, range: 2 * Math.max(viewportHeight, 500),
+        top: mobile ? 0 : Math.max(0, Math.floor((viewportHeight - frameHeight) / 2)) };
+      setLayout(current => JSON.stringify(next) === JSON.stringify(current) ? current : next);
     };
     measure();
     const observer = typeof ResizeObserver === 'function' ? new ResizeObserver(measure) : null;
-    observer?.observe(frame);
+    // Mobile scene heights change during playback; only observe their text metrics.
+    if (!mobile) observer?.observe(frame);
     textRefs.current.forEach(node => { if (node) observer?.observe(node); });
     window.addEventListener('resize', measure);
     document.fonts.ready.then(measure);
@@ -147,6 +148,12 @@ export default function AboutStory({ ready = true }) {
     let trigger;
     const paint = progress => {
       animations.forEach(animation => { animation.currentTime = progress * 1000; });
+      if (mobile && layout.copyHeights?.length === story.length) {
+        const from = Math.min(story.length - 2, Math.floor(progress * 2));
+        const mix = reducedMotion ? Number(progress * 2 - from >= 1) : ease(clamp(progress * 2 - from));
+        const height = layout.copyHeights[from] + (layout.copyHeights[from + 1] - layout.copyHeights[from]) * mix;
+        frameRef.current.style.setProperty('--story-visible-copy-height', `${height}px`);
+      }
       if (!nativeAnimation) {
         const incoming = [0, 1].map(index => reducedMotion
           ? Number(progress >= (index + 1) * .5)
@@ -245,6 +252,7 @@ export default function AboutStory({ ready = true }) {
       animations.forEach(animation => animation.cancel());
       trackRef.current?.style.removeProperty('transform');
       imageRefs.current.slice(1).forEach(image => image?.style.removeProperty('clip-path'));
+      frameRef.current?.style.removeProperty('--story-visible-copy-height');
     };
   }, [layout, reducedMotion, mobile]);
 

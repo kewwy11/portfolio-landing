@@ -8,18 +8,23 @@ export default function LumisTreatmentMotion() {
   const ref = useRef(null);
   useEffect(() => {
     const root = ref.current;
+    root.dataset.activeUi = '0';
     const media = gsap.matchMedia();
     media.add('(prefers-reduced-motion: no-preference)', () => {
       const frames = [...root.querySelectorAll('.tp-frame')];
-      const indicator = root.querySelector('.tp-switch');
+      gsap.set(frames[0], { y:0, yPercent:0 });
+      gsap.set(frames[1], { y:0, yPercent:100 });
+      const indicator = root.querySelector('.tp-active-indicator');
       const timeline = gsap.timeline({ repeat:-1, paused:true });
       for (let step = 0; step < 2; step++) {
         const next = 1 - step;
-        const at = 3.8 + step * 4.6;
-        timeline.set(frames[next], { autoAlpha:0 }, at)
-          .to(frames[step], { autoAlpha:0, duration:.8, ease:'sine.inOut' }, at)
-          .to(frames[next], { autoAlpha:1, duration:.8, ease:'sine.inOut' }, at)
-          .to(indicator, { rotation:next ? 180 : 0, duration:.8, ease:'sine.inOut' }, at);
+        const direction = next === 1 ? 1 : -1;
+        const at = 3.8 + step * 4.8;
+        timeline.set(frames[next], { yPercent:direction * 100, autoAlpha:1 }, at)
+          .to(frames[step], { yPercent:-direction * 100, duration:1, ease:'sine.inOut' }, at)
+          .to(frames[next], { yPercent:0, duration:1, ease:'sine.inOut' }, at)
+          .to(indicator, { y:next * 35, duration:1, ease:'sine.inOut' }, at)
+          .set(root, { attr:{'data-active-ui':next} }, at + 1);
       }
       let visible = false;
       const sync = () => timeline.paused(!visible || document.hidden);
@@ -32,9 +37,11 @@ export default function LumisTreatmentMotion() {
   }, []);
   return <Artboard width={612} height={443} className="tp-artwork" motionRef={ref}>
     <div className="tp-scene" role="img" aria-label="Alternating Treatment Plan and Skincare Routine interface concepts">
-      <div className="tp-frame"><LumisTreatmentArtwork property1="Frame 759" /></div>
-      <div className="tp-frame"><LumisTreatmentArtwork property1="Frame 386" /></div>
-      <img className="tp-switch" src={`${import.meta.env.BASE_URL}assets/lumis/treatment-switch.svg`} alt="" />
+      <div className="tp-window">
+        <div className="tp-frame"><LumisTreatmentArtwork property1="Frame 759" /></div>
+        <div className="tp-frame"><LumisTreatmentArtwork property1="Frame 386" /></div>
+      </div>
+      <div className="tp-switch" aria-hidden="true"><img src={`${import.meta.env.BASE_URL}assets/lumis/treatment-switch.svg`} alt="" /><span className="tp-active-indicator" /></div>
     </div>
   </Artboard>;
 }

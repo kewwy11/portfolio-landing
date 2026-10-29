@@ -11,7 +11,7 @@
 .story-image-window { position: relative; overflow: clip; width: 100%; aspect-ratio: 670 / 588; height: var(--story-image-height, auto); }
 .story-visual-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 .story-visual-image:not(:first-child) { clip-path: inset(100% 0 0 0); }
-.story-text-window { overflow: clip; min-width: 0; height: var(--story-copy-height, 360px); }
+.story-text-window { overflow: clip; min-width: 0; height: var(--story-visible-copy-height, var(--story-copy-height, 360px)); }
 .story-text-track { will-change: transform; }
 .story-text-panel { height: var(--story-copy-height, 360px); width: min(100%, 641px); padding-inline: 16px; display: flex; align-items: center; }
 .story-copy { width: min(100%, var(--copy-width)); min-height: var(--copy-min-height, 0px); font-size: 20px; line-height: 30px; }

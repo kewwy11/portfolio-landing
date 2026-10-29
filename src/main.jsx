@@ -4,5 +4,6 @@ import App from './App.jsx';
 import EyesCursor from './EyesCursor.jsx';
 import './styles.css';
 import './mobile.css';
+import './lumis-mobile.css';
 
 createRoot(document.getElementById('root')).render(<React.StrictMode><App /><EyesCursor /></React.StrictMode>);

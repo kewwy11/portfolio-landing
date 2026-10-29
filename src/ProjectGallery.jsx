@@ -55,7 +55,7 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
           {category}<img src={`${import.meta.env.BASE_URL}assets/home/filter-chevron.svg`} alt="" />
         </button>
         {menuOpen && <div className="mobile-filter-options" id={`${gridId}-filter`} role="group" aria-label="Project categories">
-          {projectCategories.map(label => <button key={label} type="button" aria-pressed={category === label} aria-controls={gridId} onClick={() => { selectCategory(label); menuRef.current?.querySelector('button')?.focus(); }}>{label === 'UI/UX' ? 'Projects' : label}</button>)}
+          {projectCategories.map(label => <button key={label} type="button" aria-pressed={category === label} aria-controls={gridId} onClick={() => { selectCategory(label); menuRef.current?.querySelector('button')?.focus(); }}>{label}</button>)}
         </div>}
       </div>
       <div className="filters" role="group" aria-label="Filter projects" data-category={category} data-touched={touched}>
