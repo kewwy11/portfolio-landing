@@ -144,7 +144,7 @@ export default function LumisCaseStudy() {
   return <div className="lumis-case-study">
     <a className="skip-link" href="#lumis-hero">Skip to case study</a>
     <aside className="lumis-sidebar">
-      <a className="lumis-back" href={`${base}projects`}><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
+      <a className="lumis-back" href={`${base}projects?category=uiux`}><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
       <nav aria-label="Case study sections">
         <a className={activeSection === 'lumis-hero' ? 'lumis-section-active' : ''} href="#lumis-hero" aria-current={activeSection === 'lumis-hero' ? 'location' : undefined}>Hero</a>
         {sections.map(([label, id]) => <a key={label} className={activeSection === id ? 'lumis-section-active' : ''} href={`#${id}`} aria-current={activeSection === id ? 'location' : undefined}>{label}</a>)}

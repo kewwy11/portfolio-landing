@@ -21,6 +21,7 @@
   padding: 48px 40px;
 }
 .about-intro h2 { font-size: 96px; line-height: 90px; letter-spacing: 0; }
+.about-portrait-frame { display:block; min-width:0; }
 .about-portrait { width: 100%; height: auto; min-height: 0; aspect-ratio: 670 / 721; object-position: bottom; }
 .about-experience { padding: 48px 40px; }
 .about-experience h2 { font-size: 96px; line-height: 106px; letter-spacing: 0; }

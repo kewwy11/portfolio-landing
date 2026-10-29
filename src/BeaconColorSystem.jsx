@@ -47,7 +47,8 @@ function useVariantSequence(ref) {
 
 function ScaledPanel({ height, className = '', children }) {
   const ref = useRef(null);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    ref.current.style.setProperty('--panel-scale', ref.current.getBoundingClientRect().width / 554);
     const observer = new ResizeObserver(([entry]) => ref.current.style.setProperty('--panel-scale', entry.contentRect.width / 554));
     observer.observe(ref.current);
     return () => observer.disconnect();

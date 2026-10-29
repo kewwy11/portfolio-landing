@@ -16,17 +16,17 @@ export default function LumisTreatmentMotion() {
       for (let step = 0; step < 2; step++) {
         const next = 1 - step;
         const at = 3.8 + step * 4.6;
-        timeline.set(frames[next], { y:32, autoAlpha:0 }, at)
-          .to(frames[step], { y:-32, autoAlpha:0, duration:.8, ease:'power2.inOut' }, at)
-          .to(frames[next], { y:0, autoAlpha:1, duration:.8, ease:'power2.inOut' }, at)
-          .set(indicator, { rotation:next ? 180 : 0 }, at + .4);
+        timeline.set(frames[next], { autoAlpha:0 }, at)
+          .to(frames[step], { autoAlpha:0, duration:.8, ease:'sine.inOut' }, at)
+          .to(frames[next], { autoAlpha:1, duration:.8, ease:'sine.inOut' }, at)
+          .to(indicator, { rotation:next ? 180 : 0, duration:.8, ease:'sine.inOut' }, at);
       }
       let visible = false;
       const sync = () => timeline.paused(!visible || document.hidden);
       const observer = new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; sync(); }, {threshold:.1});
       observer.observe(root);
       document.addEventListener('visibilitychange', sync);
-      return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync); timeline.kill(); };
+      return () => { observer.disconnect(); document.removeEventListener('visibilitychange', sync); timeline.revert(); };
     });
     return () => media.revert();
   }, []);

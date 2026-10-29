@@ -72,7 +72,7 @@ export default function BeaconCaseStudy() {
   return <div className="beacon-case-study">
     <a className="skip-link" href="#beacon-hero">Skip to case study</a>
     <aside className="beacon-sidebar">
-      <a className="beacon-back" href={`${base}projects`} aria-label="Back to projects"><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
+      <a className="beacon-back" href={`${base}projects?category=branding`} aria-label="Back to projects"><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
       <nav aria-label="Case study sections">
         {sections.map((label, index) => <a key={label} className={activeSection === (index === 0 ? 'beacon-hero' : `beacon-${label.toLowerCase().replaceAll(' ', '-')}`) ? 'beacon-section-active' : ''}
           href={index === 0 ? '#beacon-hero' : `#beacon-${label.toLowerCase().replaceAll(' ', '-')}`}

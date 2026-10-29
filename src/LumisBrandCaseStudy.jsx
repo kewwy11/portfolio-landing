@@ -59,7 +59,7 @@ export default function LumisBrandCaseStudy() {
   return <div className="lumis-brand-case-study">
     <a className="skip-link" href="#lumis-brand-hero">Skip to case study</a>
     <aside className="lumis-brand-sidebar">
-      <a className="lumis-brand-back" href={`${base}projects`} aria-label="Back to projects"><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
+      <a className="lumis-brand-back" href={`${base}projects?category=branding`} aria-label="Back to projects"><img src={`${base}assets/lumis/back-arrow.svg`} alt="" />Back</a>
       <nav aria-label="Lumis brand identity sections">
         {navigation.map(([label, id]) => <a key={id} href={`#${id}`}
           className={activeSection === id ? 'is-active' : undefined}

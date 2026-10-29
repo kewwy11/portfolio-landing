@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { useLayoutEffect } from 'react';
 import './lumis-brand-identity.css';
 import Media from './Media.jsx';
 import { LogoAnatomyArtwork, StoryArtwork1, StoryArtwork2, StoryArtwork3, StoryArtwork4, StoryArtwork5, StoryArtwork6 } from './LumisFigmaArtwork';
@@ -16,7 +17,8 @@ export function Artboard({ width, height, className = '', children, motionRef })
     ref.current = node;
     if (motionRef) motionRef.current = node;
   }, [motionRef]);
-  useEffect(() => {
+  useLayoutEffect(() => {
+    setScale(ref.current.getBoundingClientRect().width / width);
     const observer = new ResizeObserver(([entry]) => setScale(entry.contentRect.width / width));
     observer.observe(ref.current);
     return () => observer.disconnect();

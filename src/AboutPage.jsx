@@ -30,8 +30,11 @@ export default function AboutPage() {
       </div>
       <section className="about-intro" aria-labelledby="about-question">
         <RevealHeading id="about-question" ready={fontsReady} lines={['Remember', 'the best', 'day of', 'your life?']} />
-        <img className="about-portrait" src={`${import.meta.env.BASE_URL}assets/about-portrait.png`}
-          alt="Grateful Erhis wearing a black shirt against a pink background" width="670" height="721" />
+        <picture className="about-portrait-frame">
+          <source media="(max-width: 760px)" srcSet={`${import.meta.env.BASE_URL}assets/about-portrait-mobile.png`} />
+          <img className="about-portrait" src={`${import.meta.env.BASE_URL}assets/about-portrait.png`}
+            alt="Grateful Erhis wearing a black shirt against a pink background" width="670" height="721" />
+        </picture>
       </section>
       <AboutStory ready={fontsReady} />
       <section className="about-experience" aria-labelledby="experience-heading">

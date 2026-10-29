@@ -95,7 +95,7 @@ export default function AboutStory({ ready = true }) {
       const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
       const gap = parseFloat(style.rowGap);
       const imageWidth = frame.querySelector('.story-image-window').getBoundingClientRect().width;
-      const imageHeight = Math.max(1, Math.min(imageWidth * 588 / 670,
+      const imageHeight = Math.max(1, Math.min(imageWidth * (mobile ? 355 / 361 : 588 / 670),
         viewportHeight - padding - (mobile ? copyHeight + gap : 0)));
       frame.style.setProperty('--story-copy-height', `${copyHeight}px`);
       frame.style.setProperty('--story-image-height', `${imageHeight}px`);
@@ -115,7 +115,7 @@ export default function AboutStory({ ready = true }) {
 
   useLayoutEffect(() => {
     const section = sectionRef.current;
-    if (!section || mobile) return;
+    if (!section) return;
     const nativeAnimation = !reducedMotion && typeof Element.prototype.animate === 'function';
     const timing = { duration: 1000, fill: 'both', easing: 'linear' };
     const textAnimation = nativeAnimation ? trackRef.current.animate([
@@ -247,15 +247,6 @@ export default function AboutStory({ ready = true }) {
       imageRefs.current.slice(1).forEach(image => image?.style.removeProperty('clip-path'));
     };
   }, [layout, reducedMotion, mobile]);
-
-  if (mobile) return <section ref={sectionRef} id="about-story" className="about-story is-mobile" aria-label="My approach to design" data-mode="flow">
-    <div className="story-flow">
-      {story.map(item => <article className="story-flow-stage" key={item.image}>
-        <StoryCopy item={item} />
-        <img src={asset(item.image)} alt={item.alt} width="670" height="588" loading="lazy" />
-      </article>)}
-    </div>
-  </section>;
 
   return <section ref={sectionRef} id="about-story" className="about-story is-pinned"
     aria-label="My approach to design" data-mode="pinned" data-stage="1" data-progress="0" data-transitioning="false"
