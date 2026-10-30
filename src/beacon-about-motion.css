@@ -1,4 +1,5 @@
 .beacon-about-motion .beacon-futures-panel{position:relative;overflow:hidden}
+.beacon-idea-film{display:block;width:100%;height:811px;object-fit:contain;background:#17173d}
 .beacon-about-motion .beacon-written-headline{position:relative;width:100%;max-width:480px;text-wrap:nowrap;will-change:auto}
 .beacon-written-word{display:inline-block;font-kerning:normal;font-feature-settings:"kern" 1}
 .beacon-about-motion .beacon-futures-panel{container-type:inline-size}

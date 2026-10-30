@@ -77,8 +77,8 @@ export default function BeaconColorSystem() {
     const oldSlots = cards.map((_, id) => (id + previousTurn.current) % 3);
     const ink = color => ['mist', 'lavender'].includes(color) ? colors.dark : '#fff';
     const settle = () => {
-      cards.forEach((card, id) => gsap.set(card, { y:slots[id] * 75, z:(slots[id] - 1) * 3,
-        scale:1, rotation:0, zIndex:0, backgroundColor:colors[cardColors[id]], color:ink(cardColors[id]) }));
+      cards.forEach((card, id) => gsap.set(card, { y:slots[id] * 75,
+        scale:1, rotation:0, zIndex:slots[id] * 100, force3D:false, backgroundColor:colors[cardColors[id]], color:ink(cardColors[id]) }));
       root.dataset.paletteTransitioning = 'false';
     };
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -90,12 +90,11 @@ export default function BeaconColorSystem() {
     const motion = { progress: 0 };
     const setters = cards.map(card => ({
       y: gsap.quickSetter(card, 'y', 'px'),
-      z: gsap.quickSetter(card, 'z', 'px'),
       scale: gsap.quickSetter(card, 'scale'),
     }));
     const starts = cards.map(card => ({
       y: Number(gsap.getProperty(card, 'y')),
-      z: Number(gsap.getProperty(card, 'z')),
+      depth: Number(gsap.getProperty(card, 'zIndex')),
       background: getComputedStyle(card).backgroundColor,
       ink: getComputedStyle(card).color,
     }));
@@ -112,7 +111,7 @@ export default function BeaconColorSystem() {
         cards.forEach((card, id) => {
           const lift = oldSlots[id] === 2 ? Math.sin(Math.PI * p) : 0;
           setters[id].y(starts[id].y + (slots[id] * 75 - starts[id].y) * p - lift * 28);
-          setters[id].z(starts[id].z + ((slots[id] - 1) * 3 - starts[id].z) * p);
+          card.style.zIndex = String(Math.round(starts[id].depth + (slots[id] * 100 - starts[id].depth) * p));
           setters[id].scale(1 - lift * .018);
           cards[id].style.backgroundColor = blends[id].background(p);
           cards[id].style.color = blends[id].ink(p);

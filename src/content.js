@@ -12,7 +12,7 @@ export const menuNavigation = [
 
 export const heroMedia = {
   pink: { image: 'videos/pink-reel-poster.jpg', video: 'videos/pink-reel.mp4' },
-  design: { image: 'hero-design.png', video: '' },
+  design: { image: 'videos/hero-design.gif', video: '' },
   visuals: { image: 'videos/visual-reel-poster.jpg', video: 'videos/visual-reel.mp4' },
 };
 

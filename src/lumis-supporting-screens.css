@@ -1,0 +1,31 @@
+.lumis-supporting-screens { padding:48px 0; overflow:hidden; min-width:0; }
+.lumis-supporting-screens .lumis-section-heading { padding:0; margin-bottom:24px; }
+.lumis-supporting-screens .lumis-section-heading h2 { width:100%; color:#434e61; }
+.lumis-supporting-carousel { overflow:hidden; }
+.lumis-supporting-track { display:flex; width:max-content; animation:lumis-supporting-drift 65s linear infinite; }
+.lumis-supporting-group { display:flex; gap:16px; padding-right:16px; }
+.lumis-supporting-frame { position:relative; flex:none; width:774px; height:508px; padding:32px; background:#eff4ff; border:0; }
+.lumis-supporting-frame video { width:100%; height:100%; object-fit:contain; pointer-events:none; }
+.lumis-supporting-tooltip { position:absolute; top:50%; left:50%; display:flex; align-items:center; gap:18px; padding:14px 20px; border-radius:100px; background:var(--pink); color:var(--cream); font:500 14px/1.5 Poppins,sans-serif; white-space:nowrap; box-shadow:0 8px 30px #ef007033; opacity:0; transform:translate(-50%,-35%); transition:opacity .2s,transform .2s; pointer-events:none; }
+.lumis-supporting-tooltip > span { font-size:22px; }
+.lumis-supporting-frame:hover .lumis-supporting-tooltip, .lumis-supporting-frame:focus-visible .lumis-supporting-tooltip { opacity:1; transform:translate(-50%,-50%); }
+.lumis-supporting-carousel:hover .lumis-supporting-track, .lumis-supporting-carousel:focus-within .lumis-supporting-track, .has-viewer .lumis-supporting-track { animation-play-state:paused; }
+@keyframes lumis-supporting-drift { to { transform:translateX(-50%); } }
+.lumis-screen-viewer { position:fixed; inset:0; width:100vw; height:100dvh; max-width:none; max-height:none; margin:0; padding:72px 6vw 40px; border:0; background:rgb(12 10 15 / 92%); }
+.lumis-screen-viewer[open] { display:grid; place-items:center; }
+.lumis-screen-viewer::backdrop { background:transparent; }
+.lumis-screen-close { position:absolute; z-index:2; top:16px; right:20px; display:grid; place-items:center; width:44px; height:44px; padding:0; border-radius:50%; background:var(--pink); color:var(--cream); font:32px/1 Poppins,sans-serif; }
+.lumis-screen-full-frame { width:min(100%,1400px); max-height:100%; aspect-ratio:774/508; background:#eff4ff; padding:32px; }
+.lumis-screen-full-frame video { width:100%; height:100%; object-fit:contain; }
+@media(max-width:760px) {
+  .lumis-supporting-screens { padding:24px 0; }
+  .lumis-supporting-frame { width:82vw; height:auto; aspect-ratio:774/508; padding:16px; }
+  .lumis-screen-viewer { padding:76px 16px 32px; }
+  .lumis-screen-full-frame { padding:16px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .lumis-supporting-track { animation:none; }
+  .lumis-supporting-carousel { overflow-x:auto; }
+  .lumis-supporting-group[aria-hidden="true"] { display:none; }
+  .lumis-supporting-tooltip { transition:none; }
+}

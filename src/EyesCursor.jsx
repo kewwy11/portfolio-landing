@@ -27,6 +27,8 @@ export default function EyesCursor() {
       setDirection('idle');
     };
     const move = event => {
+      // Native modal dialogs render above the custom cursor's document layer.
+      if (document.querySelector('dialog[open]')) { hide(); return; }
       if (!ready || !pointer.matches || event.pointerType !== 'mouse') { hide(); return; }
       cursor.style.transform = `translate3d(${event.clientX - 28}px,${event.clientY - 19.5}px,0)`;
       cursor.classList.add('is-visible');

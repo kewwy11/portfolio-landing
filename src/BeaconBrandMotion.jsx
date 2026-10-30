@@ -67,7 +67,7 @@ export function BeaconLogoShowcase() {
       <Canvas><div className="bb-photo-window">{['logo-car.png', 'logo-photo-team.png', 'logo-photo-opening.png'].map((name, i) => <img key={name} className={`bb-logo-photo bb-photo-${i}`} src={asset(name)} alt={['Friends celebrating in a car', 'A community joining hands', 'Celebrating a business opening'][i]} loading="lazy" />)}</div></Canvas>
       <Canvas><div className="bb-colour-panel"><div className="bb-logo-tile">{['blue', 'white', 'yellow'].map(colour => <img key={colour} className="bb-cycle-mark" src={asset(`logo-cycle-${colour}.svg`)} alt={colour === 'blue' ? 'Beacon Trust symbol' : ''} />)}</div><div className="bb-indicators" aria-hidden="true">{['#0b0bd6', '#fafafc', '#ffaf1d'].map(colour => <svg key={colour} viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill={colour}/><circle className="bb-progress" cx="10" cy="10" r="9" fill="none" stroke="white" strokeWidth="1" strokeDasharray={2 * Math.PI * 9} strokeDashoffset={2 * Math.PI * 9} transform="rotate(-90 10 10)"/></svg>)}</div></div></Canvas>
     </div>
-    <Canvas height={750} className="bb-grid-panel"><img className="bb-logo-construction" src={asset('logo-grid.svg')} alt="Beacon Trust symbol on its construction grid" /></Canvas>
+    <Canvas height={750} className="bb-grid-panel"><img data-node-id="115:241" src={`${import.meta.env.BASE_URL}assets/videos/beacon-logo.gif`} alt="Beacon Trust logo construction animation" width="554" height="750" style={{width:554,height:750,objectFit:'contain'}} loading="lazy" /></Canvas>
   </div>;
 }
 

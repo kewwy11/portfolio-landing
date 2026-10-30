@@ -191,22 +191,7 @@ function Image({ src, x, y, width, height, alt = '', className = '' }) {
 }
 
 function LogoStage() {
-  const ref = useRef(null);
-  const [revealed, setRevealed] = useState(false);
-  useEffect(() => {
-    const observer = new IntersectionObserver(([entry]) => {
-      if (entry.isIntersecting) {
-        setRevealed(true);
-        observer.disconnect();
-      }
-    }, { threshold: 0.25 });
-    observer.observe(ref.current);
-    return () => observer.disconnect();
-  }, []);
-  return <div ref={ref} className={`lb-logo-stage${revealed ? ' is-revealed' : ''}`} aria-label="Lumis logo reveal">
-    <p className="lb-logo-stage-label">Logo animation</p>
-    <div className="lb-logo-stage-lockup"><img src={asset('hero-symbol.svg')} alt="" /><img src={asset('hero-wordmark.svg')} alt="Lumis" /></div>
-  </div>;
+  return <div className="lb-logo-stage" data-node-id="280:1559"><img src={`${import.meta.env.BASE_URL}assets/videos/lumis-logo.gif`} alt="Lumis logo animation" width="1134" height="600" loading="lazy" style={{position:'absolute',inset:0,display:'block',width:'100%',height:'100%',objectFit:'contain'}} /></div>;
 }
 
 function Anatomy() {
@@ -254,21 +239,9 @@ function Consultation() {
   </Artboard>;
 }
 
-const colors = [
-  ['#1d4ed8', '1D4ED8', '29, 78, 216', '0.87, 0.64, 0.00, 0.15'],
-  ['#f59e0b', 'F59E0B', '245, 158, 11', '0, 36, 96, 4'],
-  ['#0f172a', '0F172A', '15, 23, 42', '0.0, 0.0, 0.0, 0.0'],
-  ['#fff8eb', 'FFF8EB', '255, 248, 235', '0, 0.03, 0.08, 0'],
-  ['#eff6ff', 'EFF6FF', '239, 246, 255', '0.06, 0.04, 0.00, 0.0'],
-];
-
 function Palette() {
   return <Artboard width={1134} height={700}>
-    <Image src={asset('identity-skin-closeup.png')} x={0} y={0} width={1134} height={700} alt="Skin texture behind the Lumis colour palette" />
-    <div className="li-palette">{colors.map(([color, hex, rgb, cmyk]) => <div className="li-swatch-card" key={hex}>
-      <div className="li-swatch" style={{ background: color }} />
-      <dl>{[['HEX', hex], ['RGB', rgb], ['CMYK', cmyk]].map(([label, value]) => <div key={label}><dt>{label}</dt><dd>{value}</dd></div>)}</dl>
-    </div>)}</div>
+    <img data-node-id="287:1763" src={`${import.meta.env.BASE_URL}assets/videos/lumis-palette.gif`} alt="Lumis colour palette animation over skin texture" width="1134" height="700" style={{width:1134,height:700,objectFit:'contain'}} loading="lazy" />
   </Artboard>;
 }
 

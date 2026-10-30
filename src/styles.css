@@ -37,6 +37,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible, input:focus-visibl
 .menu-close { position: fixed; z-index: 1; top: 12px; right: 20px; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; background: transparent; color: var(--cream); }
 .menu-close img { width: 20px; height: 20px; transform: rotate(-90deg); transition: transform var(--menu-duration) cubic-bezier(.22, 1, .36, 1); }
 .is-open .menu-close img { transform: rotate(0deg); }
+.menu-close:focus { outline: none; }
+.menu-close:focus-visible { outline: 2px solid var(--cream); outline-offset: 4px; border-radius: 50%; }
 .menu-navigation { flex-shrink: 0; display: flex; flex-direction: column; gap: clamp(20px, 5.54vw, 24px); }
 .menu-navigation a { --link-duration: 400ms; --link-ease: cubic-bezier(.22, 1, .36, 1); position: relative; height: clamp(50px, 12.7vw, 55px); border-bottom: 1px solid #faf3e899; display: flex; justify-content: space-between; align-items: center; gap: 12px; text-decoration: none; }
 .menu-link-copy { position: relative; min-width: 0; display: flex; align-items: center; }

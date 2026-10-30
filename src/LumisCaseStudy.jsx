@@ -3,6 +3,8 @@ import LumisAnimatedHeading from './LumisAnimatedHeading.jsx';
 import useRevealOnScroll from './useRevealOnScroll.js';
 import './lumis-case-study.css';
 import LumisTreatmentMotion from './LumisTreatmentMotion.jsx';
+import LumisSupportingScreens from './LumisSupportingScreens.jsx';
+import Media from './Media.jsx';
 
 const base = import.meta.env.BASE_URL;
 const sections = [
@@ -61,7 +63,7 @@ function ConsiderationCard({ visual, title, description }) {
   const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.2, rootMargin: '0px 0px -14% 0px' });
   const immediate = reducedMotion || typeof window === 'undefined' || typeof window.IntersectionObserver !== 'function';
   return <article ref={ref} className={`lumis-consideration${!immediate ? ' can-reveal' : ''}${revealed ? ' is-revealed' : ''}`}>
-    <figure>{visual === 'consideration-treatment.png' ? <LumisTreatmentMotion /> : <img src={`${base}assets/lumis/${visual}`} alt={`${title} interface concept`} width={visual === 'consideration-environment.png' ? 613 : 612} height={443} loading="lazy" />}</figure>
+    <figure>{visual === 'consideration-treatment.png' ? <LumisTreatmentMotion /> : visual === 'consideration-comparison.png' ? <Media image={`lumis/${visual}`} video="videos/compare-scan.mp4" className="lumis-comparison-film" alt={`${title} interface concept`} width="612" height="443" /> : <img src={`${base}assets/lumis/${visual}`} alt={`${title} interface concept`} width="613" height={443} loading="lazy" />}</figure>
     <div><h3>{title}</h3><p>{description}</p></div>
   </article>;
 }
@@ -283,14 +285,14 @@ export default function LumisCaseStudy() {
           </article>
 
           {[
-            ['Patients Scan Review', 'Every patient scan is waiting on a doctor review of the AI analysis. So no patient is diagnosed wrongly and nobody gets forgotten between appointments.'],
-            ['Designing for disagreement', 'Doctors can independently examine patient evidence, review AI findings and override individual conditions rather than accepting the entire analysis.'],
-            ['Following up a patient', "The dermatologist views scans side by side to see how and if the treatment is working, which one photo/scan on its own can't. The AI confidence history and scan graph helps reassure the doctor there is progress in the treatment."],
-            ['Making the blind spots visible', 'Tracking AI performance and clinician disagreements across skin tones helps identify recurring disparities that need investigation.'],
-          ].map(([title, description], index) => (
+            ['Patients Scan Review', 'Every patient scan is waiting on a doctor review of the AI analysis. So no patient is diagnosed wrongly and nobody gets forgotten between appointments.', 'scan-review.mp4'],
+            ['Designing for disagreement', 'Doctors can independently examine patient evidence, review AI findings and override individual conditions rather than accepting the entire analysis.', 'design-for-disagreement.mp4'],
+            ['Following up a patient', "The dermatologist views scans side by side to see how and if the treatment is working, which one photo/scan on its own can't. The AI confidence history and scan graph helps reassure the doctor there is progress in the treatment.", 'scan-screens.mp4'],
+            ['Making the blind spots visible', 'Tracking AI performance and clinician disagreements across skin tones helps identify recurring disparities that need investigation.', 'analytics.mp4'],
+          ].map(([title, description, video], index) => (
             <article className="lumis-flow-item" key={title}>
-              <div className="lumis-flow-media lumis-video-placeholder" data-video-slot={index + 1} role="img" aria-label={`${title} video placeholder`}>
-                <span>Video coming soon</span>
+              <div className="lumis-flow-media" data-video-slot={index + 1}>
+                <Media video={`videos/${video}`} alt={`${title} walkthrough`} className="lumis-flow-video" />
               </div>
               <div className="lumis-flow-copy">
                 <h3>{title}</h3>
@@ -300,6 +302,8 @@ export default function LumisCaseStudy() {
           ))}
         </div>
       </section>
+
+      <LumisSupportingScreens />
 
       <section id="research" className="lumis-research" aria-labelledby="research-title">
         <div className="lumis-section-heading">

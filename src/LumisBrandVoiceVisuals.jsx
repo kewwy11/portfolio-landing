@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Artboard, useVisibleImageSequence } from './LumisBrandIdentity';
-import { VoiceTraitsArtwork, VoiceMessageArtwork, PortraitOneArtwork, PortraitTwoArtwork, PortraitThreeArtwork, CareMenuArtwork, ConsultationArtwork, SkinPatternArtwork, AccuracyArtwork } from './LumisFigmaArtwork';
+import { VoiceTraitsArtwork, VoiceMessageArtwork, PortraitOneArtwork, PortraitTwoArtwork, PortraitThreeArtwork, ConsultationArtwork, SkinPatternArtwork, AccuracyArtwork } from './LumisFigmaArtwork';
 import './lumis-brand-voice-visuals.css';
 
 function Intro({ id, title, children }) {
@@ -155,7 +155,7 @@ export function LumisVisuals() {
         <Artboard width={375.33} height={704}><PortraitThreeArtwork /></Artboard>
       </div>
       <div className="lv-pair">
-        <Artboard width={555.5} height={780}><CareMenuArtwork /></Artboard>
+        <Artboard width={555.5} height={780}><img data-node-id="312:3981" src={`${import.meta.env.BASE_URL}assets/videos/lumis-care.gif`} alt="Lumis Care lifestyle and focus menu animation" width="555.5" height="780" style={{width:555.5,height:780,objectFit:'contain'}} loading="lazy" /></Artboard>
         <Artboard width={555.5} height={780}><ConsultationArtwork /></Artboard>
       </div>
       <div className="lv-pair">

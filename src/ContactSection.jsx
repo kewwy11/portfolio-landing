@@ -27,6 +27,6 @@ export default function Contact({ heading = defaultHeading }) {
         <p className="form-status" role="status">{status}</p>
       </form>
     </div>
-    <Media {...contactMedia} className="contact-image" alt="Visual design film" loading="lazy" width="732" height="602" />
+    <Media {...contactMedia} className="contact-image" alt="Visual design film" warmup width="732" height="602" />
   </section>;
 }

@@ -3,7 +3,7 @@
 .beacon-color-canvas { position: absolute; top: 0; left: 0; width: 554px; transform: scale(var(--panel-scale)); transform-origin: top left; }
 .beacon-colors { background: #fff; }
 .beacon-color-right { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
-.beacon-color-stack { position: absolute; top: 115.5px; left: 80px; width: 395px; height: 395px; perspective:1200px; transform-style: preserve-3d; }
+.beacon-color-stack { position: absolute; top: 115.5px; left: 80px; width: 395px; height: 395px; isolation:isolate; }
 .beacon-color-stack-state { position: absolute; inset: 0; opacity: 0; visibility: hidden; }
 .beacon-color-stack-state.is-current { opacity: 1; visibility: visible; }
 .beacon-color-card { position: absolute; left: 0; width: 395px; height: 245px; padding: 20px; border-radius: 20px; display: flex; flex-direction: column; justify-content: space-between; background:var(--initial-card-color); color:#fff; }

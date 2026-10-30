@@ -201,6 +201,8 @@
 .lumis-flow-list { width: 100%; min-width: 0; margin-top: 16px; display: flex; flex-direction: column; gap: 16px; }
 .lumis-flow-item { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
 .lumis-flow-media { width: 100%; max-width: 100%; aspect-ratio: 1127 / 728; overflow: hidden; background: #f6f5f8; }
+.lumis-flow-video { width:100%; height:100%; object-fit:contain; }
+.lumis-comparison-film { display:block; width:100%; height:auto; aspect-ratio:612/443; object-fit:contain; padding:5.595% 2.888%; background:#eff4ff; }
 .lumis-scroll-scene { position: relative; width: 100%; aspect-ratio: 1127 / 1038; }
 .lumis-flow-static { aspect-ratio: 1127 / 737; min-height: 0; }
 .lumis-scroll-viewport { position: sticky; top: 24px; }

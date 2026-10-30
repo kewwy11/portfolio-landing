@@ -109,10 +109,7 @@ export default function LumisBrandCaseStudy() {
           <p>Knowing this, we built the brand strategy around three things: the vision, positioning, and the people Lumis was created for.</p>
         </SectionIntro>
         <div className="lumis-brand-strategy-pair">
-          <div className="lumis-brand-promise">
-            <p>Clarity<br />for every<br />skin.</p>
-            <small>Lumis is a dermatology brand that is inclusive of all skin tone, especially to darker skin tones that have been often overlooked in the dermatology and beauty space.</small>
-          </div>
+          <img data-node-id="250:1020" className="lumis-brand-promise" src={`${base}assets/videos/lumis-promise.gif`} alt="Clarity for every skin: an inclusive dermatology brand" width="556" height="780" style={{width:'100%',height:'auto',objectFit:'contain'}} loading="lazy" />
           <LumisPortraitMotion />
         </div>
         <LumisStrategyMotion items={strategyItems} />

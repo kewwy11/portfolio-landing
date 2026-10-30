@@ -85,17 +85,24 @@ export default function AboutStory({ ready = true }) {
     const frame = frameRef.current;
     if (!frame) return;
     let mounted = true;
+    let viewport = { width: window.innerWidth, height: window.innerHeight };
     const measure = () => {
       if (!mounted) return;
-      const viewportHeight = window.innerHeight;
       const mobile = window.innerWidth <= 760;
+      // Browser chrome can resize the viewport during a swipe. Rebuilding the
+      // pinned scene mid-gesture interrupts its animation; only remeasure that
+      // height on mobile when the width changes (rotation or a real resize).
+      if (!mobile || viewport.width !== window.innerWidth) {
+        viewport = { width: window.innerWidth, height: window.innerHeight };
+      }
+      const viewportHeight = viewport.height;
       const copyHeights = textRefs.current.map(node => Math.ceil(node?.getBoundingClientRect().height || 0));
       const copyHeight = Math.max(!mobile && viewportHeight >= 668 ? 360 : 0, ...copyHeights);
       const style = getComputedStyle(frame);
       const padding = parseFloat(style.paddingTop) + parseFloat(style.paddingBottom);
       const gap = parseFloat(style.rowGap);
       const imageWidth = frame.querySelector('.story-image-window').getBoundingClientRect().width;
-      const imageHeight = Math.max(1, Math.min(imageWidth * (mobile ? 355 / 361 : 588 / 670),
+      const imageHeight = Math.max(1, Math.min(mobile ? 500 : imageWidth * 588 / 670,
         viewportHeight - padding - (mobile ? copyHeight + gap : 0)));
       frame.style.setProperty('--story-copy-height', `${copyHeight}px`);
       frame.style.setProperty('--story-image-height', `${imageHeight}px`);
@@ -148,12 +155,6 @@ export default function AboutStory({ ready = true }) {
     let trigger;
     const paint = progress => {
       animations.forEach(animation => { animation.currentTime = progress * 1000; });
-      if (mobile && layout.copyHeights?.length === story.length) {
-        const from = Math.min(story.length - 2, Math.floor(progress * 2));
-        const mix = reducedMotion ? Number(progress * 2 - from >= 1) : ease(clamp(progress * 2 - from));
-        const height = layout.copyHeights[from] + (layout.copyHeights[from + 1] - layout.copyHeights[from]) * mix;
-        frameRef.current.style.setProperty('--story-visible-copy-height', `${height}px`);
-      }
       if (!nativeAnimation) {
         const incoming = [0, 1].map(index => reducedMotion
           ? Number(progress >= (index + 1) * .5)
@@ -264,7 +265,7 @@ export default function AboutStory({ ready = true }) {
         '--story-image-height': layout.imageHeight === null ? undefined : `${layout.imageHeight}px` }}>
       <div className="story-image-window">
         {story.map((item, index) => <img ref={node => { imageRefs.current[index] = node; }} className="story-visual-image"
-          key={item.image} src={asset(item.image)} alt="" width="670" height="588" />)}
+          key={item.image} src={asset(mobile && index === 0 ? 'about-story-design-board-mobile.png' : item.image)} alt="" width="670" height="588" />)}
       </div>
       <div className="story-text-window"><div ref={trackRef} className="story-text-track">
         {story.map((item, index) => <div className="story-text-panel" key={item.image}>
