@@ -77,8 +77,10 @@ export default function BeaconColorSystem() {
     const oldSlots = cards.map((_, id) => (id + previousTurn.current) % 3);
     const ink = color => ['mist', 'lavender'].includes(color) ? colors.dark : '#fff';
     const settle = () => {
-      cards.forEach((card, id) => gsap.set(card, { y:slots[id] * 75,
-        scale:1, rotation:0, zIndex:slots[id] * 100, force3D:false, backgroundColor:colors[cardColors[id]], color:ink(cardColors[id]) }));
+      cards.forEach((card, id) => Object.assign(card.style, {
+        transform:`translateY(${slots[id] * 75}px)`, zIndex:String(slots[id] * 100),
+        backgroundColor:colors[cardColors[id]], color:ink(cardColors[id]),
+      }));
       root.dataset.paletteTransitioning = 'false';
     };
     const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -87,14 +89,9 @@ export default function BeaconColorSystem() {
       settle();
       return;
     }
-    const motion = { progress: 0 };
-    const setters = cards.map(card => ({
-      y: gsap.quickSetter(card, 'y', 'px'),
-      scale: gsap.quickSetter(card, 'scale'),
-    }));
     const starts = cards.map(card => ({
-      y: Number(gsap.getProperty(card, 'y')),
-      depth: Number(gsap.getProperty(card, 'zIndex')),
+      y: new DOMMatrixReadOnly(getComputedStyle(card).transform).m42,
+      depth: Number(getComputedStyle(card).zIndex),
       background: getComputedStyle(card).backgroundColor,
       ink: getComputedStyle(card).color,
     }));
@@ -104,22 +101,23 @@ export default function BeaconColorSystem() {
     }));
     previousTurn.current = paletteTurn;
     root.dataset.paletteTransitioning = 'true';
-    const timeline = gsap.to(motion, {
-      progress: 1, duration: 1.3, ease: 'sine.inOut',
-      onUpdate: () => {
-        const p = motion.progress;
-        cards.forEach((card, id) => {
-          const lift = oldSlots[id] === 2 ? Math.sin(Math.PI * p) : 0;
-          setters[id].y(starts[id].y + (slots[id] * 75 - starts[id].y) * p - lift * 28);
-          card.style.zIndex = String(Math.round(starts[id].depth + (slots[id] * 100 - starts[id].depth) * p));
-          setters[id].scale(1 - lift * .018);
-          cards[id].style.backgroundColor = blends[id].background(p);
-          cards[id].style.color = blends[id].ink(p);
-        });
-      },
-      onComplete: settle,
-    });
-    return () => { timeline.kill(); settle(); };
+    // The native document timeline keeps the same 1.3s duration under mobile
+    // load. GSAP's lag-smoothed ticker could fall behind the panel's real-time
+    // sequence and have its unfinished card transition replaced by the next one.
+    // Bake the existing desktop sine easing, lift and depth into shared frames.
+    const animations = cards.map((card, id) => card.animate(
+      Array.from({ length: 81 }, (_, frame) => {
+        const offset = frame / 80;
+        const p = (1 - Math.cos(Math.PI * offset)) / 2;
+        const lift = oldSlots[id] === 2 ? Math.sin(Math.PI * p) : 0;
+        const y = starts[id].y + (slots[id] * 75 - starts[id].y) * p - lift * 28;
+        return { offset, transform:`translateY(${y}px) scale(${1 - lift * .018})`,
+          zIndex:Math.round(starts[id].depth + (slots[id] * 100 - starts[id].depth) * p),
+          backgroundColor:blends[id].background(p), color:blends[id].ink(p) };
+      }), { duration:1300, easing:'linear', fill:'both' },
+    ));
+    animations[0].onfinish = () => { settle(); animations.forEach(animation => animation.cancel()); };
+    return () => { animations.forEach(animation => animation.cancel()); settle(); };
   }, [paletteTurn]);
   const rotation = -18.43 - Math.floor(badgeTick / 3) * 360 - [0, 122.32, 225][badgeIndex];
   return <div ref={ref} id="beacon-color-system" className="beacon-color-system" style={{ '--color-transition': `${transitionMs}ms` }} aria-label="Beacon Trust colour palette and brand applications">

@@ -198,7 +198,7 @@
 }
 
 .lumis-core-flows { width: 100%; min-width: 0; max-width: 100%; margin: 0; padding: 48px 0; scroll-margin-top: 24px; }
-.lumis-flow-list { width: 100%; min-width: 0; margin-top: 16px; display: flex; flex-direction: column; gap: 16px; }
+.lumis-flow-list { width: 100%; min-width: 0; margin-top: 16px; display: flex; flex-direction: column; gap: 48px; }
 .lumis-flow-item { width: 100%; min-width: 0; display: flex; flex-direction: column; gap: 16px; }
 .lumis-flow-media { width: 100%; max-width: 100%; aspect-ratio: 1127 / 728; overflow: hidden; background: #f6f5f8; }
 .lumis-flow-video { width:100%; height:100%; object-fit:contain; }
@@ -386,7 +386,7 @@
   .lumis-workflow-diagram { grid-template-columns: 1fr; }
   .lumis-core-flows { padding-block: 48px; }
   .lumis-scroll-viewport { top: 12px; }
-  .lumis-flow-list { margin-top: 16px; gap: 16px; }
+  .lumis-flow-list { margin-top: 16px; gap: 30px; }
   .lumis-flow-copy p { font-size: 16px; line-height: 24px; }
   .lumis-research h3 { font-size: 23px; }
   .lumis-research-table { font-size: 14px; }

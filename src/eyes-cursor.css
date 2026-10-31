@@ -5,8 +5,6 @@
 .eyes-cursor-pair img { width:27px; height:39px; flex:none; user-select:none; }
 @media (hover:hover) and (pointer:fine) {
   html.has-eyes-cursor, html.has-eyes-cursor * { cursor:none !important; }
-  html.has-eyes-cursor dialog[open], html.has-eyes-cursor dialog[open] * { cursor:auto !important; }
-  html.has-eyes-cursor dialog[open] button { cursor:pointer !important; }
 }
 @media (prefers-reduced-motion:reduce) {
   .eyes-cursor-pair { transition:none; }

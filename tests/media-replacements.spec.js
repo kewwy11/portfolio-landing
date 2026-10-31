@@ -72,15 +72,17 @@ for(const width of [393,1440]) test(`carousel keeps its cursor and closes with e
     const video=dialog.locator('video');
     await expect(video).toHaveAttribute('src',new RegExp(files[i].replaceAll('.','\\.')+'$'));
     await playing(video);
-    // Reproduce opening a top-layer dialog with the custom cursor active.
-    await page.evaluate(()=>document.documentElement.classList.add('has-eyes-cursor'));
-    await expect(dialog).not.toHaveCSS('cursor','none');
-    await expect(page.getByRole('button',{name:'Close full view'})).not.toHaveCSS('cursor','none');
+    // The custom cursor must render in the dialog's top layer and stay clickable through.
     await page.mouse.move(width-40,36);
+    await expect(dialog.locator('.eyes-cursor')).toBeVisible();
+    await expect(dialog).toHaveCSS('cursor','none');
+    await expect(dialog.locator('.eyes-cursor')).toHaveCSS('pointer-events','none');
     if(i===0) await page.getByRole('button',{name:'Close full view'}).click();
     else if(i===1) await page.mouse.click(2,100);
     else await page.keyboard.press('Escape');
     await expect(dialog).toHaveCount(0);
+    await page.mouse.move(100,100);
+    await expect(page.locator('body > .eyes-cursor')).toBeVisible();
     await expect(frame).toBeFocused();
     expect(await page.evaluate(()=>document.body.style.overflow)).not.toBe('hidden');
   }

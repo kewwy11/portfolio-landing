@@ -22,7 +22,7 @@ export { projects } from './projects.js';
 
 export const testimonials = [
   {
-    quote: 'I met Grateful through a recommendation from her former colleague. She started out as a freelancer redesigning Careerontrack Landing page, but she didn’t just redesign, she walked me through what the issues where and why it didn’t help the product we were trying to build. Her role eventually became permanent in the company as she became our lead designer.',
+    quote: 'I met Grateful through a recommendation from a former colleague of hers. She started out as a freelancer redesigning the Careerontrack landing page, but she didn’t just redesign it. She walked me through what the issues were and why the page wasn’t helping the product we were trying to build. She eventually joined the company permanently as our lead designer.',
     name: 'Samuel Olu', role: 'CEO, Careerontrack AI', image: 'home/review-samuel.png',
   },
   {
@@ -30,7 +30,7 @@ export const testimonials = [
     name: 'Ibrahim Adekunle', role: 'Lead Designer - SBSC', image: 'home/review-ibrahim.png',
   },
   {
-    quote: 'No doubt she is a talented individual that understands design. She created our brand and visual identity, from something that was barely a brief. She hoped on the call with I and my co-founder and had us explain the vision we had for the brand and in less than two weeks, we had a fully fleshed brand identity that has made us stand out in the finance space.',
+    quote: 'There’s no doubt that she is a talented individual who understands design. She created our brand and visual identity from something that was barely a brief. She hopped on a call with my co-founder and me and had us explain our vision for the brand. In less than two weeks, we had a fully developed brand identity that has helped us stand out in the finance space.',
     name: 'Jesse A.', role: 'Co-founder - Beacon Trust', image: 'home/review-beacon.svg', logo: true,
   },
 ];

@@ -12,6 +12,17 @@ const eyes = {
 export default function EyesCursor() {
   const ref = useRef(null);
   const [direction, setDirection] = useState('idle');
+  const [portalTarget, setPortalTarget] = useState(document.body);
+  const lastPointer = useRef(null);
+  useEffect(() => {
+    // A modal is in the browser's top layer, above every body-level z-index.
+    // Keep the same custom cursor inside the active dialog while it is open.
+    const syncTarget = () => setPortalTarget([...document.querySelectorAll('dialog[open]')].at(-1) || document.body);
+    const observer = new MutationObserver(syncTarget);
+    observer.observe(document.body, { childList:true, subtree:true, attributes:true, attributeFilter:['open'] });
+    syncTarget();
+    return () => observer.disconnect();
+  }, []);
   useEffect(() => {
     const cursor = ref.current;
     const pointer = matchMedia('(hover: hover) and (pointer: fine)');
@@ -27,8 +38,7 @@ export default function EyesCursor() {
       setDirection('idle');
     };
     const move = event => {
-      // Native modal dialogs render above the custom cursor's document layer.
-      if (document.querySelector('dialog[open]')) { hide(); return; }
+      lastPointer.current = event;
       if (!ready || !pointer.matches || event.pointerType !== 'mouse') { hide(); return; }
       cursor.style.transform = `translate3d(${event.clientX - 28}px,${event.clientY - 19.5}px,0)`;
       cursor.classList.add('is-visible');
@@ -48,7 +58,10 @@ export default function EyesCursor() {
       timer = setTimeout(() => setDirection('idle'), 180);
     };
     Promise.all([...cursor.querySelectorAll('img')].map(image => image.decode())).then(() => {
-      if (!disposed) ready = true;
+      if (!disposed) {
+        ready = true;
+        if (lastPointer.current) move(lastPointer.current);
+      }
     }).catch(() => {});
     const leave = event => { if (!event.relatedTarget) hide(); };
     const visibility = () => { if (document.hidden) hide(); };
@@ -68,10 +81,10 @@ export default function EyesCursor() {
       window.removeEventListener('blur', hide);
       pointer.removeEventListener('change', hide);
     };
-  }, []);
+  }, [portalTarget]);
   return createPortal(<div ref={ref} className="eyes-cursor" data-direction={direction} aria-hidden="true">
     {Object.entries(eyes).map(([state, pair]) => <div key={state} className={`eyes-cursor-pair${state === direction ? ' is-active' : ''}`}>
       {pair.map(src => <img key={src} src={`${root}${src}`} alt="" draggable="false" />)}
     </div>)}
-  </div>, document.body);
+  </div>, portalTarget);
 }
