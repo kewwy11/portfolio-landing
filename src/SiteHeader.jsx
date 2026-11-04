@@ -13,7 +13,7 @@ export default function Header() {
   const menuSocials = [
     ['X (Twitter)', 'x.svg'], ['LinkedIn', 'linkedin.svg'],
     ['Instagram', 'instagram.svg'], ['Behance', 'behance.svg'],
-    ['Pinterest', 'pinterest.svg'],
+    ['Pinterest', 'pinterest.svg'], ['GitHub', 'github.svg'],
   ];
   const dismissMenu = () => {
     setOpen(false);

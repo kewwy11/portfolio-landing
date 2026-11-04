@@ -1,3 +1,4 @@
+import Media from './Media.jsx';
 import React, { useEffect, useState } from 'react';
 import LumisBrandSections from './LumisBrandSections.jsx';
 import './lumis-brand-case-study.css';
@@ -109,7 +110,7 @@ export default function LumisBrandCaseStudy() {
           <p>Knowing this, we built the brand strategy around three things: the vision, positioning, and the people Lumis was created for.</p>
         </SectionIntro>
         <div className="lumis-brand-strategy-pair">
-          <img data-node-id="250:1020" className="lumis-brand-promise" src={`${base}assets/videos/lumis-promise.gif`} alt="Clarity for every skin: an inclusive dermatology brand" width="556" height="780" style={{width:'100%',height:'auto',objectFit:'contain'}} loading="lazy" />
+          <Media data-node-id="250:1020" className="lumis-brand-promise" video="videos/lumis-promise.mp4" alt="Clarity for every skin: an inclusive dermatology brand" width="556" height="780" style={{width:'100%',height:'auto',objectFit:'contain'}} loading="lazy" />
           <LumisPortraitMotion />
         </div>
         <LumisStrategyMotion items={strategyItems} />

@@ -158,6 +158,8 @@
   .beacon-about-composition .beacon-written-headline { font-size:32px; line-height:1.28125; }
   .beacon-about-composition .beacon-community-panel p { font-size:24px; }
   .beacon-about-composition .beacon-forming-rings { width:min(504.519px,calc(100% + 52px)); max-height:none; }
+  .beacon-stories-composition { aspect-ratio:440/780; }
+  .beacon-stories-composition .responsive-composition-stage { width:440px; transform:scale(calc(var(--composition-scale) * 1127 / 440)); }
   .beacon-stories-composition .beacon-story-strip { height:780px; }
   .beacon-stories-composition .beacon-story-track { top:44px; left:24px; }
   .bb-logo-grid, .bb-type-grid, .beacon-color-system, .beacon-application-pair, .li-pair, .lv-pair, .lumis-brand-strategy-pair, .lb-app-pair { grid-template-columns:repeat(2,minmax(0,1fr)); gap:var(--artwork-gap); }

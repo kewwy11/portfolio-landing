@@ -1,3 +1,4 @@
+import Media from './Media.jsx';
 import React, { useId, useLayoutEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
 import './beacon-brand-motion.css';
@@ -67,7 +68,7 @@ export function BeaconLogoShowcase() {
       <Canvas><div className="bb-photo-window">{['logo-car.png', 'logo-photo-team.png', 'logo-photo-opening.png'].map((name, i) => <img key={name} className={`bb-logo-photo bb-photo-${i}`} src={asset(name)} alt={['Friends celebrating in a car', 'A community joining hands', 'Celebrating a business opening'][i]} loading="lazy" />)}</div></Canvas>
       <Canvas><div className="bb-colour-panel"><div className="bb-logo-tile">{['blue', 'white', 'yellow'].map(colour => <img key={colour} className="bb-cycle-mark" src={asset(`logo-cycle-${colour}.svg`)} alt={colour === 'blue' ? 'Beacon Trust symbol' : ''} />)}</div><div className="bb-indicators" aria-hidden="true">{['#0b0bd6', '#fafafc', '#ffaf1d'].map(colour => <svg key={colour} viewBox="0 0 20 20"><circle cx="10" cy="10" r="7.5" fill={colour}/><circle className="bb-progress" cx="10" cy="10" r="9" fill="none" stroke="white" strokeWidth="1" strokeDasharray={2 * Math.PI * 9} strokeDashoffset={2 * Math.PI * 9} transform="rotate(-90 10 10)"/></svg>)}</div></div></Canvas>
     </div>
-    <Canvas height={750} className="bb-grid-panel"><img data-node-id="115:241" src={`${import.meta.env.BASE_URL}assets/videos/beacon-logo.gif`} alt="Beacon Trust logo construction animation" width="554" height="750" style={{width:554,height:750,objectFit:'contain'}} loading="lazy" /></Canvas>
+    <Canvas height={750} className="bb-grid-panel"><Media data-node-id="115:241" video="videos/beacon-logo.mp4" alt="Beacon Trust logo construction animation" width="554" height="750" style={{width:554,height:750,objectFit:'contain'}} loading="lazy" /></Canvas>
   </div>;
 }
 
@@ -151,7 +152,13 @@ export function BeaconTypography() {
     </Canvas>
     <div className="bb-type-grid"><div className="bb-type-left">
       <TypographySample />
-      <Canvas className="bb-comparison"><span className="bb-slide-label">Slide to reveal</span><div className="bb-compare-sans">Beacon Trust</div><div className="bb-compare-serif" style={{ clipPath: `inset(0 0 0 ${reveal}%)` }}><img src={asset('type-comparison-exact.svg')} alt=""/></div><span className="bb-divider" style={{ left: `${reveal}%` }}><b>‹›</b></span><input type="range" min="0" max="100" value={reveal} onChange={e => setReveal(Number(e.target.value))} aria-label="Compare Inter and Canela lettering"/></Canvas>
+      <Canvas className="bb-comparison"><span className="bb-slide-label">Slide to reveal</span><div className="bb-compare-sans">Beacon Trust</div><div className="bb-compare-serif" style={{ clipPath: `inset(0 0 0 ${reveal}%)` }}><img src={asset('type-comparison-exact.svg')} alt=""/></div><span className="bb-divider" style={{ left: `${reveal}%` }}><b>‹›</b></span><div className="bb-comparison-handle" role="slider" tabIndex={0} aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(reveal)} style={{ left: `${reveal}%` }} onPointerDown={e => { e.preventDefault(); e.currentTarget.focus({ preventScroll: true }); e.currentTarget.setPointerCapture(e.pointerId); }} onPointerMove={e => { if (!e.currentTarget.hasPointerCapture(e.pointerId)) return; const box = e.currentTarget.parentElement.getBoundingClientRect(); setReveal(Math.max(0, Math.min(100, (e.clientX - box.left) / box.width * 100))); }} onKeyDown={e => {
+        const delta = { ArrowLeft: -5, ArrowDown: -5, ArrowRight: 5, ArrowUp: 5 }[e.key];
+        if (delta !== undefined || e.key === 'Home' || e.key === 'End') {
+          e.preventDefault();
+          setReveal(value => e.key === 'Home' ? 0 : e.key === 'End' ? 100 : Math.max(0, Math.min(100, value + delta)));
+        }
+      }} aria-label="Compare Inter and Canela lettering"/></Canvas>
     </div><Canvas height={750} className="bb-statement"><StatementRotation /><img className="bb-relax-photo" src={asset('lifestyle-photo.png')} alt="A person relaxing at home" loading="lazy"/></Canvas></div>
   </div>;
 }

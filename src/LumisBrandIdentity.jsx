@@ -191,7 +191,7 @@ function Image({ src, x, y, width, height, alt = '', className = '' }) {
 }
 
 function LogoStage() {
-  return <div className="lb-logo-stage" data-node-id="280:1559"><img src={`${import.meta.env.BASE_URL}assets/videos/lumis-logo.gif`} alt="Lumis logo animation" width="1134" height="600" loading="lazy" style={{position:'absolute',inset:0,display:'block',width:'100%',height:'100%',objectFit:'contain'}} /></div>;
+  return <div className="lb-logo-stage" data-node-id="280:1559"><Media video="videos/lumis-logo.mp4" alt="Lumis logo animation" width="1134" height="600" loading="lazy" style={{position:'absolute',inset:0,display:'block',width:'100%',height:'100%',objectFit:'contain'}} /></div>;
 }
 
 function Anatomy() {
@@ -241,7 +241,7 @@ function Consultation() {
 
 function Palette() {
   return <Artboard width={1134} height={700}>
-    <img data-node-id="287:1763" src={`${import.meta.env.BASE_URL}assets/videos/lumis-palette.gif`} alt="Lumis colour palette animation over skin texture" width="1134" height="700" style={{width:1134,height:700,objectFit:'contain'}} loading="lazy" />
+    <Media data-node-id="287:1763" video="videos/lumis-palette.mp4" alt="Lumis colour palette animation over skin texture" width="1134" height="700" style={{width:1134,height:700,objectFit:'contain'}} loading="lazy" />
   </Artboard>;
 }
 

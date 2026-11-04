@@ -15,13 +15,13 @@
 .lumis-screen-viewer[open] { display:grid; place-items:center; }
 .lumis-screen-viewer::backdrop { background:transparent; }
 .lumis-screen-close { position:absolute; z-index:2; top:16px; right:20px; display:grid; place-items:center; width:44px; height:44px; padding:0; border-radius:50%; background:var(--pink); color:var(--cream); font:32px/1 Poppins,sans-serif; }
-.lumis-screen-full-frame { width:min(100%,1400px); max-height:100%; aspect-ratio:774/508; background:#eff4ff; padding:32px; }
+.lumis-screen-full-frame { width:min(100%,1400px); max-height:100%; aspect-ratio:774/508; background:transparent; padding:0; }
 .lumis-screen-full-frame video { width:100%; height:100%; object-fit:contain; }
 @media(max-width:760px) {
   .lumis-supporting-screens { padding:24px 0; }
   .lumis-supporting-frame { width:82vw; height:auto; aspect-ratio:774/508; padding:16px; }
   .lumis-screen-viewer { padding:76px 16px 32px; }
-  .lumis-screen-full-frame { padding:16px; }
+  .lumis-screen-full-frame { padding:0; }
 }
 @media(prefers-reduced-motion:reduce) {
   .lumis-supporting-track { animation:none; }

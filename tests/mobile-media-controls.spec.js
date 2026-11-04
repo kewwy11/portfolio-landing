@@ -1,0 +1,26 @@
+import {test,expect} from './browser-test.js';
+test.use({isMobile:true,hasTouch:true});
+test('mobile comparison handle drags and full view plays without its frame',async({page})=>{
+ await page.setViewportSize({width:393,height:852});
+ await page.goto('/projects/beacon-trust');
+ const slider=page.getByRole('slider');
+ await slider.scrollIntoViewIfNeeded();
+ const box=await slider.boundingBox();
+ const touch=await page.context().newCDPSession(page);
+ const x=box.x+box.width/2,y=box.y+box.height/2;
+ await touch.send('Input.dispatchTouchEvent',{type:'touchStart',touchPoints:[{x,y}]});
+ for(let delta=5;delta<=35;delta+=5) await touch.send('Input.dispatchTouchEvent',{type:'touchMove',touchPoints:[{x:x+delta,y}]});
+ await touch.send('Input.dispatchTouchEvent',{type:'touchEnd',touchPoints:[]});
+ await touch.detach();
+ expect(Number(await slider.getAttribute('aria-valuenow'))).toBeGreaterThan(60);
+ await expect(page.locator('.beacon-story-progress').first()).toBeVisible();
+ await page.goto('/projects/lumis');
+ await page.locator('#supporting-screens').scrollIntoViewIfNeeded();
+ const frame=await page.locator('.lumis-supporting-frame').first().boundingBox();
+ await page.touchscreen.tap(Math.max(20,Math.min(370,frame.x+frame.width/2)),frame.y+frame.height/2);
+ const video=page.locator('dialog video');
+ await expect.poll(()=>video.evaluate(v=>!v.paused&&!v.error&&v.currentTime>0)).toBe(true);
+ await expect(page.locator('.lumis-screen-full-frame')).toHaveCSS('padding','0px');
+ await page.getByRole('button',{name:'Close full view'}).click();
+ await expect(page.locator('dialog')).toHaveCount(0);
+});

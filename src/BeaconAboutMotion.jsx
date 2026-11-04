@@ -1,3 +1,4 @@
+import Media from './Media.jsx';
 import React, { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import './beacon-about-motion.css';
@@ -61,7 +62,7 @@ export default function BeaconAboutMotion() {
     return () => media.revert();
   }, []);
   return <div ref={ref} className="beacon-about-grid beacon-about-motion">
-    <img className="beacon-idea-film" data-node-id="120:299" src={`${import.meta.env.BASE_URL}assets/videos/beacon-idea.gif`} alt="The idea: Beacon Trust brings people together into a community rooted in trust" width="580" height="811" loading="lazy" />
+    <Media className="beacon-idea-film" data-node-id="120:299" video="videos/beacon-idea.mp4" alt="The idea: Beacon Trust brings people together into a community rooted in trust" width="580" height="811" loading="lazy" />
     <div className="beacon-about-right">
       <div className="beacon-futures-panel"><p className="beacon-written-headline" aria-label="Building better futures together..."><span aria-hidden="true"><Word name="beacon-building-word">Building</Word>{' '}<Word name="beacon-better-word">better</Word><br /><Word name="beacon-future-word">futures</Word>{' '}<Word name="beacon-together-word">together...</Word></span></p></div>
       <div className="beacon-community-panel"><img src={`${import.meta.env.BASE_URL}assets/beacon/about-community.png`} alt="A joyful group of people celebrating together" loading="lazy" /><p aria-label="Community plus Trust plus Hope">{['Community', '+ Trust', '+ Hope'].map(word => <span key={word} className="beacon-community-reveal" aria-hidden="true"><span>{word}</span></span>)}</p></div>

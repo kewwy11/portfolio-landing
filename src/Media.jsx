@@ -4,7 +4,8 @@ const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
 // File names are relative to public/assets. A poster remains visible until
 // a video file is supplied, or if the browser cannot load that video.
-export default function Media({ image, video, alt = '', className, width, height, loading, autoPlay = true, loop = true, muted = true, controls = false, warmup = false, reducedMotionControls = true }) {
+export default function Media({ image, video, alt = '', className, width, height, loading, autoPlay = true, loop = true, muted = true, controls = false, warmup = false, reducedMotionControls = true, ...props }) {
+  if (!video && image?.startsWith('videos/') && image.endsWith('.gif')) video = image.replace(/\.gif$/, '.mp4');
   const player = useRef(null);
   const [failedVideo, setFailedVideo] = useState(null);
   const [reducedMotion, setReducedMotion] = useState(true);
@@ -33,7 +34,10 @@ export default function Media({ image, video, alt = '', className, width, height
       element.autoplay = canPlay;
       if (!canPlay) {
         element.pause();
-      } else if (!element.ended) element.play().catch(() => {});
+      } else if (!element.ended) {
+        element.preload = 'auto';
+        element.play().catch(() => {});
+      }
     };
     const observer = typeof IntersectionObserver === 'undefined' ? null : new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting && entry.intersectionRatio > 0;
@@ -63,8 +67,8 @@ export default function Media({ image, video, alt = '', className, width, height
     return image ? <img src={asset(image)} alt={alt} className={className} width={width} height={height} loading={loading} decoding="async" /> : null;
   }
 
-  return <video key={video} ref={player} className={className} width={width} height={height}
-    src={asset(video)} poster={image ? asset(image) : undefined}
+  return <video {...props} key={video} ref={player} className={className} width={width} height={height}
+    src={asset(video)} poster={image && !image.endsWith('.gif') ? asset(image) : undefined}
     aria-label={alt || 'Portfolio video'} controls={controls || (reducedMotion && reducedMotionControls)} playsInline preload="metadata"
     autoPlay={autoPlay && !reducedMotion && visibleForPlayback} muted={muted} loop={loop}
     onError={() => setFailedVideo(video)} />;

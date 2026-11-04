@@ -27,6 +27,10 @@ export default function LumisSupportingScreens() {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
     dialog.current.showModal();
+    const player = dialog.current.querySelector('video');
+    player.defaultMuted = true;
+    player.muted = true;
+    player.play().catch(() => {});
     return () => {
       document.body.style.overflow = previousBody;
       document.documentElement.style.overflow = previousRoot;
@@ -43,8 +47,8 @@ export default function LumisSupportingScreens() {
         {[0, 1].map(copy => <div className="lumis-supporting-group" key={copy} aria-hidden={copy === 1 ? true : undefined}>
           {screens.map(screen => <button type="button" className="lumis-supporting-frame" key={screen.title}
             tabIndex={copy === 1 ? -1 : undefined} aria-label={`View ${screen.title} in full screen`} onClick={event => open(screen, event)}>
-            <Media video={`videos/${screen.video}`} alt={`${screen.title} walkthrough`} reducedMotionControls={false} />
-            <span className="lumis-supporting-tooltip" aria-hidden="true">Click for full view <span>↗</span></span>
+            <Media video={`videos/${screen.video}`} alt={`${screen.title} walkthrough`} autoPlay={!selected} reducedMotionControls={false} />
+            <span className="lumis-supporting-tooltip" aria-hidden="true">Click for full view</span>
           </button>)}
         </div>)}
       </div>

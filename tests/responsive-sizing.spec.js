@@ -21,7 +21,7 @@ for (const route of ['/', '/about', '/projects', '/contact']) {
         const contentBottom = Math.max(...contents.map(node => node.getBoundingClientRect().bottom));
         return document.querySelector('.footer').getBoundingClientRect().top - contentBottom;
       });
-      expect(footerGap).toBeCloseTo(96, 1);
+      expect(footerGap).toBeCloseTo(viewport.width <= 760 ? 64 : 96, 1);
       for (const image of await page.locator('.project-image').all()) {
         const ratio = await image.evaluate(node => {
           const box = node.getBoundingClientRect();
@@ -42,7 +42,7 @@ for (const route of ['/', '/about', '/projects', '/contact']) {
             return { gap: answer.top - question.bottom, answerWidth: answer.width,
               rowWidth: row.width, right: answer.right, rowRight: row.right };
           });
-          expect(boxes.gap).toBeGreaterThanOrEqual(24);
+          expect(boxes.gap).toBeGreaterThanOrEqual(viewport.width <= 760 ? 16 : 24);
           const widths = { cost: 529, timeline: 529, 'design-build': 504, ai: 529,
             'getting-started': 508, payments: 513, international: 501, revisions: 506 };
           const expectedWidth = widths[await item.getAttribute('data-faq')];

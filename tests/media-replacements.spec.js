@@ -6,29 +6,29 @@ async function playing(video) {
   expect(await video.evaluate(v => v.muted && v.loop && v.playsInline && !v.error)).toBe(true);
 }
 
-test('supplied GIFs occupy the hero, both Beacon covers and their mapped brand frames', async ({ page }) => {
+test('compatible animations occupy the hero, both Beacon covers and their mapped brand frames', async ({ page }) => {
   test.setTimeout(180000);
   await page.goto('/');
-  await expect(page.locator('.hero-inset').nth(1)).toHaveAttribute('src', /hero-design\.gif$/);
+  await expect(page.locator('.hero-inset').nth(1)).toHaveAttribute('src', /hero-design\.mp4$/);
   for (const route of ['/?category=branding', '/projects?category=branding']) {
     await page.goto(route);
-    const cover=page.locator('[data-project="beacon-trust"] .project-image img').first();
-    await expect(cover).toHaveAttribute('src', /beacon-cover\.gif$/);
+    const cover=page.locator('[data-project="beacon-trust"] .project-image video').first();
+    await expect(cover).toHaveAttribute('src', /beacon-cover\.mp4$/);
     await cover.scrollIntoViewIfNeeded();
-    await expect.poll(() => cover.evaluate(e => e.complete && e.naturalWidth > 0)).toBe(true);
+    await expect.poll(() => cover.evaluate(e => e.readyState >= 2 && e.videoWidth > 0)).toBe(true);
   }
   for (const [route, slots] of [
-    ['/projects/beacon-trust', [['120:299','beacon-idea.gif'], ['115:241','beacon-logo.gif']]],
-    ['/projects/lumis-brand', [['250:1020','lumis-promise.gif'], ['280:1559','lumis-logo.gif'], ['287:1763','lumis-palette.gif'], ['312:3981','lumis-care.gif']]],
+    ['/projects/beacon-trust', [['120:299','beacon-idea.mp4'], ['115:241','beacon-logo.mp4']]],
+    ['/projects/lumis-brand', [['250:1020','lumis-promise.mp4'], ['280:1559','lumis-logo.mp4'], ['287:1763','lumis-palette.mp4'], ['312:3981','lumis-care.mp4']]],
   ]) {
     await page.goto(route);
     for (const [node, file] of slots) {
       console.log('Checking',node,file);
       const slot=page.locator(`[data-node-id="${node}"]`);
-      const image=slot.locator('img').or(slot.and(page.locator('img'))).first();
+      const image=slot.locator('video').or(slot.and(page.locator('video'))).first();
       await expect(image).toHaveAttribute('src',new RegExp(file.replaceAll('.','\\.')+'$'));
       await image.scrollIntoViewIfNeeded();
-      await expect.poll(() => image.evaluate(e => e.complete && e.naturalWidth>0),{timeout:30000}).toBe(true);
+      await expect.poll(() => image.evaluate(e => e.readyState >= 2 && e.videoWidth>0),{timeout:30000}).toBe(true);
       const box=await image.boundingBox();
       expect(box.width).toBeGreaterThan(100);
       expect(box.height).toBeGreaterThan(100);
