@@ -1,0 +1,14 @@
+.clarity-consent { position: fixed; z-index: 10000; inset: auto 20px 20px; display: flex; align-items: center; justify-content: space-between; gap: 24px; max-width: 920px; margin-inline: auto; padding: 20px 22px; color: #171714; background: #faf3e8; border: 1px solid rgba(23, 23, 20, .18); box-shadow: 0 12px 40px rgba(0, 0, 0, .18); font: inherit; }
+.clarity-consent-copy { max-width: 600px; }
+.clarity-consent-copy strong { display: block; margin-bottom: 5px; font-size: 16px; }
+.clarity-consent-copy p { margin: 0; font-size: 13px; line-height: 1.5; }
+.clarity-consent-actions { display: flex; flex: none; flex-wrap: wrap; align-items: center; gap: 8px; }
+.clarity-consent-actions button { min-height: 42px; padding: 0 14px; border: 1px solid #171714; border-radius: 0; font: inherit; font-size: 13px; cursor: pointer; }
+.clarity-consent-reject, .clarity-consent-close { color: #171714; background: transparent; }
+.clarity-consent-accept { color: #faf3e8; background: #171714; }
+.clarity-consent-actions button:focus-visible { outline: 2px solid #8b3d26; outline-offset: 3px; }
+@media (max-width: 680px) {
+  .clarity-consent { inset-inline: 12px; bottom: 12px; align-items: stretch; flex-direction: column; gap: 14px; padding: 16px; }
+  .clarity-consent-actions { display: grid; grid-template-columns: 1fr 1fr; }
+  .clarity-consent-close { grid-column: 1 / -1; }
+}

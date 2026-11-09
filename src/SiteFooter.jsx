@@ -4,6 +4,7 @@ import RevealHeading from './RevealHeading.jsx';
 import { navigationHref } from './navigation.js';
 import './footer.css';
 import FooterMasthead from './FooterMasthead.jsx';
+import { openClarityPreferences } from './ClarityConsent.jsx';
 
 function FooterLink({ children, ...props }) {
   return <a {...props} className="footer-rolling-link">
@@ -28,7 +29,7 @@ export default function Footer() {
         const label = name === 'X (Twitter)' ? 'X(Twitter)' : name;
         return url ? <FooterLink key={name} href={url} target="_blank" rel="noopener noreferrer">{label}</FooterLink> : <span className="social-label" key={name}>{label}</span>;
       })}</div></div>
-    </div><small>©2026 Grateful Erhis</small></div>
+    </div><small>©2026 Grateful Erhis · <button className="footer-privacy-link" type="button" onClick={openClarityPreferences}>Privacy choices</button></small></div>
     </div>
   </footer>;
 }
