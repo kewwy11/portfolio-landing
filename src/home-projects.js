@@ -8,7 +8,7 @@ export const homeProjects = [
   },
   {
     id: 'french-cake', name: 'The French Cake Company', category: 'UI/UX',
-    image: 'french-0-imgProperty1Frame14.png', video: 'videos/french-cake-project.mp4', height: 373,
+    image: 'videos/french-cake-project-poster.webp', video: 'videos/french-cake-project.mp4', height: 373,
     alt: 'The French Cake Company redesigned website', tags: ['Responsive', 'Landing page'],
   },
   {

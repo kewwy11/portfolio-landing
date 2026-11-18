@@ -18,7 +18,8 @@ export default function App() {
   const projects = isProjectsPage();
   const contact = isContactPage();
   useEffect(() => {
-    document.title = lumisBrand ? 'Lumis Brand Identity — Grateful Erhis' : beacon ? 'Beacon Trust — Grateful Erhis' : lumis ? 'Lumis Dermatologists â€” Grateful Erhis' : about ? 'About â€” Grateful Erhis'
+    document.title = frenchCake ? 'The French Cake Company — Grateful Erhis'
+      : lumisBrand ? 'Lumis Brand Identity — Grateful Erhis' : beacon ? 'Beacon Trust — Grateful Erhis' : lumis ? 'Lumis Dermatologists â€” Grateful Erhis' : about ? 'About â€” Grateful Erhis'
       : projects ? 'Projects â€” Grateful Erhis'
         : contact ? 'Contact â€” Grateful Erhis' : 'Grateful Erhis â€” Visual Designer';
     if (!window.location.hash) return;
@@ -35,6 +36,6 @@ export default function App() {
       });
     });
     return () => { mounted = false; cancelAnimationFrame(frame); };
-  }, [about, projects, contact, lumis, lumisBrand, beacon]);
+  }, [about, projects, contact, lumis, lumisBrand, beacon, frenchCake]);
   return frenchCake ? <FrenchCakeCaseStudy /> : lumisBrand ? <LumisBrandCaseStudy /> : beacon ? <BeaconCaseStudy /> : lumis ? <LumisCaseStudy /> : about ? <AboutPage /> : projects ? <ProjectsPage /> : contact ? <ContactPage /> : <LandingPage />;
 }
