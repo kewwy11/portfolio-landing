@@ -7,6 +7,11 @@ export const homeProjects = [
     alt: 'Skin analysis interface on a phone resting in blue striped fabric', tags: [],
   },
   {
+    id: 'french-cake', name: 'The French Cake Company', category: 'UI/UX',
+    image: 'french-0-imgProperty1Frame14.png', video: 'videos/french-cake-project.mp4', height: 373,
+    alt: 'The French Cake Company redesigned website', tags: ['Responsive', 'Landing page'],
+  },
+  {
     id: 'lumis', name: 'Lumis Dermatologists', category: 'UI/UX',
     image: 'home/project-lumis.jpg', hoverImage: 'home/project-lumis-hover.jpg', height: 373,
     alt: 'Lumis dermatology dashboard displayed on a laptop',

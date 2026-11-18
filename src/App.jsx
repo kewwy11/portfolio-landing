@@ -4,12 +4,14 @@ import AboutPage from './AboutPage.jsx';
 import ProjectsPage from './ProjectsPage.jsx';
 import ContactPage from './ContactPage.jsx';
 import LumisCaseStudy from './LumisCaseStudy.jsx';
+import FrenchCakeCaseStudy from './FrenchCakeCaseStudy.jsx';
 import LumisBrandCaseStudy from './LumisBrandCaseStudy.jsx';
 import BeaconCaseStudy from './BeaconCaseStudy.jsx';
 import { isAboutPage, isProjectsPage, isContactPage } from './navigation.js';
 
 export default function App() {
   const lumis = window.location.pathname.replace(/\/+$/, '') === `${import.meta.env.BASE_URL}projects/lumis`;
+  const frenchCake = window.location.pathname.replace(/\/+$/, '') === `${import.meta.env.BASE_URL}projects/french-cake`;
   const lumisBrand = window.location.pathname.replace(/\/+$/, '') === `${import.meta.env.BASE_URL}projects/lumis-brand`;
   const beacon = window.location.pathname.replace(/\/+$/, '') === `${import.meta.env.BASE_URL}projects/beacon-trust`;
   const about = isAboutPage();
@@ -34,5 +36,5 @@ export default function App() {
     });
     return () => { mounted = false; cancelAnimationFrame(frame); };
   }, [about, projects, contact, lumis, lumisBrand, beacon]);
-  return lumisBrand ? <LumisBrandCaseStudy /> : beacon ? <BeaconCaseStudy /> : lumis ? <LumisCaseStudy /> : about ? <AboutPage /> : projects ? <ProjectsPage /> : contact ? <ContactPage /> : <LandingPage />;
+  return frenchCake ? <FrenchCakeCaseStudy /> : lumisBrand ? <LumisBrandCaseStudy /> : beacon ? <BeaconCaseStudy /> : lumis ? <LumisCaseStudy /> : about ? <AboutPage /> : projects ? <ProjectsPage /> : contact ? <ContactPage /> : <LandingPage />;
 }
