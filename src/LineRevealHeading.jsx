@@ -48,8 +48,8 @@ function measureLines(heading, source, text) {
   });
 }
 
-export default function LineRevealHeading({ as: Tag = 'h2', children, stagger = 140, className = '', ...props }) {
-  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.15, repeat: true, rootMargin: '0px' });
+export default function LineRevealHeading({ as: Tag = 'h2', children, stagger = 140, repeat = true, className = '', ...props }) {
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.15, repeat, rootMargin: '0px' });
   const sourceRef = useRef(null);
   const [lines, setLines] = useState([]);
   const [fontsReady, setFontsReady] = useState(false);

@@ -1,13 +1,14 @@
 import { test, expect } from './browser-test.js';
 
 const uiProjects = [
-  { name: 'Coming soon', tags: [], image: 'home/project-coming-soon.jpg' },
+  { name: 'The French Cake Company', tags: ['Responsive', 'Landing page'], video: '/assets/videos/french-cake-project.mp4' },
   { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'], image: 'home/project-lumis.jpg' },
   { name: 'Piggyvest', tags: ['App', 'Mobile', 'Dashboard'], image: 'home/project-piggyvest.jpg' },
+  { name: 'Coming soon', tags: [], image: 'home/project-coming-soon.jpg' },
 ];
 const brandProjects = [
-  { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], video: true },
-  { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], image: 'home/project-beacon.png' },
+  { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], video: '/assets/videos/lumis-brand-reel.mp4' },
+  { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], video: '/assets/videos/beacon-cover.mp4' },
 ];
 const piggyvestCaseStudy = 'https://www.behance.net/gallery/231953873/Piggyvest-Case-Study';
 
@@ -22,15 +23,7 @@ test('Piggyvest image and title open the Behance case study from both galleries'
 });
 
 async function expectGallery(page, category) {
-  const home = !new URL(page.url()).pathname.startsWith('/projects');
-  const expected = home ? (category === 'Branding' ? [
-    { name: 'Lumis', tags: ['Brand Identity & Strategy', 'Visual Direction'], video: true },
-    { name: 'Beacon Trust', tags: ['Brand Identity', 'Visual Direction'], image: 'home/project-beacon.png' },
-  ] : [
-    { name: 'Coming soon', tags: [], image: 'home/project-coming-soon.jpg' },
-    { name: 'Lumis Dermatologists', tags: ['Web', 'Dashboard'], image: 'home/project-lumis.jpg' },
-    { name: 'Piggyvest', tags: ['App', 'Mobile', 'Dashboard'], image: 'home/project-piggyvest.jpg' },
-  ]) : category === 'Branding' ? brandProjects : uiProjects;
+  const expected = category === 'Branding' ? brandProjects : uiProjects;
   const cards = page.locator('.project-grid .project');
   await expect(cards).toHaveCount(expected.length);
   await expect(page.getByRole('button', { name: category, exact: true })).toHaveAttribute('aria-pressed', 'true');
@@ -48,7 +41,7 @@ async function expectGallery(page, category) {
       }).toBe(true);
       await expect(image).toHaveAttribute('alt', /\S/);
     } else if (expected[index].video) {
-      await expect(card.locator('video')).toHaveAttribute('src', /\/assets\/videos\/lumis-brand-reel\.mp4$/);
+      await expect(card.locator('video')).toHaveAttribute('src', expected[index].video);
     } else {
       await expect(card.locator('.project-placeholder')).toHaveCount(1);
     }
@@ -199,6 +192,7 @@ test('both project categories fit tablet and narrow screens without clipping cap
         expect(bound.captionFits).toBe(true);
       }
       if (width <= 760) {
+        await expect(page.locator('.project-grid')).toHaveCSS('row-gap', '20px');
         expect(bounds[0].x).toBe(bounds[1].x);
         expect(bounds[1].imageTop).toBeGreaterThan(bounds[0].imageTop + bounds[0].imageHeight);
       } else {
@@ -212,7 +206,7 @@ test('both project categories fit tablet and narrow screens without clipping cap
       const gallery = document.querySelector('.project-grid').getBoundingClientRect();
       return footer.top - gallery.bottom;
     });
-    expect(footerGap).toBeCloseTo(96, 1);
+    expect(footerGap).toBeCloseTo(width <= 760 ? 64 : 96, 1);
   }
 });
 

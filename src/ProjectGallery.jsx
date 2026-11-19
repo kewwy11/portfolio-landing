@@ -1,6 +1,5 @@
 ﻿import React, { useEffect, useState } from 'react';
 import { projects, projectCategories } from './projects.js';
-import { useRef } from 'react';
 import { homeProjects } from './home-projects.js';
 import Media from './Media.jsx';
 import RevealHeading from './RevealHeading.jsx';
@@ -8,20 +7,14 @@ import './project-gallery.css';
 
 export default function ProjectGallery({ page = false, headingId = 'projects-heading', ready = true }) {
   const [category, setCategory] = useState(() => new URLSearchParams(window.location.search).get('category') === 'branding' ? 'Branding' : 'UI/UX');
-  const [menuOpen, setMenuOpen] = useState(false);
-  const menuRef = useRef(null);
   const [touched, setTouched] = useState(false);
   const filtered = (page ? projects : homeProjects).filter(project => project.category === category);
   const gridId = `${headingId}-grid`;
 
   useEffect(() => {
-    const dismiss = event => { if (!menuRef.current?.contains(event.target)) setMenuOpen(false); };
-    const escape = event => { if (event.key === 'Escape' && menuRef.current?.contains(document.activeElement)) { setMenuOpen(false); menuRef.current?.querySelector('button')?.focus(); } };
     const restore = () => setCategory(new URLSearchParams(window.location.search).get('category') === 'branding' ? 'Branding' : 'UI/UX');
-    document.addEventListener('pointerdown', dismiss);
-    document.addEventListener('keydown', escape);
     window.addEventListener('popstate', restore);
-    return () => { document.removeEventListener('pointerdown', dismiss); document.removeEventListener('keydown', escape); window.removeEventListener('popstate', restore); };
+    return () => window.removeEventListener('popstate', restore);
   }, []);
 
   useEffect(() => {
@@ -36,7 +29,6 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
   }, [page]);
 
   const selectCategory = label => {
-    setMenuOpen(false);
     if (label === category) return;
     setTouched(true);
     setCategory(label);
@@ -50,14 +42,6 @@ export default function ProjectGallery({ page = false, headingId = 'projects-hea
       <RevealHeading as={page ? 'h1' : 'h2'} id={headingId} ready={ready}>
         {page ? 'My projects' : 'Projects'}
       </RevealHeading>
-      <div ref={menuRef} className="mobile-project-filter" onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setMenuOpen(false); }}>
-        <button type="button" className="mobile-filter-toggle" aria-label={`Filter projects: ${category}`} aria-expanded={menuOpen} aria-controls={`${gridId}-filter`} onClick={() => setMenuOpen(open => !open)}>
-          {category}<img src={`${import.meta.env.BASE_URL}assets/home/filter-chevron.svg`} alt="" />
-        </button>
-        {menuOpen && <div className="mobile-filter-options" id={`${gridId}-filter`} role="group" aria-label="Project categories">
-          {projectCategories.map(label => <button key={label} type="button" aria-pressed={category === label} aria-controls={gridId} onClick={() => { selectCategory(label); menuRef.current?.querySelector('button')?.focus(); }}>{label}</button>)}
-        </div>}
-      </div>
       <div className="filters" role="group" aria-label="Filter projects" data-category={category} data-touched={touched}>
         <span className="filter-indicator" aria-hidden="true" />
         {projectCategories.map(label => <button key={label} type="button"

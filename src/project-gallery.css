@@ -33,9 +33,16 @@
   .tags { flex-wrap: wrap; max-width: 100%; }
 }
 @media (max-width: 760px) {
-  .filters { --filter-inset: 5px; width: 196px; }
-  .filters button { font-size: 13px; padding: 10px 12px; line-height: 19.5px; }
-  .project-grid { margin-top: 28px; gap: 30px; grid-template-columns: 1fr; }
+  .filters { --filter-inset: 5px; --ui-filter-width: 74.5px; width: 154px; padding-block: 3px; }
+  .filter-indicator { top: 5px; bottom: 5px; width: var(--ui-filter-width); }
+  .filters[data-category='Branding'] .filter-indicator {
+    width: calc(100% - 2 * var(--filter-inset) - var(--ui-filter-width));
+    transform: translate3d(var(--ui-filter-width), 0, 0);
+  }
+  .filters button { padding: 10px 0; color: var(--pink); font-size: 11px; line-height: 16px; }
+  .filters button:first-of-type { flex: 0 0 var(--ui-filter-width); }
+  .filters button:focus-visible { outline-offset: -4px; }
+  .project-grid { grid-template-columns: 1fr; }
   .project-caption { margin-top: 12px; gap: 12px; }
   .project-caption h3 { font-size: 15px; line-height: 22.5px; }
   .tags { gap: 6px; }

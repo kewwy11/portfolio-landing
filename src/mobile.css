@@ -1,4 +1,3 @@
-.mobile-project-filter { display:none; }
 .responsive-composition { width:100%; }
 .responsive-composition-stage { display:contents; }
 .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip-path:inset(50%); white-space:nowrap; border:0; }
@@ -38,19 +37,12 @@
   h2, .about-heading h1, .about-experience h2, .contact-page h1, .projects-page h1 { font-size:32px; line-height:1.08; letter-spacing:0; }
   .contact-page h1 { font-size:min(32px,7.4vw); }
   .section-heading { flex-wrap:nowrap; gap:12px; min-height:44px; }
-  .project-gallery .section-heading > .scroll-heading { min-width:0; }
-  .project-gallery .filters { display:none; }
-  .mobile-project-filter { position:relative; display:block; flex:none; width:96px; color:var(--pink); z-index:3; }
-  .mobile-filter-toggle { display:flex; align-items:center; justify-content:center; gap:5px; width:100%; border:0; border-radius:100px; padding:10px 14px; color:inherit; background:#f4d6e9; font:400 12px/18px Poppins,sans-serif; }
-  .mobile-filter-toggle img { width:16px; height:16px; filter:brightness(0) saturate(100%) invert(19%) sepia(95%) saturate(4985%) hue-rotate(322deg); transition:transform .2s ease; }
-  .mobile-filter-toggle[aria-expanded="true"] img { transform:rotate(180deg); }
-  .mobile-filter-toggle:focus-visible, .mobile-filter-options button:focus-visible { outline:2px solid var(--pink); outline-offset:2px; }
-  .mobile-filter-options { position:absolute; top:calc(100% + 12px); right:0; width:136px; border-radius:10px; overflow:hidden; background:#f4d6e9; }
-  .mobile-filter-options button { display:block; width:100%; padding:10px; text-align:left; color:inherit; background:transparent; font:400 12px/18px Poppins,sans-serif; }
-  .mobile-filter-options button + button { border-top:.5px solid #ff98d2; }
-  .project-grid, .projects-page .project-grid { margin-top:24px; gap:16px; }
+  .project-gallery .section-heading { gap:8px; }
+  .project-gallery .section-heading > .scroll-heading { min-width:0; font-size:clamp(22px, calc(14vw - 23px), 32px); }
+  .project-grid, .projects-page .project-grid { margin-top:24px; gap:20px; }
   .project-image { aspect-ratio:362/236; }
   .project-caption { flex-wrap:nowrap; align-items:center; margin-top:10px; gap:8px; }
+  [data-project='french-cake'] .project-caption { align-items:flex-start; }
   .project-caption h3 { font-size:clamp(12px,4.07vw,16px); line-height:1.5; flex:1; }
   .tags { flex:none; flex-wrap:nowrap; gap:5px; }
   .tags li { padding:8px 10px; font-size:10px; line-height:1.2; }

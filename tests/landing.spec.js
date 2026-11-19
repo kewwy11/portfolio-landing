@@ -16,14 +16,21 @@ for (const width of [1440, 768, 390, 320]) {
     page.on('pageerror', error => errors.push(error.message));
     await page.goto('/');
     await page.evaluate(() => document.fonts.ready);
-    for (const image of await page.locator('img[loading="lazy"]').all()) {
+    const images = page.locator('img');
+    // Use layout boxes so desktop hover previews count and mobile-only hidden artwork does not.
+    const lazyImageIndexes = await images.evaluateAll(nodes => nodes.flatMap((img, index) =>
+      img.loading === 'lazy' && img.getClientRects().length > 0 ? [index] : []));
+    for (const index of lazyImageIndexes) {
+      const image = images.nth(index);
       await image.evaluate(img => img.scrollIntoView({ behavior: 'instant', block: 'center' }));
       await expect.poll(() => image.evaluate(img => img.complete && img.naturalWidth > 0), {
         message: `Load ${await image.getAttribute('src')}`,
         timeout: 30_000,
       }).toBe(true);
     }
-    await expect.poll(() => page.locator('img').evaluateAll(images => images.every(img => img.complete && img.naturalWidth > 0)), { timeout: 30_000 }).toBe(true);
+    await expect.poll(() => images.evaluateAll(nodes => nodes
+      .filter(img => img.getClientRects().length > 0 && (!img.complete || img.naturalWidth === 0))
+      .map(img => img.getAttribute('src'))), { timeout: 30_000 }).toEqual([]);
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
     expect(errors).toEqual([]);
     await page.evaluate(() => scrollTo({ top: 0, behavior: 'instant' }));

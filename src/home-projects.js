@@ -2,13 +2,8 @@
 // full Projects page's gallery.
 export const homeProjects = [
   {
-    id: 'coming-soon', name: 'Coming soon', category: 'UI/UX',
-    image: 'home/project-coming-soon.jpg', height: 421,
-    alt: 'Skin analysis interface on a phone resting in blue striped fabric', tags: [],
-  },
-  {
     id: 'french-cake', name: 'The French Cake Company', category: 'UI/UX',
-    image: 'videos/french-cake-project-poster.webp', video: 'videos/french-cake-project.mp4', height: 373,
+    image: 'videos/french-cake-project-poster.webp', video: 'videos/french-cake-project.mp4', height: 421,
     alt: 'The French Cake Company redesigned website', tags: ['Responsive', 'Landing page'],
   },
   {
@@ -20,10 +15,15 @@ export const homeProjects = [
   },
   {
     id: 'piggyvest', name: 'Piggyvest', category: 'UI/UX',
-    image: 'home/project-piggyvest.jpg', hoverImage: 'home/project-piggyvest-hover-updated.webp', height: 421,
+    image: 'home/project-piggyvest.jpg', hoverImage: 'home/project-piggyvest-hover-updated.webp', height: 373,
     alt: 'Piggyvest mobile finance interface displayed on a phone',
     hoverAlt: 'Piggyvest app screens on two phones against a dark textured surface',
     tags: ['App', 'Mobile', 'Dashboard'],
+  },
+  {
+    id: 'coming-soon', name: 'Coming soon', category: 'UI/UX',
+    image: 'home/project-coming-soon.jpg', height: 421,
+    alt: 'Skin analysis interface on a phone resting in blue striped fabric', tags: [],
   },
   {
     id: 'lumis-brand', name: 'Lumis', category: 'Branding',

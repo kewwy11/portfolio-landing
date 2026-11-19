@@ -23,7 +23,7 @@ export default function App() {
     }
     document.title = frenchCake ? 'The French Cake Company — Grateful Erhis'
       : lumisBrand ? 'Lumis Brand Identity — Grateful Erhis' : beacon ? 'Beacon Trust — Grateful Erhis' : lumis ? 'Lumis Dermatologists â€” Grateful Erhis'
-      : projects ? 'Projects â€” Grateful Erhis'
+      : projects ? 'Projects — Grateful Erhis'
         : contact ? 'Contact â€” Grateful Erhis' : 'Grateful Erhis â€” Visual Designer';
     if (!window.location.hash) return;
     let mounted = true;

@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import LineRevealHeading from './LineRevealHeading.jsx';
 import Media from './Media.jsx';
 import useRevealOnScroll from './useRevealOnScroll.js';
 import { coreFlows, overviewCopy, problems, reflectionCopy, solutionCopy } from './french-cake-content.js';
@@ -30,26 +31,37 @@ function Paragraphs({ items, className }) {
   </div>;
 }
 
-function Heading({ label, children }) {
+function SlideHeading(props) {
+  return <LineRevealHeading repeat={false} stagger={200} {...props} />;
+}
+
+function Heading({ as = 'h2', label, children }) {
   return <header className="french-heading">
-    <p className="french-eyebrow">{label}</p>
-    <h2>{children}</h2>
+    <SlideHeading as="p" className="french-eyebrow">{label}</SlideHeading>
+    <SlideHeading as={as}>{children}</SlideHeading>
   </header>;
 }
 
-function Film({ name, label, width, height, poster }) {
-  return <div className="french-media" style={{ aspectRatio: `${width} / ${height}` }}>
-    <Media video={`videos/${name}`} image={poster} alt={label} width={width} height={height} />
+function RevealFrame({ as: Tag = 'div', className, ...props }) {
+  const { ref, revealed, reducedMotion } = useRevealOnScroll({ threshold: 0.12 });
+  const animate = !reducedMotion && typeof window.IntersectionObserver === 'function';
+  return <div ref={ref} className="french-frame" data-revealed={!animate || revealed}>
+    <Tag {...props} className={className} />
   </div>;
+}
+
+function Film({ name, label, width, height, reveal = true }) {
+  const Frame = reveal ? RevealFrame : 'div';
+  const poster = `videos/${name.replace(/\.mp4$/, '-poster.webp')}`;
+  return <Frame className="french-media" style={{ aspectRatio: `${width} / ${height}` }}>
+    <Media video={`videos/${name}`} image={poster} alt={label} width={width} height={height} />
+  </Frame>;
 }
 
 function Hero() {
   return <section id="hero" className="french-section french-hero">
-    <header className="french-heading">
-      <p className="french-eyebrow">A cake delivery website redesign concept</p>
-      <h1>Small Design Decisions. Bigger Business Opportunities.</h1>
-    </header>
-    <Film name="french-cake-hero.mp4" label="The French Cake Company hero film" width={1127} height={626} />
+    <Heading as="h1" label="A cake delivery website redesign concept">Small Design Decisions. Bigger Business Opportunities.</Heading>
+    <Film name="french-cake-hero.mp4" label="The French Cake Company hero film" width={1127} height={626} reveal={false} />
     <dl className="french-meta">
       {details.map(([label, lines]) => <div key={label}>
         <dt>{label}</dt>
@@ -90,16 +102,17 @@ function Overview() {
 }
 
 function Banner({ image, children, className }) {
-  return <header className={`french-banner ${className}`}>
+  return <RevealFrame as="header" className={`french-banner ${className}`}>
     <img src={asset(image)} alt="" loading="lazy" />
     <div>{children}</div>
-  </header>;
+  </RevealFrame>;
 }
 
-function EntryTitle({ number, title, continuation, large = false }) {
+function EntryTitle({ number, title, continuation, badge, large = false }) {
+  const heading = `${number}. ${title}${continuation ? `\n${continuation}` : ''}`;
   return <header className={`french-entry-title${large ? ' french-entry-title-large' : ''}`}>
-    <h3><span>{number}.</span><span>{title}{continuation && <><br />{continuation}</>}</span></h3>
-    <p>Existing Experience</p>
+    <SlideHeading as="h3" className={continuation ? 'french-entry-title-wrapped' : undefined}>{heading}</SlideHeading>
+    <p>{badge}</p>
   </header>;
 }
 
@@ -123,7 +136,7 @@ function AcquisitionDiagram() {
 }
 
 function DiscoveryVisual() {
-  return <figure className="french-audit-frame french-discovery">
+  return <RevealFrame as="figure" className="french-audit-frame french-discovery">
     <img className="french-discovery-screen" src={asset('french-4-imgFrame1411.png')}
       alt="Original product and service columns with their calls to action" loading="lazy" />
     <img className="french-discovery-outline french-discovery-outline-first"
@@ -131,15 +144,15 @@ function DiscoveryVisual() {
     <img className="french-discovery-outline french-discovery-outline-second"
       src={asset('french-4-imgVector2.svg')} alt="" />
     <figcaption>Too many informations and decisions cramped in one place, with a CTA that is very easy to miss</figcaption>
-  </figure>;
+  </RevealFrame>;
 }
 
 function TrustVisual() {
-  return <figure className="french-audit-frame french-trust">
+  return <RevealFrame as="figure" className="french-audit-frame french-trust">
     <img src={asset('french-4-img91.png')} alt="" loading="lazy" />
     <img src={asset('french-4-img92.png')} alt="" loading="lazy" />
     <figcaption>Missing Testimonial section!!!!</figcaption>
-  </figure>;
+  </RevealFrame>;
 }
 
 function Problem() {
@@ -153,8 +166,8 @@ function Problem() {
   return <section id="problem" className="french-section french-problem">
     <div className="french-problem-intro">
       <Banner image="french-4-imgFrame1409.png" className="french-problem-banner">
-        <p className="french-eyebrow">The problem</p>
-        <h2>What happens when poor design<br className="french-desktop-break" /> meets good business?</h2>
+        <SlideHeading as="p" className="french-eyebrow">The problem</SlideHeading>
+        <SlideHeading>{'What happens when poor design\nmeets good business?'}</SlideHeading>
       </Banner>
       <div className="french-copy french-copy-column">
         <p>The French Cake Company has spent over two decades creating beautifully crafted cakes for memorable occasions. However, its digital experience had several design gaps that could make it harder for customers to discover products, build trust, and complete purchases.</p>
@@ -163,11 +176,11 @@ function Problem() {
     </div>
     <div className="french-entries">
       {problems.map(({ title, heading, paragraphs }, index) => <article className="french-entry" key={title}>
-        <EntryTitle number={index + 1} title={title} large={index === 3} />
+        <EntryTitle number={index + 1} title={title} badge="Existing Experience" large={index === 3} />
         <div className="french-entry-content">
           {visuals[index]}
           <div className={`french-audit-copy french-audit-copy-${index + 1}`}>
-            <h4>{heading}</h4>
+            <SlideHeading as="h4">{heading}</SlideHeading>
             <Paragraphs className={index === 3 ? 'french-copy-spaced' : undefined} items={paragraphs} />
           </div>
         </div>
@@ -178,8 +191,7 @@ function Problem() {
 
 function Solution() {
   return <section id="solution" className="french-section french-solution">
-    <Film name="french-cake-project.mp4" poster="videos/french-cake-project-poster.webp"
-      label="Redesigned French Cake Company website" width={1127} height={634} />
+    <Film name="french-cake-project.mp4" label="Redesigned French Cake Company website" width={1127} height={634} />
     <div className="french-copy-column french-solution-copy">
       <Heading label="The solution">Bringing the "Wow" Back to the Digital Experience</Heading>
       <Paragraphs className="french-copy french-copy-spaced" items={solutionCopy} />
@@ -190,20 +202,20 @@ function Solution() {
 function CoreFlows() {
   return <section id="core-flows" className="french-section french-core">
     <Banner image="french-6-imgFrame1401.png" className="french-core-banner">
-      <h2 className="french-eyebrow">The core-flows</h2>
+      <SlideHeading className="french-eyebrow">The core-flows</SlideHeading>
     </Banner>
     <div className="french-entries">
       {coreFlows.map(({ title, titleContinuation, height, image, video, decision, why }, index) =>
         <article className="french-entry" key={title}>
-          <EntryTitle number={index + 1} title={title} continuation={titleContinuation} />
+          <EntryTitle number={index + 1} title={title} continuation={titleContinuation} badge="Redesigned Experience" />
           <div className="french-entry-content">
             {video ? <Film name={video} label={title} width={1099} height={height} /> :
-              <div className="french-media" style={{ aspectRatio: `1099 / ${height}` }}>
+              <RevealFrame className="french-media" style={{ aspectRatio: `1099 / ${height}` }}>
                 <img src={asset(image)} alt={title} width={1099} height={height} loading="lazy" />
-              </div>}
+              </RevealFrame>}
             <div className="french-pair">
-              <div><h4>The design decision</h4><Paragraphs items={decision} /></div>
-              <div><h4>Why it mattered</h4><Paragraphs items={why} /></div>
+              <div><SlideHeading as="h4">The design decision</SlideHeading><Paragraphs items={decision} /></div>
+              <div><SlideHeading as="h4">Why it mattered</SlideHeading><Paragraphs items={why} /></div>
             </div>
           </div>
         </article>)}
@@ -236,7 +248,7 @@ export default function FrenchCakeCaseStudy() {
 
   return <main className="french-case-study">
     <aside className="french-sidebar">
-      <a className="french-back" href={`${base}projects`}><span aria-hidden="true">←</span> Back</a>
+      <a className="french-back" href={`${base}projects`}><img src={asset('lumis/back-arrow.svg')} alt="" />Back</a>
       <nav aria-label="Case study sections">
         {sections.map(([label, id]) => <a key={id} href={`#${id}`}
           aria-current={active === id ? 'location' : undefined}>{label}</a>)}

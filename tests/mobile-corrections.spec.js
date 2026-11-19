@@ -2,14 +2,12 @@ import { test, expect } from './browser-test.js';
 
 test.use({ viewport: { width: 393, height: 852 }, isMobile: true, hasTouch: true, channel: undefined });
 
-test('project dropdown matches the custom menu and Back preserves each project category', async ({ page }) => {
+test('mobile project filter uses the segmented control and Back preserves each project category', async ({ page }) => {
   await page.goto('/projects');
-  const toggle = page.locator('.mobile-filter-toggle');
-  await toggle.click();
-  await expect(toggle).toHaveAttribute('aria-expanded', 'true');
-  await expect(page.locator('.mobile-filter-options')).toHaveCSS('width', '136px');
-  await expect(page.locator('.mobile-filter-options button').first()).toHaveText('UI/UX');
-  await page.locator('.mobile-filter-options button').last().click();
+  const filters = page.getByRole('group', { name: 'Filter projects' });
+  await expect(filters).toHaveCSS('width', '154px');
+  await expect(filters.getByRole('button', { name: 'UI/UX' })).toHaveAttribute('aria-pressed', 'true');
+  await filters.getByRole('button', { name: 'Branding' }).click();
   await expect(page.locator('.project-grid')).toHaveAttribute('data-category', 'Branding');
   await page.reload();
   await expect(page.locator('.project-grid')).toHaveAttribute('data-category', 'Branding');
