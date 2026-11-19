@@ -6,7 +6,7 @@ const viewports = [
   { width: 1920, height: 1080 }, { width: 844, height: 390 },
 ];
 
-for (const route of ['/', '/about', '/projects', '/contact']) {
+for (const route of ['/', '/projects', '/contact']) {
   test(`${route} fits portrait, landscape, tablet, and desktop screens`, async ({ page }) => {
     await page.emulateMedia({ reducedMotion: 'reduce' });
     for (const viewport of viewports) {

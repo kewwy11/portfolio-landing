@@ -22,7 +22,7 @@ test('project dropdown matches the custom menu and Back preserves each project c
 });
 
 test('mobile contact videos play inline and pause when offscreen', async ({ page }) => {
-  for (const route of ['/', '/about', '/contact']) {
+  for (const route of ['/', '/contact']) {
     await page.goto(route);
     await page.evaluate(() => document.fonts.ready);
     const video = page.locator('video.contact-image');
@@ -35,40 +35,6 @@ test('mobile contact videos play inline and pause when offscreen', async ({ page
     await expect.poll(() => video.evaluate(node => node.paused)).toBe(true);
     await page.setViewportSize({ width: 393, height: 852 });
   }
-});
-
-test('About keeps the authored portrait frame and a compact vertical pinned story with complete touch transitions', async ({ page }) => {
-  await page.goto('/about');
-  await page.evaluate(() => document.fonts.ready);
-  const portrait = page.locator('.about-portrait');
-  await expect(portrait).toHaveCSS('object-fit', 'fill');
-  await expect(portrait).toHaveCSS('object-position', '50% 100%');
-  const story = page.locator('.about-story');
-  await expect(story).toHaveAttribute('data-mode', 'pinned');
-  await expect(story.locator('.story-visual-image')).toHaveCount(3);
-  await story.evaluate(node => scrollTo({ top: node.offsetTop, behavior: 'instant' }));
-  const text = await story.locator('.story-text-window').boundingBox();
-  const image = await story.locator('.story-image-window').boundingBox();
-  expect(text.y + text.height).toBeLessThan(image.y);
-  expect(image.y - text.y - text.height).toBeCloseTo(16, 0);
-  expect(await story.locator('.story-sticky').evaluate(node => parseFloat(getComputedStyle(node).top))).toBe(0);
-  const session = await page.context().newCDPSession(page);
-  const swipe = async direction => {
-    const start = direction > 0 ? 650 : 250;
-    await session.send('Input.dispatchTouchEvent', { type: 'touchStart', touchPoints: [{ x: 190, y: start }] });
-    for (let step = 1; step <= 8; step++) {
-      await session.send('Input.dispatchTouchEvent', { type: 'touchMove', touchPoints: [{ x: 190, y: start - direction * step * 35 }] });
-    }
-    await session.send('Input.dispatchTouchEvent', { type: 'touchEnd', touchPoints: [] });
-  };
-  for (const stage of [2, 3]) {
-    await swipe(1);
-    await expect(story).toHaveAttribute('data-stage', String(stage));
-    await expect(story).toHaveAttribute('data-transitioning', 'false');
-  }
-  await swipe(1);
-  await expect.poll(() => story.evaluate(node => scrollY > node.offsetTop + node.offsetHeight - innerHeight)).toBe(true);
-  await session.detach();
 });
 
 test('Lumis treatment variants slide through the same frame and translate their active indicator', async ({ page }) => {
@@ -94,7 +60,7 @@ test('Lumis treatment variants slide through the same frame and translate their 
 });
 
 test('every mobile page leaves 64px between its final content and footer', async ({ page }) => {
-  for (const [route, lastContent] of [['/', '.contact-image'], ['/about', '.contact-image'], ['/projects', '.project-gallery'], ['/contact', '.faq']]) {
+  for (const [route, lastContent] of [['/', '.contact-image'], ['/projects', '.project-gallery'], ['/contact', '.faq']]) {
     await page.goto(route);
     await page.evaluate(() => document.fonts.ready);
     const gap = await page.evaluate(selector => document.querySelector('.site-footer').getBoundingClientRect().top - document.querySelector(selector).getBoundingClientRect().bottom, lastContent);

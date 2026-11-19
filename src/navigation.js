@@ -1,7 +1,10 @@
 const base = import.meta.env.BASE_URL;
 
-export function isAboutPage() {
-  return window.location.pathname.replace(/\/+$/, '') === `${base}about`;
+export const resumePdfHref = `${base}resume.pdf`;
+
+export function isResumePage() {
+  const path = window.location.pathname.replace(/\/+$/, '');
+  return path === `${base}resume` || path === `${base}about`;
 }
 
 export function isProjectsPage() {
@@ -13,12 +16,11 @@ export function isContactPage() {
 }
 
 export function navigationHref(section) {
-  const about = isAboutPage();
   const projects = isProjectsPage();
   const contact = isContactPage();
-  if (section === 'about') return about ? '#about' : `${base}about`;
+  if (section === 'resume') return `${base}resume`;
   if (section === 'projects') return projects ? '#projects' : `${base}projects`;
   if (section === 'contact') return contact ? '#contact' : `${base}contact`;
-  if (!about && !projects && !contact) return `#${section}`;
+  if (!projects && !contact) return `#${section}`;
   return `${base}#${section}`;
 }

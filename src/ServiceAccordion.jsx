@@ -1,6 +1,7 @@
 import React, { useId } from 'react';
 import RevealHeading from './RevealHeading.jsx';
 import RollingNumber from './RollingNumber.jsx';
+import AccordionPanel from './AccordionPanel.jsx';
 import './service-accordion.css';
 
 export default function ServiceAccordion({ service, index, open = false, onToggle }) {
@@ -29,15 +30,7 @@ export default function ServiceAccordion({ service, index, open = false, onToggl
       </span>
     </button>
 
-    <div
-      id={panelId}
-      className="service-panel"
-      role="region"
-      aria-labelledby={toggleId}
-      aria-hidden={!open}
-      inert={!open}
-    >
-      <div className="service-panel-clip">
+    <AccordionPanel id={panelId} labelledBy={toggleId} open={open}>
         <div className="service-content">
           <div className={`service-visual service-visual-${service.id}`} aria-hidden="true">
             <img src={`${import.meta.env.BASE_URL}assets/${service.image}`} alt="" loading="lazy" />
@@ -56,7 +49,6 @@ export default function ServiceAccordion({ service, index, open = false, onToggl
             </li>)}</ul>
           </div>
         </div>
-      </div>
-    </div>
+    </AccordionPanel>
   </article>;
 }

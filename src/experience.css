@@ -1,0 +1,115 @@
+.section.experience { padding-block: 48px; }
+.experience-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px 32px;
+}
+.experience-heading h2, .experience-heading .heading-text {
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+.experience-heading h2 { letter-spacing: normal; }
+.talk-button.experience-resume {
+  flex: none;
+  width: 155px;
+  height: 50px;
+  margin: 0;
+  font-size: 18px;
+}
+.experience-resume .talk-button-fill { width: 174px; height: 174px; left: -9.5px; top: -62px; }
+.experience-resume .talk-button-label { inset: 0; display: grid; place-items: center; text-box-trim: none; }
+.experience-list { display: grid; gap: 10px; margin: 32px 24px 0; }
+.experience-row { color: #7f6c72; border-bottom-color: var(--pale-pink); }
+.experience-row.is-open { border-bottom-color: transparent; }
+.experience-row-header {
+  display: grid;
+  grid-template-columns: minmax(0, 202px) minmax(0, 1fr) 24px;
+  align-items: center;
+  padding: 16px 0;
+  transition: padding var(--service-duration) var(--service-ease);
+}
+.experience-row:first-child .experience-row-header { grid-template-columns: minmax(0, 192px) minmax(0, 1fr) 24px; }
+.experience-row.is-open .experience-row-header { padding: 32px 48px 0; }
+.experience-role { display: grid; justify-items: start; gap: 5px; min-width: 0; }
+.experience-role h3 { font-size: 20px; font-weight: 600; line-height: 1.5; }
+.experience-role a { display: inline; }
+.experience-company-arrow { display: inline-grid; width: 25.456px; height: 25.456px; place-items: center; vertical-align: middle; }
+.experience-company-arrow img { transform: rotate(-45deg); }
+.experience-role p, .experience-date { font-size: 18px; line-height: 1.5; }
+.experience-date { text-align: center; }
+.experience-toggle {
+  display: grid;
+  place-items: center;
+  justify-self: center;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  background: transparent;
+}
+.experience-toggle img {
+  grid-area: 1 / 1;
+  transition: opacity var(--service-duration) var(--service-ease),
+    transform var(--service-duration) var(--service-ease);
+}
+.experience-toggle img:last-child,
+.experience-row.is-open .experience-toggle img:first-child { opacity: 0; transform: scale(.55); }
+.experience-row.is-open .experience-toggle img:last-child { opacity: 1; transform: scale(1); }
+.experience-details { display: grid; gap: 24px; padding: 24px 48px 32px; }
+.experience-description {
+  display: flex;
+  gap: 9px;
+  max-width: 713px;
+  color: #604d53;
+  font-size: 16px;
+  line-height: 1.5;
+  letter-spacing: -.32px;
+}
+.experience-description::before, .experience-skills li::before {
+  content: '';
+  flex: 0 0 12px;
+  height: 12px;
+  background: #ff58b3;
+}
+.experience-description::before { margin-top: 6px; }
+.experience-skills-label { margin-bottom: 8px; color: #af9ca2; font-size: 14px; }
+.experience-skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 16px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.experience-skills li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: -.32px;
+  text-transform: uppercase;
+}
+
+@media (min-width: 1061px) {
+  .experience-role h3, .experience-role p { white-space: nowrap; }
+}
+@media (max-width: 760px) {
+  .section.experience { padding-block: 44px; }
+  .experience-heading h2 { font-size: clamp(38px, 10vw, 64px); }
+  .talk-button.experience-resume { width: 138px; height: 44px; font-size: 16px; }
+  .experience-list { margin: 24px 0 0; }
+  .experience-row .experience-row-header, .experience-row:first-child .experience-row-header {
+    grid-template-columns: minmax(0, 1fr) auto 28px;
+    gap: 10px;
+  }
+  .experience-row.is-open .experience-row-header { padding: 20px 16px 0; }
+  .experience-role h3 { font-size: 16px; }
+  .experience-role p, .experience-date { font-size: 13px; }
+  .experience-details { padding: 20px 16px 24px; }
+  .experience-description, .experience-skills li { font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .experience-row-header, .experience-toggle img { transition: none; }
+}

@@ -75,8 +75,19 @@
   text-align: center;
 }
 .french-links a:first-child { min-width: 183px; background: var(--fc-ink); color: var(--fc-bg); }
+.french-links a:focus-visible { box-shadow: 0 4px 0 var(--fc-accent); }
+@media (hover: hover) and (pointer: fine) {
+  .french-links a {
+    transition: transform 180ms ease-out, box-shadow 180ms ease-out;
+  }
+  .french-links a:hover { transform: translateY(-3px); box-shadow: 0 4px 0 var(--fc-accent); }
+  .french-links a:active { transform: translateY(0); box-shadow: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .french-links a, .french-links a:hover { transform: none; transition: none; }
+}
 
-.french-copy { font-size: 20px; line-height: 1.5; }
+.french-copy { font-size: 16px; line-height: 1.5; }
 .french-copy-column { max-width: 793px; }
 .french-copy-spaced { display: grid; gap: 1.5em; white-space: pre-line; }
 
@@ -288,7 +299,6 @@
   .french-links a, .french-links a:first-child { flex: 1 1 150px; min-width: 0; }
   .french-overview-grid { grid-template-columns: 1fr; gap: 24px; }
   .french-reveal { width: min(100%, 503px); margin-inline: auto; }
-  .french-copy { font-size: 17px; line-height: 28px; }
   .french-banner { height: 210px; padding: 20px; }
   .french-problem-banner h2 { font-size: 28px; line-height: 1.2; }
   .french-desktop-break { display: none; }

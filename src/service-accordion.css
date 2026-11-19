@@ -1,4 +1,4 @@
-.service-accordion {
+:is(.service-accordion, .experience-row) {
   --service-duration: 450ms;
   --service-ease: cubic-bezier(.22, 1, .36, 1);
   min-width: 0;
@@ -10,7 +10,7 @@
     background-color var(--service-duration) var(--service-ease);
 }
 
-.service-accordion.is-open {
+:is(.service-accordion, .experience-row).is-open {
   border-top-width: 6px;
   border-bottom-color: transparent;
   background: #f8eedd;
@@ -115,7 +115,7 @@
     visibility 0s var(--service-duration);
 }
 
-.service-accordion.is-open .service-panel {
+:is(.service-accordion, .experience-row).is-open .service-panel {
   grid-template-rows: 1fr;
   visibility: visible;
   transition: grid-template-rows var(--service-duration) var(--service-ease),
@@ -189,7 +189,7 @@
 }
 
 @media (max-width: 760px) {
-  .service-accordion.is-open { border-top-width: 4px; }
+  :is(.service-accordion, .experience-row).is-open { border-top-width: 4px; }
   .service-toggle { padding: 25px 4px; gap: 16px; }
   .service-toggle-label { font-size: 17px; letter-spacing: -.34px; }
   .service-toggle-square { width: 10px; height: 10px; margin-right: 0; }
@@ -208,7 +208,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-accordion, .service-toggle, .service-toggle-label,
+  .service-accordion, .experience-row, .service-toggle, .service-toggle-label,
   .service-toggle-number, .service-toggle-square, .service-toggle-icon, .service-icon-vertical, .service-panel,
-  .service-accordion.is-open .service-panel { transition: none; }
+  :is(.service-accordion, .experience-row).is-open .service-panel { transition: none; }
 }

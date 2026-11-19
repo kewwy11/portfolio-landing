@@ -57,7 +57,7 @@ test('Contact matches the desktop design with its own heading, shared form, FAQ,
 test('Contact navigation opens the new route from every page and keeps its form anchor local', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.setViewportSize({ width: 1440, height: 1000 });
-  for (const route of ['/', '/about', '/projects']) {
+  for (const route of ['/', '/projects']) {
     await page.goto(route);
     const footer = page.getByRole('navigation', { name: 'Footer navigation' });
     await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
@@ -72,7 +72,7 @@ test('Contact navigation opens the new route from every page and keeps its form 
   const footer = page.getByRole('navigation', { name: 'Footer navigation' });
   await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '#contact');
   await expect(footer.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('href', '/projects');
-  await expect(footer.getByRole('link', { name: 'About', exact: true })).toHaveAttribute('href', '/about');
+  await expect(footer.getByRole('link', { name: 'Resume', exact: true })).toHaveAttribute('href', '/resume');
   await expect(footer.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute('href', '/#services');
   await page.getByLabel('Name', { exact: true }).fill('Contact Visitor');
   await footer.getByRole('link', { name: 'Contact', exact: true }).click();

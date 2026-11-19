@@ -37,7 +37,7 @@ test('navigation, project filters, services, and inquiry form work', async ({ pa
   const menu = page.getByRole('navigation', { name: 'Main navigation' });
   await expect(menu).toBeVisible();
   await expect(menu.getByRole('link')).toHaveCount(6);
-  await expect(menu.getByRole('link', { name: 'Proof' })).toHaveAttribute('href', '#proof');
+  await expect(menu.getByRole('link', { name: 'Resume' })).toHaveAttribute('href', '/resume');
   await expect(menu.getByRole('link', { name: 'Let’s Talk' })).toHaveAttribute('href', '/contact');
   await page.keyboard.press('Escape');
   await expect(page.getByRole('button', { name: 'Open navigation' })).toBeFocused();

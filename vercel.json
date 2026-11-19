@@ -1,4 +1,17 @@
 {
+  "redirects": [
+    { "source": "/about", "destination": "/resume.pdf", "permanent": false },
+    { "source": "/resume", "destination": "/resume.pdf", "permanent": false }
+  ],
+  "headers": [
+    {
+      "source": "/resume.pdf",
+      "headers": [
+        { "key": "Content-Type", "value": "application/pdf" },
+        { "key": "Content-Disposition", "value": "inline; filename=\"resume.pdf\"" }
+      ]
+    }
+  ],
   "rewrites": [
     {
       "source": "/(.*)",

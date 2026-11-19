@@ -150,7 +150,7 @@ test('leaving and rapid reentry reverse the existing tracks at their current pos
 });
 
 test('both contact buttons use the same smooth curve and speed in each direction with no stationary exit phase', async ({ page }) => {
-  for (const route of ['/', '/about']) {
+  for (const route of ['/', '/contact']) {
     const button = await openContact(page, route);
     await button.hover();
     const outward = await sample(button, 120);
@@ -169,7 +169,7 @@ test('both contact buttons use the same smooth curve and speed in each direction
     await expect(button).not.toHaveClass(/is-active/);
     await expect.poll(async () => (await read(button)).rates).toEqual([-1, -1]);
     await expect.poll(async () => (await read(button)).sweep).toBeLessThan(359.9);
-    await button.screenshot({ path: `.tools/talk-button-return-${route === '/' ? 'landing' : 'about'}.png` });
+    await button.screenshot({ path: `.tools/talk-button-return-${route === '/' ? 'landing' : 'contact'}.png` });
     await expect(button.locator('.talk-button-fill')).toHaveCSS('opacity', '0');
     await expect(button.locator('.talk-button-label')).toHaveCSS('color', pink);
     expect(await read(button)).toMatchObject({ labelY: 16, width: 123, height: 43 });

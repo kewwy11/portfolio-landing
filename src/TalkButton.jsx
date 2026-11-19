@@ -7,7 +7,7 @@ const DURATION = 650;
 const EASE = 'cubic-bezier(0.4, 0, 0.6, 1)';
 const at = milliseconds => milliseconds / DURATION;
 
-export default function TalkButton({ children = 'Let’s talk', type = 'submit', className = '', disabled = false,
+export default function TalkButton({ as: Component = 'button', children = 'Let’s talk', type = 'submit', className = '', disabled = false,
   onPointerEnter, onPointerLeave, onFocus, onBlur, ...props }) {
   const buttonRef = useRef(null);
   const fillRef = useRef(null);
@@ -89,7 +89,8 @@ export default function TalkButton({ children = 'Let’s talk', type = 'submit',
     });
   }, [active, immediate]);
 
-  return <button {...props} ref={buttonRef} type={type} disabled={disabled}
+  const buttonProps = Component === 'button' ? { type, disabled } : {};
+  return <Component {...props} {...buttonProps} ref={buttonRef}
     className={`talk-button${active ? ' is-active' : ''}${immediate ? ' motion-disabled' : ''}${className ? ` ${className}` : ''}`}
     onPointerEnter={event => {
       if (event.pointerType !== 'touch') setHovered(true);
@@ -109,5 +110,5 @@ export default function TalkButton({ children = 'Let’s talk', type = 'submit',
     }}>
     <span ref={fillRef} className="talk-button-fill" aria-hidden="true" />
     <span ref={labelRef} className="talk-button-label">{children}</span>
-  </button>;
+  </Component>;
 }

@@ -1,13 +1,13 @@
 export const email = 'erhisohwodegratefulruki@gmail.com';
 
 export const navigation = [
-  ['Home', 'home'], ['About', 'about'], ['Projects', 'projects'],
+  ['Home', 'home'], ['Resume', 'resume'], ['Projects', 'projects'],
   ['Services', 'services'], ['Contact', 'contact'],
 ];
 
 export const menuNavigation = [
-  ['Home', 'home'], ['About', 'about'], ['Projects', 'projects'],
-  ['Services', 'services'], ['Proof', 'proof'], ['Let’s Talk', 'contact'],
+  ['Home', 'home'], ['Resume', 'resume'], ['Projects', 'projects'],
+  ['Services', 'services'], ['Let’s Talk', 'contact'],
 ];
 
 export const heroMedia = {

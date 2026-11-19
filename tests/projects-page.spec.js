@@ -135,14 +135,14 @@ test('Projects supports direct reload, a trailing slash, local links, and cross-
   await expect(page.getByRole('heading', { name: 'My projects', exact: true })).toBeVisible();
   const footer = page.getByRole('navigation', { name: 'Footer navigation' });
   await expect(footer.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('href', '#projects');
-  await expect(footer.getByRole('link', { name: 'About', exact: true })).toHaveAttribute('href', '/about');
+  await expect(footer.getByRole('link', { name: 'Resume', exact: true })).toHaveAttribute('href', '/resume');
   await expect(footer.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', '/#home');
   await expect(footer.getByRole('link', { name: 'Services', exact: true })).toHaveAttribute('href', '/#services');
   await expect(footer.getByRole('link', { name: 'Contact', exact: true })).toHaveAttribute('href', '/contact');
   await page.getByRole('button', { name: 'Open navigation' }).click();
   const menu = page.getByRole('navigation', { name: 'Main navigation' });
   await expect(menu.getByRole('link', { name: 'Projects', exact: true })).toHaveAttribute('href', '#projects');
-  await expect(menu.getByRole('link', { name: 'Proof', exact: true })).toHaveAttribute('href', '/#proof');
+  await expect(menu.getByRole('link', { name: 'Resume', exact: true })).toHaveAttribute('href', '/resume');
   await expect(menu.getByRole('link', { name: 'Let’s Talk', exact: true })).toHaveAttribute('href', '/contact');
   await page.keyboard.press('Escape');
   await page.getByRole('button', { name: 'Branding', exact: true }).click();
@@ -153,9 +153,8 @@ test('Projects supports direct reload, a trailing slash, local links, and cross-
   await page.reload();
   await expect(page.locator('#projects-page-heading')).toBeInViewport();
   await expectGallery(page, 'UI/UX');
-  await footer.getByRole('link', { name: 'About', exact: true }).click();
-  await expect(page).toHaveURL(/\/about$/);
-  await expect(page.locator('.about-page')).toBeVisible();
+  await footer.getByRole('link', { name: 'Home', exact: true }).click();
+  await expect(page).toHaveURL(/\/#home$/);
   await page.getByRole('button', { name: 'Open navigation' }).click();
   await page.getByRole('navigation', { name: 'Main navigation' }).getByRole('link', { name: 'Projects', exact: true }).click();
   await expect(page).toHaveURL(/\/projects$/);

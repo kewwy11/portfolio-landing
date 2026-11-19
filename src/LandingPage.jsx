@@ -9,6 +9,7 @@ import Header from './SiteHeader.jsx';
 import Contact from './ContactSection.jsx';
 import Footer from './SiteFooter.jsx';
 import ProjectGallery from './ProjectGallery.jsx';
+import Experience from './Experience.jsx';
 
 const asset = (name) => `${import.meta.env.BASE_URL}assets/${name}`;
 
@@ -111,5 +112,5 @@ function Services() {
 }
 
 export default function LandingPage() {
-  return <><a className="skip-link" href="#projects">Skip to projects</a><main><Hero /><Tools /><Projects /><Testimonials /><Services /><Contact /></main><Footer /></>;
+  return <><a className="skip-link" href="#projects">Skip to projects</a><main><Hero /><Tools /><Experience /><Projects /><Testimonials /><Services /><Contact /></main><Footer /></>;
 }
