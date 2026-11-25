@@ -83,7 +83,7 @@ export const socials = [
   { name: 'GitHub', url: 'https://github.com/kewwy11' },
   { name: 'X (Twitter)', url: 'https://x.com/des1gn_princess' },
   { name: 'LinkedIn', url: 'https://www.linkedin.com/in/grateful-erhis-343a9629a/?isSelfProfile=true' },
-  { name: 'Instagram', url: 'https://www.instagram.com/erhisgrateful/' },
+  { name: 'Instagram', url: 'https://www.instagram.com/des1gnprincess/' },
   { name: 'Pinterest', url: 'https://www.pinterest.com/Designgirlyyy/' },
   { name: 'Behance', url: 'https://www.behance.net/gratefulerhisoh' },
 ];

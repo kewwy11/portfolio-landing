@@ -62,7 +62,7 @@ test('footer labels and service numbers roll on hover and all supplied social li
   const expected = {
     'X(Twitter)': 'https://x.com/des1gn_princess',
     LinkedIn: 'https://www.linkedin.com/in/grateful-erhis-343a9629a/?isSelfProfile=true',
-    Instagram: 'https://www.instagram.com/erhisgrateful/',
+    Instagram: 'https://www.instagram.com/des1gnprincess/',
     Pinterest: 'https://www.pinterest.com/Designgirlyyy/',
     Behance: 'https://www.behance.net/gratefulerhisoh',
   };
